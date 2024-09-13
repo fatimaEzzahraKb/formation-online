@@ -134,7 +134,7 @@ ul{
  .responsive-menu{
    display: flex;
  justify-content: space-between;
- align-items: center;
+ align-items: center; 
  width: 70px;
  }
  .responsive-menu button{
@@ -176,6 +176,10 @@ header{
   z-index: 100;
   width: 100vw;
   height: 100vh;
+}
+
+.visible {
+  display: block;
 }
 #close-search{
   height: 30px;
