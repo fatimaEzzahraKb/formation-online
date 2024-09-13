@@ -9,7 +9,7 @@ body {
 }
 header{
  
- border-bottom: 1px solid gray;
+ border-bottom: 1px solid rgb(174, 174, 174);
  width: 100vw;
 }
 .per-container{
@@ -44,20 +44,29 @@ menu{
  gap: 30px;
 margin-right: 30px;
 }
+.responsive-search-btn {
+  display: none;
+}
+.responsive-search-page{
+  display: none;
+}
+.active-search{
+  display: block;
+}
 .search {
  display: flex;
 align-items: center;
-justify-content: center;
+justify-content: start;
  gap: 10px;
  border:0.8px black solid;
  padding:  0px 10px;
  border-radius: 20px;
- height: 35px;
+ height: 42px;
 }
-.search input {
+.search-input {
  border: none;
 }
-.search input:focus{
+.search-input:focus{
  border: none;
  outline: none;
 }
@@ -118,14 +127,15 @@ ul{
  line-height: 30px;
 }
 
-@media  (max-width:770px){
+@media screen and (max-width:870px){
  .menu{
   display: none;
  }
  .responsive-menu{
    display: flex;
- justify-content: center;
+ justify-content: space-between;
  align-items: center;
+ width: 70px;
  }
  .responsive-menu button{
   display: flex;
@@ -141,8 +151,41 @@ header{
  menu{
    display: none;
  }
+ 
 }
-
+@media screen and (max-width:550px) {
+  nav{
+    gap: 20px;
+  }
+  .search{
+      display: none;
+      visibility: hidden;
+  }
+  .responsive-search-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .responsive-search-page {
+    display: block;
+    background-color: white;
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+  }
+  .responsive-search-page svg {
+  }
+  .searching{
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid black;
+    gap: 30px;
+  }
+  .searching input{
+    width: 90%;
+  }
+}
 
 .user-icon-resp{
  display: flex;
