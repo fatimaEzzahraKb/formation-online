@@ -4,31 +4,37 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique(); // Changed to username and made it unique if it's a unique field
-            $table->string('first_name'); // Renamed 'prenom' to 'first_name' for clarity
-            $table->string('email')->unique(); // Email should remain unique
+            $table->string('username')->unique();
+            $table->string('first_name');
+            $table->string('email')->unique();
             $table->string('password');
             $table->enum('permission', ['admin', 'super_admin', 'stagiaire']);
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('souscategory_id')->nullable()->constrained('souscategories')->onDelete('set null');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
-        
+    }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
         Schema::dropIfExists('users');
     }
-};
+}

@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('utilisateurs', function (Blueprint $table) {
+        Schema::create('souscategories', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_user');
-            $table->string('prenom_user');
-            $table->string('login_user');
-            $table->string('email_user');
-            $table->string('password_user');
-            $table->enum('permission', ['admin', 'super_admin', 'stagiaire']);
+            $table->string('nom');
+            $table->text('description');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('utilisateurs');
+        Schema::dropIfExists('souscategories');
     }
 };
