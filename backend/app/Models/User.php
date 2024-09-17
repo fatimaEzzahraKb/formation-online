@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'first_name',
         'email',
         'password',
+        'permisson',
+        'category_id',
+        'souscategory_id'
     ];
 
     /**
@@ -42,4 +46,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+    public function souscategory(){
+        return $this->belongsTo(Category::class);
+    }
+    public function favoris(){
+        return $this->hasOne(Favoris::class);
+    }
+    public function histories(){
+        return $this->hasMany(History::class);
+    }
 }

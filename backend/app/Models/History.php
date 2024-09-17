@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class History extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id','formation_id','watched_at'];
+
+    public function formation(){
+        return $this->belongsTo(Formation::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

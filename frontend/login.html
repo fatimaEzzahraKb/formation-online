@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/bootstrap-5.3.3-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-    <script src="css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
-    
- <script src="css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
- <script src="css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
-    <title>Document</title>
 </head>
 <body>
-    <div class="login-container ">
-        <form action= ""> 
-            <h1>Bienvenue !</h1>
-        <p>Simplifier votre développement et augmenter votre career avec X!</p>
-       
-            <div class="input-border  ">
-                <input type="email" name="user_name" class="" id="" placeholder="email">
-              </div>
-              <div class="input-border">
-                <input type="password" name="password" placeholder="mot de passe ..." class="" >
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Se Connecter</h2>
+                        <form method="POST" class="register-form" id="register-form">
+                            
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="pass" id="pass" placeholder="Mot de passe"/>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Se Connecter"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
+                    </div>
                 </div>
-                    <input type="submit" id="submit-btn" class="input-border" value="log in" >
-                
-        </form>
-        <div class="hero-login">
-            <img src="images/login_img.png" alt="">
-        </div>
+            </div>
+        </section>
+
+        
+
     </div>
+
+    <!-- JS -->
+    <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

@@ -44,6 +44,46 @@ menu{
  gap: 30px;
 margin-right: 30px;
 }
+menu a {
+  text-transform: capitalize;
+}
+@keyframes textlink {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.menu .text-link {
+  position: relative;
+  display: inline-block;
+  color: #000; /* Change the text color if needed */
+  text-decoration: none;
+}
+.menu  svg:hover{
+  color: #bc35ff;
+  stroke:#bc35ff;
+}
+.menu svg:hover path{
+  stroke:#bc35ff;
+}
+.menu .text-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px; /* Border thickness */
+  background-color: #bc35ff; /* Border color */
+  transition: width 0.3s linear;
+}
+
+.menu .text-link:hover::after {
+  width: 100%;
+}
+
 .responsive-search-btn {
   display: none;
 }
