@@ -155,6 +155,10 @@ flex-direction: column;
 gap: 10px;
 text-decoration: none !important;
 }
+.formation-card:hover img{
+	filter: brightness(0.7); 
+    transition: filter 0.3s ease;
+}
 .line-card{ 
     margin: 0 !important;
     background-color: #787878;
