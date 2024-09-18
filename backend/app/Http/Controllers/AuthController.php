@@ -9,7 +9,7 @@ use App\Models\Souscategory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+    
 class AuthController extends Controller
 {
     //
@@ -17,7 +17,6 @@ class AuthController extends Controller
     public function register(Request $request){
         $validatedData =Validator::make($request->all(),[
             'username' =>"required|string|unique:users",
-            'first_name' => "required|string",
             'email' => "required|string|unique:users",
             'password' => "required|string",
             'permission' => "required|string|in:admin,super_admin,stagiaire",
@@ -34,7 +33,6 @@ class AuthController extends Controller
 
         $user = User::create([
             'username' =>$validatedData->username,
-            'first_name' =>$validatedData->first_name,
             'email' =>$validatedData->email,
             'password' =>Hash::make($validatedData->password),
             'permession' =>$validatedData->permession,

@@ -12,10 +12,13 @@ class Category extends Model
         'description',
     ];
     use HasFactory;
-    public function souscategory(){
+    public function souscategories(){
         return $this->hasMany(Category::class);
     }
-    public function user(){
+    public function users(){
         return $this->hasMany(User::class);
+    }
+    public function formations(){       
+        return $this->hasMany(Formation::class);
     }
 }

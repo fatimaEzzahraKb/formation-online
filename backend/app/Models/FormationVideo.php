@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Favoris extends Model
-{   
-        
+class FormationVideo extends Model
+{
     use HasFactory;
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+    protected $fillables = ["video_path","formation_id"];
     public function formation(){
-        return $this->hasOne(Formation::class);
+        return $this->belongsTo(Formation::class);
     }
 }

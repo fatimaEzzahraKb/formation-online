@@ -18,5 +18,8 @@ class Souscategory extends Model
     public function user(){
         return $this->hasMany(User::class);
     }
+    public function formations(){       
+        return $this->hasMany(Formation::class);
+    }
 
 }
