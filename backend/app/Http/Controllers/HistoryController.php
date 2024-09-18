@@ -15,6 +15,7 @@ class HistoryController extends Controller
         
         $histories = Histroy::where(auth()->id(),'user_id')
         ->with('formations')
+        ->with('videos')
         ->orderBy('watched_at','desc')
         ->get();
 
@@ -29,10 +30,11 @@ class HistoryController extends Controller
     {
         $request->validate([
             'formation_id'=>'required | exists:formations,id',
+            'formation_videos_id'=>'required | exists:formation_videos,id'
         ]);
 
         History::updateOrCreate(
-            ['user_id' => $request->user()->id, 'formation_id' => $request->formation_id],
+            ['user_id' => $request->user()->id, 'formation_id' => $request->formation_id,"formation_videos_id"=>$request->formation_video_id],
             ['watched_at' => now()]
         );
         return response()->json(['message'=>'histroy updated successfully. ']);

@@ -27,4 +27,7 @@ class Formation extends Model
     public function videos(){
         return $this->hasMany(FormationVideo::class);
     }
+    public function blocked(){
+        return $this->hasMany(BlockedFormation::class);
+    }
 }
