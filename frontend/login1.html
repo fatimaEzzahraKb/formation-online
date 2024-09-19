@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="login-container ">
-        <form action= ""> 
+        <form action= "" id="register-form"> 
             <h1>Bienvenue !</h1>
         <p>Simplifier votre développement et augmenter votre career avec X!</p>
        
@@ -24,12 +24,16 @@
         </div>
         <div class="form-group">
             <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-            <input type="password" name="pass" id="pass" placeholder="Password"/>
+            <input type="password" name="pass" id="password" placeholder="Password"/>
         </div>
+        <input type="submit" value="Connecter">
         </form>
         <div class="hero-login">
             <img src="images/login_img.png" alt="">
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/login1.js"></script>
+
 </body>
 </html> 

@@ -58,6 +58,7 @@ class AuthController extends Controller
                 'errors'=>$validatedData->messages()
             ]);
         }else{
+            $credentials = $request->only('email', 'password');
             if (!Auth::attempt($credentials)) {
                 return response()->json(['message' => 'Invalid login details'], 401);
             }
@@ -81,4 +82,8 @@ class AuthController extends Controller
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
     }
+    public function try(){
+        dd('reeechead');
+    }
 }
+

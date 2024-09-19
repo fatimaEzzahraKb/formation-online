@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     public function index(){
-        $categories  = Category::with('users','souscategories','formations')->get();
+        $categories  = Category::with('users','formations','souscategories')->get();
 
         return response()->json( ['categories'=>$categories]);
     }
@@ -17,7 +17,7 @@ class CategoryController extends Controller
             'nom'=>'required|string|unique:categories',
             'description'=>'required | string',
         ]);
-        if(!$validate->fails()){
+        if( $validate->fails()){
             return response()->json([
                 'status'=>422,
                 'errors'=>$validate->messages()   

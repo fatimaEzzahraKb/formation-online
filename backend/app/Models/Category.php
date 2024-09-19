@@ -13,7 +13,7 @@ class Category extends Model
     ];
     use HasFactory;
     public function souscategories(){
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Souscategory::class,'category_id','id');
     }
     public function users(){
         return $this->hasMany(User::class);
