@@ -6,6 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
+    background-color: rgb(248, 252, 255) !important ;
+
 }
 
 .body-container {
@@ -14,7 +16,9 @@ body {
         "sidebar navbar"
         "sidebar main";
     height: 100vh;
-    
+    grid-template-columns: 20% 80% ;
+    background-color: rgb(248, 252, 255);
+    text-align: center;
 }
 
 /* NAVBAR */
@@ -22,6 +26,7 @@ body {
     grid-area: navbar;
     background-color: rgb(248, 252, 255);
     padding: 10px;
+    height: 50px;
 }
 
 .navbar nav {
@@ -29,6 +34,7 @@ body {
     padding: 10px;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .navbar nav .search {
@@ -54,7 +60,14 @@ body {
 .navbar nav .search input:focus {
     outline: none;
 }
-
+.offcanvas-header .top img{
+    height: 50px;
+}
+.offcanvas-header {
+    display: flex;
+    flex-direction: column;
+    
+}
 .account {
     cursor: pointer;
 }
@@ -89,6 +102,7 @@ body {
     background-color: #ffffff;
     box-shadow: 2px 5px 30px rgba(187, 187, 187, 0.6);
     animation: dropdownVisible 0.3s linear;
+    z-index:20;
 }
 
 .info-acc {
@@ -205,9 +219,12 @@ body {
 }
 
 .card-dashboard h1 {
-    font-size: 30px;
+    font-size: 40px;
 }
+.card-dashboard h4{
+    font-size: 20px;
 
+}
 .card-dashboard i {
     font-size: 40px;
 }
@@ -250,9 +267,6 @@ body {
     flex-wrap: wrap;
 }
 
-.p {
-    color: rgb(30, 218, 30);
-}
 .responsive-menu{
     display: none;
 }
@@ -289,11 +303,22 @@ body {
     font-family: sans-serif;
     line-height: 30px;
    }
-   
+   .menu-btn{
+    background-color: transparent;
+   }
 /* Responsive Styles */
 @media (max-width: 768px) {
+    .account{
+        display: flex;
+        gap: 10px;
+    }
     .responsive-menu{
         display: block;
+    }
+    .responsive-menu button{
+        background-color: none !important;
+        border: none;
+        color: none !important;
     }
     .body-container {
         grid-template-areas: 
@@ -304,15 +329,15 @@ body {
     }
     .navbar nav .search {
         justify-content: start;
-        width: 85%;
+        width: 50%;
         margin-bottom: 10px;
     }
     .sidebar {
-        position: relative; 
+        display:none;
     }
 
     .sidebar ul {
-        padding-left: 20px; 
+        width: 100%;
     }
 
     .main-cards {
@@ -322,9 +347,11 @@ body {
 
     .card-dashboard {
         flex: 1 1 auto; 
+        width: 100%;
         margin: 10px 0; 
+        justify-content: space-around;
     }
-
+    
     #myPieChart, #myBarChart {
         width: 90%; 
     }

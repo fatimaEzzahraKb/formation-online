@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,9 +18,9 @@ use App\Http\Controllers\TestController;
 */
 Route::post('login',[AuthController::class,'login']);
 Route::post('logout',[AuthController::class,'logout']);
-Route::get('/try',[TestController::class,'try']);
+Route::get('/user_info',[AuthController::class,'user']);
+Route::resource('users',UsersController::class);
 Route::resource('categories', CategoryController::class);
-Route::get('categoriesindex', [CategoryController::class,'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::middleware('auth:sanctum')->group(function () {

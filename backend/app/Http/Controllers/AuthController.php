@@ -74,17 +74,16 @@ class AuthController extends Controller
             ]);
         }
     }
+    public function user(){
+        $user = Auth::user();
+        return response()->json([
+            'user'=>$user
+        ]);
+    }
     public function logout(Request $request){
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }
-    public function delete($id){
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json(['message' => 'User deleted successfully']);
-    }
-    public function try(){
-        dd('reeechead');
-    }
+    
 }
 
