@@ -106,7 +106,7 @@ label {
   margin-top: 20px;
   margin-bottom: 5px;
 }
-input {
+input, button {
   background: transparent;
   border: 0;
   color: #f2f2f2;
@@ -119,14 +119,14 @@ input {
 input::-moz-focus-inner { 
   border: 0; 
 }
-#submit {
+#login-btn {
   color: #707075;
   margin-top: 40px;
   transition: color 300ms;
 }
-#submit:focus {
+#login-btn:focus {
   color: #f2f2f2;
 }
-#submit:active {
+#login-btn:active {
   color: #d0d0d2;
 }

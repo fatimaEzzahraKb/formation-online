@@ -13,7 +13,6 @@ const login = async(e)=> {
     };
   
     console.log('Before fetch');
-    e.preventDefault();
     axios.post('http://127.0.0.1:8000/api/login', data, {
         headers: {
             'Content-Type': 'application/json',
@@ -21,28 +20,22 @@ const login = async(e)=> {
     })
     .then(response => {
         console.log('Success:', response.data);
-        e.preventDefault();
+
     })
     .catch(error => {
         if (error.response) {
             
-    e.preventDefault();
             console.error('Error data:', error.response.data);
             console.error('Error status:', error.response.status);
             console.log('errrr')
-    e.preventDefault();
         } else if (error.request) {
             
-    e.preventDefault();
             console.error('No response received:', error.request);
             
-    e.preventDefault();
         } else {
             
-    e.preventDefault();
             console.error('Error:', error.message);
             
-    e.preventDefault();
         }
     });
 
