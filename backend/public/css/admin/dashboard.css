@@ -1,0 +1,369 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(248, 252, 255) !important ;
+
+}
+
+.body-container {
+    display: grid;
+    grid-template-areas: 
+        "sidebar navbar"
+        "sidebar main";
+    height: 100vh;
+    grid-template-columns: 20% 80% ;
+    background-color: rgb(248, 252, 255);
+    text-align: center;
+}
+
+/* NAVBAR */
+.navbar {
+    grid-area: navbar;
+    background-color: rgb(248, 252, 255);
+    padding: 10px;
+    height: 50px;
+}
+
+.navbar nav {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar nav .search {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    border-radius: 15px;
+    height: 30px;
+}
+
+.navbar nav .search svg {
+    height: 15px;
+}
+
+.navbar nav .search input {
+    border: none;
+    background-color: none;
+}
+
+.navbar nav .search input:focus {
+    outline: none;
+}
+.offcanvas-header .top img{
+    height: 50px;
+}
+.offcanvas-header {
+    display: flex;
+    flex-direction: column;
+    
+}
+.account {
+    cursor: pointer;
+}
+
+@keyframes dropdownVisible {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dropdownInVisible {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+.invisible {
+    display: none;
+    animation: dropdownInVisible 0.3s linear;
+}
+
+.account-dropdown {
+    position: absolute;
+    right: 30px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 2px 5px 30px rgba(187, 187, 187, 0.6);
+    animation: dropdownVisible 0.3s linear;
+    z-index:20;
+}
+
+.info-acc {
+    padding: 20px;
+}
+
+.info-acc p {
+    font-size: 13px;
+}
+
+.account-dropdown ul {
+    gap: 10px;
+    list-style: none;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.account-dropdown ul hr {
+    width: 100% !important;
+}
+
+.account-dropdown ul li {
+    color: gray;
+    display: flex;
+    gap: 10px;
+    padding: 0px 10px;
+    height: 30px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.account-dropdown ul li:hover {
+    color: black;
+    background-color: aliceblue;
+}
+
+/* END navbar */
+
+/* Sidebar */
+.sidebar {
+    grid-area: sidebar;
+    background-color: #ffffff;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar img {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.top {
+    padding: 20px 1px 0px 20px;
+}
+
+.line {
+    width: 100%;
+}
+
+.sidebar ul {
+    line-height: 35px;
+    padding-left: 40px;
+}
+
+.sidebar ul li {
+    list-style: none;
+    cursor: pointer;
+    padding: 5px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.sidebar ul li:hover {
+    background-color: blueviolet;
+    a{
+        color: #ffffff  ;
+    }
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    display: flex;
+    gap: 15px;
+    color: rebeccapurple;
+}
+
+/* END sidebar */
+
+/* MAIN */
+.main {
+    grid-area: main; 
+    padding: 20px;
+    background-color: rgb(248, 252, 255);
+}
+
+.main-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow cards to wrap */
+}
+
+.card-dashboard {
+    display: flex;
+    gap: 30px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px; 
+    flex: 1 1 30%; 
+    min-width: 230px; 
+}
+
+.card-dashboard h1 {
+    font-size: 40px;
+}
+.card-dashboard h4{
+    font-size: 20px;
+
+}
+.card-dashboard i {
+    font-size: 40px;
+}
+
+.card-dashboard:nth-child(2) {
+    color: rgb(248, 100, 100);
+    box-shadow: 
+        0 0 13px rgba(255, 0, 0, 0.6),   
+        0 0 22px rgba(255, 0, 0, 0.4);
+}
+
+.card-dashboard:first-child {
+    color: rgb(101, 101, 255);
+    box-shadow: 
+        0 0 13px rgb(163, 163, 255),   
+        0 0 22px rgb(62, 62, 219);
+}
+
+.card-dashboard:nth-child(3) i {
+    color: rgb(34, 230, 109);
+}
+
+.card-dashboard:nth-child(3) {
+    color: rgb(34, 230, 109);
+    box-shadow: 
+        0 0 13px rgb(98, 218, 144),   
+        0 0 22px rgb(40, 168, 89);
+}
+
+/* charts */
+#myPieChart, #myBarChart {
+    width: 300px !important; 
+    height: 300px !important;
+    margin: 30px 0;
+}
+
+.charts {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.responsive-menu{
+    display: none;
+}
+
+.offcanvas-body > ul > li  {
+    margin: 10px;
+    padding-left: 20px;
+    padding: 5px;
+   }
+   .offcanvas-body li{
+    text-decoration: none;
+    list-style: none;
+   }
+   .offcanvas-body ul  li:hover{
+    color:#bc35ff;
+    
+   }
+   .offcanvas-body  ul  li:hover >a{
+    color:#bc35ff;
+   
+   }
+   .offcanvas-body >ul> li> a{
+    text-decoration: none;
+    color: #000;
+    font-family: sans-serif;
+    font-weight: 600;
+   }
+   ul{
+    padding-bottom: 10px;
+   }
+   .offcanvas-body li > ul {
+    position: relative;
+    right: 20px;
+    font-family: sans-serif;
+    line-height: 30px;
+   }
+   .menu-btn{
+    background-color: transparent;
+   }
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .account{
+        display: flex;
+        gap: 10px;
+    }
+    .responsive-menu{
+        display: block;
+    }
+    .responsive-menu button{
+        background-color: none !important;
+        border: none;
+        color: none !important;
+    }
+    .body-container {
+        grid-template-areas: 
+            "navbar"
+            "main"
+            "sidebar";
+        grid-template-columns: 1fr;
+    }
+    .navbar nav .search {
+        justify-content: start;
+        width: 50%;
+        margin-bottom: 10px;
+    }
+    .sidebar {
+        display:none;
+    }
+
+    .sidebar ul {
+        width: 100%;
+    }
+
+    .main-cards {
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .card-dashboard {
+        flex: 1 1 auto; 
+        width: 100%;
+        margin: 10px 0; 
+        justify-content: space-around;
+    }
+    
+    #myPieChart, #myBarChart {
+        width: 90%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar nav {
+        justify-content: space-between;
+    }
+   
+
+    .account { 
+        text-align: center; 
+    }
+}

@@ -1,16 +1,33 @@
-hello 
+
+  hello 
+<input type="text" id="email" name="email">
+<input type="password" id="password" name="password">
 <button id="login-btn" type="button">Se Connecter</button>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   function test(event) {
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+    console.log(email, 'data ' ,password)
     $.ajax({
-      url: 'http://127.0.0.1:8000/api/categories', // Change this to your login endpoint
-      type: 'GET', // Use POST for login
-      // data: JSON.stringify({ email, password }),
+      url: 'http://127.0.0.1:8000/api/login', // Change this to your login endpoint
+      type: 'POST', // Use POST for login
+      contentType: 'application/json', // Set the content type to JSON
+      dataType: 'json', // Expect JSON response from the server
+      data: JSON.stringify({ email: email, password: password }),
       success: function(response) {
         console.log('Response: ' + JSON.stringify(response));
-        // Handle success (e.g., redirect or show a message)
+        if(response.access_token){
+          localStorage.setItem('user',response.user)
+          localStorage.setItem('auth_token',response.access_token)
+        }
+        if(response.user.permission === "admin"){
+          window.location.href='admin/admin_dashboard.html'
+        }
+        else{
+          window.location.href = 'index.html'
+        }
       },
       error: function(xhr, status, error) {
         console.log('Error: ' + error);

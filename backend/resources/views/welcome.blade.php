@@ -38,15 +38,16 @@
               </defs>
               <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
             </svg>
-            <div id="loginForm" class="form">
+            <form method="post" action='login'  id="loginForm" class="form">
+              @csrf
               <!-- <form id="loginForm"> -->
                 <label for="email">Email</label>
-                <input type="email" id="email" required>
+                <input type="email" name="email" id="email" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" required>
-                <button id="login-btn" type="button">Se Connecter</button>
+                <input type="password" name="password" id="password" required>
+                <button id="login-btn" type="submit">Se Connecter</button>
               <!-- </form> -->
-            </div>
+            </form >
           </div>
         </div>
       </div>
@@ -55,10 +56,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   function test(event) {
+    e.preventDefault()
+    const email = $('#email').val()
+    const password = $('#password').val()
     $.ajax({
-      url: 'http://127.0.0.1:8000/api/categories', // Change this to your login endpoint
-      type: 'GET', // Use POST for login
-      // data: JSON.stringify({ email, password }),
+      url: 'http://127.0.0.1:8000/api/login', // Change this to your login endpoint
+      type: 'POST', // Use POST for login
+      contentType: 'application/json', // Set the content type to JSON
+      dataType: 'json', 
+      data: JSON.stringify({ 'email':email,'password': password }),
       success: function(response) {
         alert('Response: ' + JSON.stringify(response));
         // Handle success (e.g., redirect or show a message)
@@ -70,7 +76,6 @@
     });
   }
 
-  $('#login-btn').on('click', test);
 </script>
 </body>
 

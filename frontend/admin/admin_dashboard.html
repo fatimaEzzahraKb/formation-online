@@ -123,8 +123,14 @@
             </div>
         </section>
     </div>
-    <script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        function getUser(){
+            const user = localStorage.getItem('user')
+            console.log("user data",user)
+        }
+        getUser()
         const account_btn = document.getElementById('account-btn')
         const account_dropdown = document.getElementById("account-dropdown")
             function ToggleClass(classname,element){

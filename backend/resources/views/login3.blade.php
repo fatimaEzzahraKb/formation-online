@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login3.css">
+    <link rel="stylesheet" href="{{asset('css/login3.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <title>Document</title>
@@ -41,9 +41,9 @@
             <div id="loginForm" class="form">
               <!-- <form id="loginForm"> -->
                 <label for="email">Email</label>
-                <input type="email" id="email" required>
+                <input type="email" name='email' id="email" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" required>
+                <input type="password" name="password" id="password" required>
                 <button id="login-btn" type="button">Se Connecter</button>
               <!-- </form> -->
             </div>

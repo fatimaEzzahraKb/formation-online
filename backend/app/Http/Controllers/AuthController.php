@@ -65,13 +65,16 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
-
-            return response()->json([
-                'user'=>$user,
+            if(in_array($user->permission,['admin','super_admin'])){
+                return view('admin/admin_dashboard')->with(['user'=>$user,
                 'access_token'=>$token,
-                'token_type'=>'Bearer',
-                'message'=>'Good login '
-            ]);
+                'token_type'=>'Bearer', ]);
+            }
+            else{
+                return view('index')->with(['user'=>$user,
+                'access_token'=>$token,
+                'token_type'=>'Bearer', ]);
+            }
         }
     }
     public function user(){
