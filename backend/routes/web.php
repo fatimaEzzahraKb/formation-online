@@ -15,22 +15,37 @@ use App\Http\Controllers\UsersController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/try',[AuthController::class,'try']);
+// Route::get('/',)
+Route::middleware('guest')->group(function(){
+Route::get('/login_form', function () {return view('login');})->name('login');
 Route::post('login',[AuthController::class,'login']);
-Route::post('logout',[AuthController::class,'logout']);
+});
+Route::get('/', function () {
+    return redirect()->route('login'); // Redirect to login if not authenticated
+});
 Route::get('/user_info',[AuthController::class,'user']);
-Route::resource('users',UsersController::class);
 Route::resource('categories', CategoryController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::middleware('admin')->group(function(){
+        Route::get('admin',function(){
+            return view('admin/admin_dashboard');
+        })->name('admin');
+        Route::resource('formations',UsersController::class);
+        Route::get('/souscategories/{id}', function ($id) {
+            return Souscategory::where('category_id', $id)->get();
         });
     });
+    
+    Route::get('home',function(){
+        return view('index');
+    })->name('home');
+    Route::post('logout',[AuthController::class,'logout'])->name('logout');
+    Route::resource('users',UsersController::class);
 
 });
+

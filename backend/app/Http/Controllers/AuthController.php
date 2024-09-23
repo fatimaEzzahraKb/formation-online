@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     //
-
+    
     public function register(Request $request){
         $validatedData =Validator::make($request->all(),[
             'username' =>"required|string|unique:users",
@@ -44,39 +44,28 @@ class AuthController extends Controller
         
     }
     }
-    public function login(Request $request){
-        $validatedData =  Validator::make($request->all(),[
-            'email'=>"required|email|exists:users",
-            'password'=>"required",
-        ],[
-            'email.required'=>"L'email est obligatoire",
-            'email.exists'=>"Ce compte n'existe pas"
-        ]);
-        if($validatedData->fails()){
-            return response()->json([
-                'status'=>422,
-                'errors'=>$validatedData->messages()
-            ]);
-        }else{
-            $credentials = $request->only('email', 'password');
-            if (!Auth::attempt($credentials)) {
-                return response()->json(['message' => 'Invalid login details'], 401);
-            }
-            $user = Auth::user();
-            $token = $user->createToken('auth_token')->plainTextToken;
+    public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email',
+        'password' => 'required',
+    ], [
+        'email.required' => "L'email est obligatoire",
+        'email.exists' => "Ce compte n'existe pas",
+        'password.required' => 'Le mot de passe est obligatoire.',
+    ]);
 
-            if(in_array($user->permission,['admin','super_admin'])){
-                return view('admin/admin_dashboard')->with(['user'=>$user,
-                'access_token'=>$token,
-                'token_type'=>'Bearer', ]);
-            }
-            else{
-                return view('index')->with(['user'=>$user,
-                'access_token'=>$token,
-                'token_type'=>'Bearer', ]);
-            }
-        }
+    $credentials = $request->only('email', 'password');
+    if (!Auth::attempt($credentials)) {
     }
+
+    $user = Auth::user();
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return redirect()->intended($user->permission === 'admin' || $user->permission === 'super_admin' ? route('admin') : route('home'))
+        ->with(['user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
+}
+
     public function user(){
         $user = Auth::user();
         return response()->json([
@@ -84,8 +73,10 @@ class AuthController extends Controller
         ]);
     }
     public function logout(Request $request){
+            $request->user()->tokens()->delete();
+        Auth::guard('web')->logout();
         $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully']);
+        return redirect()->route('login');
     }
     
 }

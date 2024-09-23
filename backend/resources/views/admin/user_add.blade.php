@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
+    <link rel="stylesheet" href="../css/admin/form_user.css">
+
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -13,13 +15,10 @@
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 
-    <!-- chartjs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <title>Document</title>
 </head>
 <body>
-    <div class="body-container ">
+    <div class="body-container">
         <section class="navbar">
             <nav>
                 <div class="responsive-menu">
@@ -97,126 +96,143 @@
                 </ul>
             </nav>
         </section>
-        <section class="main container">
-            <div class="main-cards">
-                <div class="card-dashboard">
-                    <i class="bi bi-collection-play"></i>
-                    <div>
-                    <h1 id="nombre-formations">200</h1>
-                    <h4>  Formations</h4>    
+        <section class="main">
+            
+            <h1>Ajouter Un Nouveau utilisateur</h1>
+            <div class="form-main-container">
+                <form action="{{route('users.store')}}" method="POST">
+                @csrf
+                <div class="mb-3  row-forms ">
+                    <label for="username" class="form-label">Username : </label>
+                    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
+                    @error('username')
+                            <p class="error"> {{$message}} </p>
+                        @enderror
+                </div>
+                <div class="mb-3 row-forms ">
+                    <label for="exampleInputEmail1" class="form-label">Email address : </label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    @error('email')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
+                </div>
+                <div class="mb-3 row-forms">
+                    <label for="exampleInputPassword1" class="form-label">Password : </label>
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                    @error('password')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
+                </div>
+                <div class="mb-3 row-forms">
+                    <label for="confirmation" class="form-label">Verifier le mot de passe : </label>
+                    <input type="password"  name="password_confirmation" class="form-control" id="confirmation">
+                    @error('password_confirmation')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
+                </div>
+                
+                <div class="permission-radio">
+                   <label for="">Permission : </label> 
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" value="stagiaire" name="permission" >
+                        <label class="form-check-label" for="stagiaire">
+                            Stagiaire
+                         </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" value="admin" name="permission" >
+                        <label class="form-check-label" for="admin">
+                            Admin
+                         </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"  type="radio" value="super_admin" name="permission" >
+                        <label class="form-check-label" for="super_admin">
+                            Super admin
+                          </label>
+                    </div>
+                    @error('permission')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
                     </div>
                     
-                </div>
-                <div class="card-dashboard">
-                    <i class="bi bi-people-fill"></i>
-                    <div>
-                    <h1 id="nombre-utilisateurs">20</h1>
-                    <h4>  Utilisateurs</h4>
+                    <div class="row-flex" id="category">
+                       <label for="">Catégorie : </label> 
+                        <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
+                            <option selected>-</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" data-souscategories='@json($category->souscategories)'>{{ $category->nom }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    @error('category_id')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
+                    
+
+<div id="subcategory-container" style="display:none;">
+    Sous-catégorie
+    <select class="form-select" name="souscategory_id" id="subcategory-select" aria-label="Default select example">
+        <option selected>-</option>
+    </select>
+</div>
+
                 </div>
-                <div class="card-dashboard">
-                    <i class="bi bi-card-list"></i> 
-                    <div> 
-                    <h1 id="nombre-categorie">200</h1>
-                    <h4>  Catégorie</h4>
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-primary submit-add-user">Submit</button>
+
+            </form>
             </div>
-            <div class="charts">
-            <canvas id="myPieChart" width="100" height="100"></canvas>
-            <canvas id="myBarChart" width="100" height="100"></canvas>
-            </div>
+            
         </section>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <script>
+const permissionRadios = document.querySelectorAll('input[name="permission"]');
+const categorySelect = document.getElementById('category');
 
-        const account_btn = document.getElementById('account-btn')
-        const account_dropdown = document.getElementById("account-dropdown")
-            function ToggleClass(classname,element){
-                element.classList.toggle(classname)
-                
-            }
-            account_btn.addEventListener('click',function(){
-                ToggleClass("invisible",account_dropdown)
-            })
-            document.addEventListener('click', function(event) {
-               if (!account_btn.contains(event.target) && !account_dropdown.contains(event.target)) {
-                    account_dropdown.classList.add("invisible"); 
-                }
-    });
-        const ctx = document.getElementById('myPieChart').getContext('2d');
-        const myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Green'],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Pie Chart Example'
-                    }
-                }
-            }
+function ToggleCategory() {
+    const isStagiaireSelected = Array.from(permissionRadios).some(radio => radio.value === 'stagiaire' && radio.checked);
+
+    categorySelect.style.display = isStagiaireSelected ? "flex" : "none";
+}
+permissionRadios.forEach(radio => {
+    radio.addEventListener('change', ToggleCategory);
+});
+
+ToggleCategory();
+function updateSubcategories() {
+    const categorySelect = document.getElementById('category-select');
+    const subcategorySelect = document.getElementById('subcategory-select');
+    const subcategoryContainer = document.getElementById('subcategory-container');
+
+    const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+    const subcategories = selectedOption ? JSON.parse(selectedOption.dataset.souscategories) : [];
+
+    // Clear previous subcategories
+    subcategorySelect.innerHTML = '<option selected>-</option>';
+
+    if (subcategories.length > 0) {
+        subcategories.forEach(subcategory => {
+            const option = document.createElement('option');
+            option.value = subcategory.id;
+            option.textContent = subcategory.nom;
+            subcategorySelect.appendChild(option);
         });
-        const barCtx = document.getElementById('myBarChart').getContext('2d');
-        const myBarChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                    label: 'Votes',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Bar Chart Example'
-                    }
-                }
-            }
-        });
-        </script>
+        subcategoryContainer.style.display = 'flex'; // Show subcategory select
+    } else {
+        subcategoryContainer.style.display = 'none'; // Hide subcategory select
+    }
+}
+
+
+    </script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="body-container ">
-        <section class="navbar">
+    <section class="navbar">
             <nav>
                 <div class="responsive-menu">
                    
@@ -77,7 +77,12 @@
                         <hr>
                         <ul>
                             <li><i class="bi bi-person-fill"></i>Profile</li>
-                            <li><i class="bi bi-box-arrow-right"></i>Log out </li>
+                            <li><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <i class="bi bi-box-arrow-right"></i>Log out
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                </a>
                         </ul>
                     </div>
                 
@@ -95,9 +100,9 @@
             <nav>
                 <ul>
                     <li> <a href="admin_dashboard.html"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
-                    <li><a href="users_index.html"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                    <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
-                    <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
+                    <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
+                    <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                    <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                     <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
             </nav>
@@ -105,94 +110,78 @@
         <section class="main">
             <div class="users">
                 <h1>Utilisateurs</h1>
-                <div class="table-users-container">
-
+                    <div class="btn-add text-end" ><button class="btn btn-primary "> <a href="{{route('users.create')}}" style="color:white; text-transform:none;">Ajouter un utilisateur</a> </button></div>
+                <div class="table-users-container" style="overflow-x:auto;">
                 <table id="example" class="ui celled table users-table " style="width:100%">
                     <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Email</th>
-                            <th>Spécialisation</th>
+                            <th>Rôle</th>
                             <th>Catégorie</th>
+                            <th>Sous Catégories</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
+                        @foreach ($users as $user)
+                        <tr class="user-row">
+                            <td>{{$user->username}}</td>
+                            <td> {{$user->email}} </td>
+                            <td> {{$user->permission }}   </td>
+                            <td>{{$user->category ? $user->category->nom : 'aucune' }}</td>
                             <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
+                                @if ($user->souscategory)
+                                    
+                                        @foreach ($user->souscategory as $nom)
+                                            {{ $nom }}
+                                        @endforeach
+                                    
+                                @else
+                                    ___
+                                @endif
+                            </td>
+                            <td class="actions">
+                            <form action="{{route('users.update',$user->id)}}" method="GET" style="display:inline;" >
+                                    @csrf
+                                <button type="submit" style="border:none; background:none; padding:0;">
+                                        <i class="bi bi-pencil-square text-secondary"></i>
+                                </button>
+                            </form>
+                                <form action="{{route('users.destroy',$user->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none; padding:0;">
+                                        <i href="" class="bi bi-trash3 text-danger"></i></button>
+                                </form>
+                                
                             </td>
                         </tr>
-                        <tr>
-                            <td>Garrett Winters</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>63</td>
-                            
-                            <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ashton Cox</td>
-                            <td>Junior Technical Author</td>
-                            <td>San Francisco</td>
-                            <td>66</td>
-                            <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td>Cedric Kelly</td>
-                            <td>Senior Javascript Developer</td>
-                            <td>Edinburgh</td>
-                            <td>22</td>
-                            <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td>Airi Satou</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>33</td>
-                            <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
-                            </td>
-                           
-                        </tr>
-                        <tr>
-                            <td>Brielle Williamson</td>
-                            <td>Integration Specialist</td>
-                            <td>New York</td>
-                            <td>61</td>
-                            <td>
-                                <i class="bi bi-pencil-square"></i>
-                                <i class="bi bi-trash3"></i>
-                            </td>
-                            
-                        </tr>
-                        
+                        @endforeach
                     </tbody>
-                </div>
+                
                 </table>
             </div>
         </div>
         </section>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script> 
-        	
+        	const account_btn = document.getElementById('account-btn')
+        const account_dropdown = document.getElementById("account-dropdown")
+            function ToggleClass(classname,element){
+                element.classList.toggle(classname)
+                
+            }
+            account_btn.addEventListener('click',function(){
+                ToggleClass("invisible",account_dropdown)
+            })
+            document.addEventListener('click', function(event) {
+               if (!account_btn.contains(event.target) && !account_dropdown.contains(event.target)) {
+                    account_dropdown.classList.add("invisible"); 
+                }
+    });
     new DataTable('#example');
     </script>
 </body>

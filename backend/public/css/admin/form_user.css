@@ -1,0 +1,44 @@
+.form-main-container{
+    background-color: aliceblue ;
+    padding: 20px 10px 0px 5px;
+    width: 100%;
+    border-radius: 20px;
+}
+.row-forms{
+    display: flex;
+    gap: 2rem;
+    padding: 10px;
+}
+.row-forms input, .row-forms select, .row-forms label{
+    width: 14rem ;
+}
+.form-check{
+    width: 8rem;
+    display: flex;
+    gap: 12px;
+}
+
+.form-select{
+    width: 10rem !important;
+}
+.permission-radio{
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width:545px) {
+    .row-forms{
+        flex-direction: column;
+        gap: 2px;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+}
+label{
+    font-weight: 600;
+}
+.submit-add-user{
+    margin-top: 20px;
+}

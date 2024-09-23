@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Souscategory;
 class UsersController extends Controller
 {
     /**
@@ -13,12 +16,56 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::with('category','souscategory','favoris','histories')->get();
-        return response()->json([
-            'users'=>$users,
-            
-        ]);
+        
+        return view('admin/users_index',compact('users'));
     }
-
+    public function create()
+    {
+        $categories = Category::with('souscategories')->get();
+        return view('admin/user_add',compact('categories'));
+    }
+    public function store(Request $request){
+        $validatedData = $request->validate([
+            'username' => 'required|string|unique:users',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:8',
+            'password_confirmation' => 'required|string|same:password',
+            'permission' => 'required|string|in:admin,super_admin,stagiaire',
+            'category_id' => 'nullable|exists:categories,id',
+            'souscategory_id' => 'nullable|exists:souscategories,id',
+        ], [
+            'username.required' => 'Le nom d’utilisateur est requis.',
+            'username.unique' => 'Ce nom d’utilisateur est déjà pris.',
+            'email.required' => 'L’adresse e-mail est requise.',
+            'email.email' => 'L’adresse e-mail doit être une adresse valide.',
+            'email.unique' => 'Cette adresse e-mail est déjà utilisée.',
+            'password.required' => 'Le mot de passe est requis.',
+            'password_confirmation.required' => 'Veuillez confirmer le mot de passe.',
+            'password_confirmation.same' => "Les mots de passe ne sont pas les mêmes .",
+            'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
+            'permission.required' => 'Le rôle est requis.',
+            'permission.in' => 'Le rôle doit être l’un des suivants : admin, super_admin, stagiaire.',
+            'category_id.exists' => 'La catégorie sélectionnée est invalide.',
+            'souscategory_id.exists' => 'La sous-catégorie sélectionnée est invalide.',
+        ]);
+        if(!$validatedData){
+        return back()->withErrors($validatedData)->withInput();
+        }
+        else{
+           $user = User::create([
+                'username' => $validatedData['username'],
+        'email' => $validatedData['email'],
+        'password' => Hash::make($validatedData['password']),
+        'permission' => $validatedData['permission'],
+        'category_id' => $validatedData['category_id'],
+        'souscategory_id' => $validatedData['souscategory_id'],
+            ]);
+            
+            return $this->index();
+        }
+            
+            
+    }
     public function show(string $id)
     {
         $user = User::find($id);
@@ -77,6 +124,6 @@ class UsersController extends Controller
     public function destroy($id){
         $user = User::findOrFail($id);
         $user->delete();
-        return response()->json(['message' => 'User deleted successfully']);
+        return $this->index();
     }
 }
