@@ -15,9 +15,11 @@ class Souscategory extends Model
     public function category(){
         return $this->belongsTo(Category::class,'category_id','id');
     }
-    public function user(){
-        return $this->hasMany(User::class);
+    public function userList()
+    {
+        return $this->belongsToMany(User::class, 'user_subcategories', 'souscategory_id', 'user_id')->withPivot('id');
     }
+
     public function formations(){       
         return $this->hasMany(Formation::class);
     }

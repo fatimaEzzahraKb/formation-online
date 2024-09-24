@@ -45,26 +45,29 @@ class AuthController extends Controller
     }
     }
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email|exists:users,email',
-        'password' => 'required',
-    ], [
-        'email.required' => "L'email est obligatoire",
-        'email.exists' => "Ce compte n'existe pas",
-        'password.required' => 'Le mot de passe est obligatoire.',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required',
+        ], [
+            'email.required' => "L'email est obligatoire",
+            'email.exists' => "Ce compte n'existe pas",
+            'email.email' => "Veuillez saisir un email validé",
+            'password.required' => 'Le mot de passe est obligatoire.',
+        ]);
 
-    $credentials = $request->only('email', 'password');
-    if (!Auth::attempt($credentials)) {
+        $credentials = $request->only('email', 'password');
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors(['email'=>"L'email ou le mot de pass est incorrect"])->withInput();
+
+        }
+
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return redirect()->intended($user->permission === 'admin' || $user->permission === 'super_admin' ? route('admin') : route('home'))
+            ->with(['user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
     }
-
-    $user = Auth::user();
-    $token = $user->createToken('auth_token')->plainTextToken;
-
-    return redirect()->intended($user->permission === 'admin' || $user->permission === 'super_admin' ? route('admin') : route('home'))
-        ->with(['user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
-}
 
     public function user(){
         $user = Auth::user();

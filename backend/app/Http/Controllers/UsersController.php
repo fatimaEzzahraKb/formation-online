@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Souscategory;
+use App\Models\UserSubcategory;
 class UsersController extends Controller
 {
     /**
@@ -15,9 +17,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('category','souscategory','favoris','histories')->get();
-        
-        return view('admin/users_index',compact('users'));
+        $users = User::with('category','souscategoriesList','favoris','histories')->get();
+        $souscategories = Souscategory::with('users');
+        return view('admin/users_index',compact('users','souscategories'));
     }
     public function create()
     {
@@ -25,17 +27,18 @@ class UsersController extends Controller
         return view('admin/user_add',compact('categories'));
     }
     public function store(Request $request){
+        LOG::info($request->all());
         $validatedData = $request->validate([
-            'username' => 'required|string|unique:users',
+            'username' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|string|same:password',
             'permission' => 'required|string|in:admin,super_admin,stagiaire',
-            'category_id' => 'nullable|exists:categories,id',
-            'souscategory_id' => 'nullable|exists:souscategories,id',
+            'category_id' => 'sometimes|nullable|exists:categories,id',
+            "souscategories"=>'array|nullable',
+            "souscategories.*"=>'exists:souscategories,id'
         ], [
             'username.required' => 'Le nom d’utilisateur est requis.',
-            'username.unique' => 'Ce nom d’utilisateur est déjà pris.',
             'email.required' => 'L’adresse e-mail est requise.',
             'email.email' => 'L’adresse e-mail doit être une adresse valide.',
             'email.unique' => 'Cette adresse e-mail est déjà utilisée.',
@@ -46,39 +49,43 @@ class UsersController extends Controller
             'permission.required' => 'Le rôle est requis.',
             'permission.in' => 'Le rôle doit être l’un des suivants : admin, super_admin, stagiaire.',
             'category_id.exists' => 'La catégorie sélectionnée est invalide.',
-            'souscategory_id.exists' => 'La sous-catégorie sélectionnée est invalide.',
         ]);
         if(!$validatedData){
-        return back()->withErrors($validatedData)->withInput();
+            return back()->withErrors($validatedData)->withInput();
         }
         else{
-           $user = User::create([
+            $user = User::create([
                 'username' => $validatedData['username'],
-        'email' => $validatedData['email'],
-        'password' => Hash::make($validatedData['password']),
-        'permission' => $validatedData['permission'],
-        'category_id' => $validatedData['category_id'],
-        'souscategory_id' => $validatedData['souscategory_id'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+                'permission' => $validatedData['permission'],
+                'category_id' => $validatedData['category_id'],
             ]);
+            if (isset($validatedData['souscategories'])){
+                foreach ($validatedData['souscategories'] as $souscategoryId){
+                    UserSubcategory::create([
+                        'user_id'=>$user->id,
+                        'souscategory_id'=>$souscategoryId
+                    ]);
+                }
+            }
+           
             
             return $this->index();
         }
             
             
     }
-    public function show(string $id)
+    public function show(User $user)
     {
-        $user = User::find($id);
-        if(!$user){
-            return response()->json([
-                'message'=>'Not Found'
-            ]);
-        }
-        return response()->json([
-            'user'=>$user
-        ]);
+        return view('admin.user_show', compact('user'));
     }
-
+    public function edit(string $id)
+    {
+        $user = User::with('category','souscategoriesList','favoris','histories')->find($id);
+        $categories = Category::with('souscategories')->get();
+        return view('admin/user_update',compact('user','categories'));
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -89,19 +96,15 @@ class UsersController extends Controller
                 'message'=>'Not Found'
             ]);
         }
-        $validatedData =Validator::make($request->all(),[
-            'username' =>"sometimes|string|unique:users,username,".$user->id,
+        $validatedData =$request->validate([
+            'username' =>"sometimes|string",
             'email' => "sometimes|string|unique:users,email,".$user->id,
-            'password' => "sometimes|string",
+            'password' => "sometimes|nullable|string",
             'permission' => "string|in:admin,super_admin,stagiaire",
-            'category_id' => 'exists:categories,id',
-            'souscategory_id' => 'sometimes|nullable|exists:souscategories,id',
+            'category_id' => 'sometimes|nullable|exists:categories,id',
         ]);
-        if($validatedData->fails()){
-            return response()->json([
-                'status'=>422,
-                'errors'=>$validatedData->messages()
-            ]);
+        if(!$validatedData){
+            return back()->withErrors($validatedData)->withInput();
         }
 
         $user->update(array_filter([
@@ -110,12 +113,10 @@ class UsersController extends Controller
             'permission'=>$request->permission , 
             'password'=>$request->password ? bcrypt($request->password) : $user->password,
             'category_id'=>$request->category_id,
-            'souscategory_id'=>$request->souscategory_id,
         ]));
         $user->permission = $request->permission;
-        return response()->json([
-            'user'=>$user
-        ]);
+        return $this->index();
+
     }
 
     /**

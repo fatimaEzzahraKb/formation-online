@@ -11,30 +11,34 @@ body {
 }
 
 .body-container {
+    max-width: 1300px;
     display: grid;
     grid-template-areas: 
         "sidebar navbar"
         "sidebar main";
-    height: 100vh;
+    min-height: 100vh;
     grid-template-columns: 20% 80% ;
+    grid-template-rows: min-content ;
     background-color: rgb(248, 252, 255);
     text-align: center; 
 }
+
 
 /* NAVBAR */
 .navbar {
     grid-area: navbar;
     background-color: rgb(248, 252, 255);
     padding: 10px;
-    height: 50px;
+    padding: 10px;
+    height: 60px;
 }
 
 .navbar nav {
     display: flex;
-    padding: 10px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 50px;
 }
 
 .navbar nav .search {
@@ -201,6 +205,9 @@ body {
     padding: 20px;
     padding-left: 30px !important;
     background-color: rgb(248, 252, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
 }
 
 .main-cards {

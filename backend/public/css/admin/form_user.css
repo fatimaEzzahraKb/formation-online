@@ -4,6 +4,10 @@
     width: 100%;
     border-radius: 20px;
 }
+.main h1{
+    font-family:  Helvetica, sans-serif;
+    margin-bottom: 30px;
+}
 .row-forms{
     display: flex;
     gap: 2rem;
@@ -11,6 +15,15 @@
 }
 .row-forms input, .row-forms select, .row-forms label{
     width: 14rem ;
+    display: flex;
+    justify-content: start;
+}
+.error{
+    color: rgb(255, 111, 111);
+    
+}
+.checks{
+    display: flex;
 }
 .form-check{
     width: 8rem;
@@ -24,7 +37,7 @@
 .permission-radio{
     padding: 5px;
     display: flex;
-    justify-content: space-around;
+    gap: 30px;
     flex-wrap: wrap;
 }
 

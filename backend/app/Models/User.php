@@ -21,7 +21,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'permisson',
+        'permission',
         'category_id',
         'souscategory_id'
     ];
@@ -48,9 +48,11 @@ class User extends Authenticatable
     public function category(){
         return $this->belongsTo(Category::class);
     }
-    public function souscategory(){
-        return $this->belongsTo(Category::class);
+    public function souscategoriesList()
+    {
+        return $this->belongsToMany(Souscategory::class, 'user_subcategories', 'user_id', 'souscategory_id')->withPivot('id');
     }
+
     public function favoris(){
         return $this->hasOne(Favoris::class);
     }

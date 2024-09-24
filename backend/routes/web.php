@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('home',function(){
         return view('index');
-    })->name('home');
+    })->name('home')->middleware('stagiaire');
     Route::post('logout',[AuthController::class,'logout'])->name('logout');
     Route::resource('users',UsersController::class);
 

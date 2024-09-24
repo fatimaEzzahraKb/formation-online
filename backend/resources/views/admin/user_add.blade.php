@@ -41,8 +41,8 @@
                     
                         <nav>
                             <ul>
-                                <li> <a href="admin_dashboard.html"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
-                                <li><a href="users_index.html"><i class="bi bi-person"></i>Utilisateurs</a></li>
+                                <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                                <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                                 <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
@@ -88,7 +88,7 @@
         
             <nav>
                 <ul>
-                    <li> <a href="admin_dashboard.html"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
@@ -104,104 +104,131 @@
                 @csrf
                 <div class="mb-3  row-forms ">
                     <label for="username" class="form-label">Username : </label>
-                    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
+                    <div class="">
+                        <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp">
                     @error('username')
                             <p class="error"> {{$message}} </p>
                         @enderror
+                    </div>
+                    
                 </div>
                 <div class="mb-3 row-forms ">
                     <label for="exampleInputEmail1" class="form-label">Email address : </label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div class="inputs">
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     @error('email')
                             <p class="error"> {{$message}} </p>
                     @enderror
+                    </div>
+                    
                 </div>
                 <div class="mb-3 row-forms">
                     <label for="exampleInputPassword1" class="form-label">Password : </label>
-                    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
-                    @error('password')
-                            <p class="error"> {{$message}} </p>
-                    @enderror
+                    <div class="inputs">
+                        <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                    
+                        @error('password')
+                                    <p class="error"> {{$message}} </p>
+                            @enderror
+                    </div>
+                    
                 </div>
                 <div class="mb-3 row-forms">
                     <label for="confirmation" class="form-label">Verifier le mot de passe : </label>
-                    <input type="password"  name="password_confirmation" class="form-control" id="confirmation">
+                    <div class="inputs">
+                        <input type="password"  name="password_confirmation" class="form-control" id="confirmation">
                     @error('password_confirmation')
                             <p class="error"> {{$message}} </p>
                     @enderror
-                </div>
+                    </div>
                 
-                <div class="permission-radio">
+                </div>
+                <div class="permission-radio ">
                    <label for="">Permission : </label> 
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" value="stagiaire" name="permission" >
-                        <label class="form-check-label" for="stagiaire">
-                            Stagiaire
-                         </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" value="admin" name="permission" >
-                        <label class="form-check-label" for="admin">
-                            Admin
-                         </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input"  type="radio" value="super_admin" name="permission" >
-                        <label class="form-check-label" for="super_admin">
-                            Super admin
-                          </label>
-                    </div>
+                   <div class="checks">
+                        <div class="form-check">
+                            <input class="form-check-input"  type="radio" value="stagiaire" name="permission" >
+                            <label class="form-check-label" for="stagiaire">
+                                Stagiaire
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input"  type="radio" value="admin" name="permission" >
+                            <label class="form-check-label" for="admin">
+                                Admin
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input"  type="radio" value="super_admin" name="permission" >
+                            <label class="form-check-label" for="super_admin">
+                                Super admin
+                            </label>
+                        </div>
+                   </div>
+                    
                     @error('permission')
                             <p class="error"> {{$message}} </p>
                     @enderror
                     </div>
                     
                     <div class="row-flex" id="category">
-                       <label for="">Catégorie : </label> 
-                        <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
-                            <option selected>-</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" data-souscategories='@json($category->souscategories)'>{{ $category->nom }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @error('category_id')
-                            <p class="error"> {{$message}} </p>
-                    @enderror
-                    
+                            <label for="">Catégorie : </label> 
+                                <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
+                                    <option ></option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" data-souscategories='@json($category->souscategories)'>{{ $category->nom }}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                            @error('category_id')
+                                    <p class="error"> {{$message}} </p>
+                            @enderror
+                        
+                            <div id="subcategory-container" style="display:none;">
+                                <label for="">Sous-catégorie</label> 
+                                    <div id="subcategory-select">
 
-<div id="subcategory-container" style="display:none;">
-    Sous-catégorie
-    <select class="form-select" name="souscategory_id" id="subcategory-select" aria-label="Default select example">
-        <option selected>-</option>
-    </select>
-</div>
+                                    </div>
+                            </div>
 
-                </div>
-                <button type="submit" class="btn btn-primary submit-add-user">Submit</button>
+                            </div>
+                            <button type="submit" class="btn btn-primary submit-add-user">Submit</button>
 
-            </form>
-            </div>
-            
+                        </form>
+                        
         </section>
     </div>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
     <script>
+        const account_btn = document.getElementById('account-btn')
+        const account_dropdown = document.getElementById("account-dropdown")
+            function ToggleClass(classname,element){
+                element.classList.toggle(classname)
+                
+            }
+            account_btn.addEventListener('click',function(){
+                ToggleClass("invisible",account_dropdown)
+            })
+            document.addEventListener('click', function(event) {
+               if (!account_btn.contains(event.target) && !account_dropdown.contains(event.target)) {
+                    account_dropdown.classList.add("invisible"); 
+                }
+    });
 const permissionRadios = document.querySelectorAll('input[name="permission"]');
 const categorySelect = document.getElementById('category');
 
 function ToggleCategory() {
     const isStagiaireSelected = Array.from(permissionRadios).some(radio => radio.value === 'stagiaire' && radio.checked);
-
+    const subcategoryContainer = document.getElementById('subcategory-container');
     categorySelect.style.display = isStagiaireSelected ? "flex" : "none";
+    categorySelect.style.gap='30px'
+    categorySelect.style.margin='10px'
+    subcategoryContainer.style.display = isStagiaireSelected ? 'none' : 'none';
+    if (!isStagiaireSelected) {
+        subcategoryContainer.style.display = 'none';
+        document.getElementById('category-select').selectedIndex = 0; // Reset category selection
+        document.getElementById('subcategory-select').innerHTML = ''; // Clear previous subcategories
+    }
 }
 permissionRadios.forEach(radio => {
     radio.addEventListener('change', ToggleCategory);
@@ -216,20 +243,29 @@ function updateSubcategories() {
     const selectedOption = categorySelect.options[categorySelect.selectedIndex];
     const subcategories = selectedOption ? JSON.parse(selectedOption.dataset.souscategories) : [];
 
-    // Clear previous subcategories
-    subcategorySelect.innerHTML = '<option selected>-</option>';
 
     if (subcategories.length > 0) {
         subcategories.forEach(subcategory => {
-            const option = document.createElement('option');
-            option.value = subcategory.id;
-            option.textContent = subcategory.nom;
-            subcategorySelect.appendChild(option);
+            const checkbox = document.createElement('input');
+            const label = document.createElement('p')
+            checkbox.setAttribute('type','checkbox')
+            checkbox.value = subcategory.id;
+            checkbox.name = "souscategories[]";
+            label.textContent = subcategory.nom;
+            label.style.marginBottom='0px'
+            subcategorySelect.appendChild(checkbox);
+            subcategorySelect.appendChild(label);
         });
-        subcategoryContainer.style.display = 'flex'; // Show subcategory select
+        subcategorySelect.style.display = 'flex'; 
+        subcategoryContainer.style.display = 'flex'; 
+        subcategoryContainer.style.gap = '30px'; 
+        subcategorySelect.style.gap = '10px'; 
+        subcategoryContainer.style.alignItems = 'center'; 
+        subcategorySelect.style.alignItems = 'center'; 
     } else {
-        subcategoryContainer.style.display = 'none'; // Hide subcategory select
+        subcategoryContainer.style.display = 'none'; 
     }
+
 }
 
 

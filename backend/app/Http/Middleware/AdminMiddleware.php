@@ -18,7 +18,7 @@ class AdminMiddleware
         if($request->user() && in_array( $request->user()->permission,["super_admin","admin"])){
             return $next($request);}
             else {
-                return response()->json(['message' => 'Unauthorized'], 403);
+                return response()->view('notfound',[],403);
             }
     }
 }

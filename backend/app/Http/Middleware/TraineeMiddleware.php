@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SupadminMiddleware
+class TraineeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,11 @@ class SupadminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     { 
-        if($request->user() && $request->user()->permission  ==="super_admin"){
+        if($request->user() && $request->user()->permission  ==="stagiaire"){
         return $next($request);}
+        elseif($request->user() && $request->user()->permission  ==="admin" || $request->user()->permission  ==="super_admin"){
+            return response()->route('admin');
+        }
         else {
             return response()->view('notfound',[],403);
             

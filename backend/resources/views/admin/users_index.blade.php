@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/admin/dashboard.css">
-    <link rel="stylesheet" href="../css/admin/user_index.css">
+    <link rel="stylesheet" href="{{asset('css/admin/dashboard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -52,8 +52,8 @@
                     
                         <nav>
                             <ul>
-                                <li> <a href="admin_dashboard.html"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
-                                <li><a href="users_index.html"><i class="bi bi-person"></i>Utilisateurs</a></li>
+                                <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                                <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                                 <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
@@ -99,7 +99,7 @@
         
             <nav>
                 <ul>
-                    <li> <a href="admin_dashboard.html"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                    <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
@@ -108,6 +108,11 @@
             </nav>
         </section>
         <section class="main">
+            @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{session('success')}}
+            </div>
+            @endif
             <div class="users">
                 <h1>Utilisateurs</h1>
                     <div class="btn-add text-end" ><button class="btn btn-primary "> <a href="{{route('users.create')}}" style="color:white; text-transform:none;">Ajouter un utilisateur</a> </button></div>
@@ -126,23 +131,19 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr class="user-row">
-                            <td>{{$user->username}}</td>
+                            <td> <a href="{{route('users.show',$user->id)}}"> {{$user->username}}</a></td>
                             <td> {{$user->email}} </td>
                             <td> {{$user->permission }}   </td>
                             <td>{{$user->category ? $user->category->nom : 'aucune' }}</td>
                             <td>
-                                @if ($user->souscategory)
-                                    
-                                        @foreach ($user->souscategory as $nom)
-                                            {{ $nom }}
-                                        @endforeach
-                                    
+                                @if ($user->souscategoriesList->isNotEmpty())
+                                    {{$user->souscategoriesList->pluck('nom')->join(',')}}
                                 @else
-                                    ___
+                                   <p style="display:flex; justify-content:center;" > __</p>
                                 @endif
                             </td>
                             <td class="actions">
-                            <form action="{{route('users.update',$user->id)}}" method="GET" style="display:inline;" >
+                            <form action="{{route('users.edit',$user->id)}}" method="GET" style="display:inline;" >
                                     @csrf
                                 <button type="submit" style="border:none; background:none; padding:0;">
                                         <i class="bi bi-pencil-square text-secondary"></i>

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('souscategory_id')->nullable()->constrained('souscategories')->onDelete('set null');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamps();   
         });
     }
 
