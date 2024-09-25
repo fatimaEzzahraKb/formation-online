@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
+    <link rel="stylesheet" href="../css/admin/form_user.css">
+    <link rel="stylesheet" href="../css/admin/form_formation.css">
+
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -13,17 +16,11 @@
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 
-    <!-- chartjs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Apex charts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
     <title>Document</title>
 </head>
 <body>
-    <div class="body-container ">
-        <section class="navbar">
+    <div class="body-container">
+    <section class="navbar">
             <nav>
                 <div class="responsive-menu">
                    
@@ -47,7 +44,7 @@
                             <ul>
                                 <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                                 <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                                <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                                <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
@@ -99,46 +96,104 @@
                 <ul>
                     <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                    <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                    <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                     <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
             </nav>
         </section>
-        <section class="main container">
-            <div class="main-cards">
-                <div class="card-dashboard">
-                    <i class="bi bi-collection-play"></i>
-                    <div>
-                    <h1 id="nombre-formations">200</h1>
-                    <h4>  Formations</h4>    
+        <section class="main">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                        <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href=" {{route('admin')}} ">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href=" {{route('formations.index')}} ">Formations</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Formulaire</li>
+                        </ol>
+                    </nav>
+                    <!-- /Breadcrumb -->
+            <h1>Ajouter Une Nouvelle formation</h1>
+            <div class="form-main-container">
+                <form action="{{route('formations.store')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3  row-forms ">
+                    <label for="titre" class="form-label">Titre : </label>
+                    <div class="">
+                        <input type="text" class="form-control" name="titre"  aria-describedby="emailHelp">
+                    @error('titre')
+                            <p class="error"> {{$message}} </p>
+                        @enderror
                     </div>
                     
                 </div>
-                <div class="card-dashboard">
-                    <i class="bi bi-people-fill"></i>
-                    <div>
-                    <h1 id="nombre-utilisateurs">20</h1>
-                    <h4>  Utilisateurs</h4>
+                <div class="mb-3 row-forms ">
+                    <label for="exampleInputEmail1" class="form-label">Description </label>
+                    <div class="inputs">
+                        <textarea name="description" id="description" class="form-control"></textarea>
+                    @error('description')
+                            <p class="error"> {{$message}} </p>
+                    @enderror
                     </div>
+                    
                 </div>
-                <div class="card-dashboard">
-                    <i class="bi bi-card-list"></i> 
-                    <div> 
-                    <h1 id="nombre-categorie">200</h1>
-                    <h4>  Catégorie</h4>
+                <div class="mb-3 row-forms">
+                    <label for="exampleInputPassword1" class="form-label">Image </label>
+                    <div class="inputs">
+                        <div class="mb-3">
+                            <input class="form-control" accept="image/*" style="width:100%" name="image_url" type="file" id="formFile">
+                        </div>
+                        @error('image')
+                                    <p class="error"> {{$message}} </p>
+                            @enderror
                     </div>
+                    
                 </div>
-            </div>
-            <div class="charts">
-            <canvas id="myPieChart" width="100" height="100"></canvas>
-            <canvas id="myBarChart" width="100" height="100"></canvas>
-            <canvas id="chart" width="100" height="100"></canvas>
-            </div>
+                <div class="mb-3 row-forms">
+                        <label for="formFileMultiple" class="form-label">Vidéos</label>
+                        <div class="inputs ">
+                            <input class="form-control files-input" name="videos[]" accept="video/*" type="file" style="width:100%;" id="formFileMultiple" multiple>
+                        </div>
+                    </div>
+            
+                
+                    
+                    <div class="row-flex mb-3  row-forms" id="category">
+                            <label for="">Catégorie : </label> 
+                                <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
+                                    <option ></option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" data-souscategories='@json($category->souscategories)'>{{ $category->nom }}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                            @error('category_id')
+                                    <p class="error"> {{$message}} </p>
+                            @enderror
+                        
+                            <div id="subcategory-container" style="display:none;">
+                                <label for="">Sous-catégorie:</label> 
+                                    <select class="form-select  " name="souscategory_id" id="subcategory-select">
+                                    
+                                    </select>
+                            </div>
+
+                            </div>
+                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Submit</button>
+
+                        </form>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
         </section>
     </div>
-    <script>
 
+    <script>
         const account_btn = document.getElementById('account-btn')
         const account_dropdown = document.getElementById("account-dropdown")
             function ToggleClass(classname,element){
@@ -153,95 +208,36 @@
                     account_dropdown.classList.add("invisible"); 
                 }
     });
-        const ctx = document.getElementById('myPieChart').getContext('2d');
-        const myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Green'],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Pie Chart Example'
-                    }
-                }
-            }
-        });
-        const barCtx = document.getElementById('myBarChart').getContext('2d');
-        const myBarChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                    label: 'Votes',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Bar Chart Example'
-                    }
-                }
-            }
-        });
-        var options = {
-            chart: {
-                type: 'line'
-            },
-            series: [{
-                name: 'sales',
-                data: [30,40,35,50,49,60,70,91,125]
-            }],
-            xaxis: {
-                categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-            }
-            }
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
+function updateSubcategories() {
+    const categorySelect = document.getElementById('category-select');
+    const subcategorySelect = document.getElementById('subcategory-select');
+    const subcategoryContainer = document.getElementById('subcategory-container');
 
-        chart.render();
-        </script>
+    const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+    const subcategories = selectedOption ? JSON.parse(selectedOption.dataset.souscategories) : [];
+
+
+    if (subcategories.length > 0) {
+        subcategories.forEach(subcategory => {
+            const option = document.createElement('option');
+            option.value = subcategory.id;
+            option.textContent = subcategory.nom;
+            subcategorySelect.appendChild(option);
+        });
+        subcategorySelect.style.display = 'flex'; 
+        subcategoryContainer.style.display = 'flex'; 
+        subcategoryContainer.style.gap = '30px'; 
+        subcategorySelect.style.gap = '10px'; 
+        subcategoryContainer.style.alignItems = 'center'; 
+        subcategorySelect.style.alignItems = 'center'; 
+    } else {
+        subcategoryContainer.style.display = 'none'; 
+    }
+
+}
+
+
+    </script>
 </body>
 </html>

@@ -65,9 +65,12 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return redirect()->intended($user->permission === 'admin' || $user->permission === 'super_admin' ? route('admin') : route('home'))
-            ->with(['user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
-    }
+        return redirect()->intended()->with([
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'Bearer'
+        ]);
+}
 
     public function user(){
         $user = Auth::user();

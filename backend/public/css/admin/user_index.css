@@ -19,6 +19,12 @@
 table .user-row:hover td{
    background-color: rgb(224, 240, 253) !important;
 }
+tr td a{
+    text-wrap: nowrap;
+}
+tr td    a{
+    text-decoration: underline;
+}
 .user-row{
    cursor: pointer;
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\FormationsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,8 @@ Route::get('/', function () {
 });
 Route::get('/user_info',[AuthController::class,'user']);
 Route::resource('categories', CategoryController::class);
+Route::get('formations',[FormationsController::class,'index'])->name('formations.index');
+Route::get('formations/{$id}',[FormationsController::class,'show'])->name('formations.show');
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -35,17 +38,27 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('admin',function(){
             return view('admin/admin_dashboard');
         })->name('admin');
-        Route::resource('formations',UsersController::class);
         Route::get('/souscategories/{id}', function ($id) {
             return Souscategory::where('category_id', $id)->get();
         });
+        Route::middleware('superadmin')->group(function(){
+            Route::resource('users',UsersController::class);
+        Route::resource('formations',FormationsController::class);
+
+        });
+        Route::resource('users',UsersController::class)->except(['destroy','create']);
+        Route::resource('formations',FormationsController::class)->except(['destroy']);
+        
     });
     
     Route::get('home',function(){
         return view('index');
     })->name('home')->middleware('stagiaire');
     Route::post('logout',[AuthController::class,'logout'])->name('logout');
-    Route::resource('users',UsersController::class);
+    
 
 });
 
+Route::fallback(function(){
+    return view('notfound');
+});

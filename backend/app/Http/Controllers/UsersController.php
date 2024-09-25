@@ -27,7 +27,6 @@ class UsersController extends Controller
         return view('admin/user_add',compact('categories'));
     }
     public function store(Request $request){
-        LOG::info($request->all());
         $validatedData = $request->validate([
             'username' => 'required|string',
             'email' => 'required|string|email|unique:users',

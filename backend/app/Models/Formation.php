@@ -19,7 +19,7 @@ class Formation extends Model
         return $this->belongsTo(Category::class);
     }
     public function souscategory(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Souscategory::class);
     }
     public function histories(){
         return $this->hasMany(History::class);

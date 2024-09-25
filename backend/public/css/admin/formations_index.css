@@ -1,0 +1,7 @@
+#description-textarea:focus{
+    outline: none;
+    border: none;
+}
+#description-textarea{
+    border: none;
+}

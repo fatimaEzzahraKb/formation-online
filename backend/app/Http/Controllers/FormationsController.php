@@ -4,33 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Formations;
-class FormationsConrtroller extends Controller
+use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Facades\Log;
+use App\Models\Category;
+use App\Models\Formation;
+use App\Models\FormationVideo;
+class FormationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(){
-        $formations  = Formation::with('category','souscategory','histores','videos')->get();
-
-        return response()->json( ['formations'=>$formations]);
+        $formations  = Formation::with('category','souscategory','histories','videos')->get();
+        return view('admin/formations')->with(['formations'=>$formations]);
+    }
+    public function create(){
+        $categories = Category::with('souscategories')->get();
+        return view('admin/formations_add')->with('categories',$categories);
     }
     public function store(Request $request){
-        $validate = Validator::make($request->all(),[
-            'titre'=>'required|string|unique:formatuions',
-            'description'=>'required | string',
-            'image_url'=>'required  |image|mimes:jpeg,png,jpg,gif,webp',
-            'category_id'=>'required  | exists: categories,id',
-            'souscategory_id'=>'required  | exists: souscategories,id',
+        $validateData = $request->validate([
+            'titre'=>'required|string|unique:formations',
+            'description'=>'required|string',
+            'image_url'=>'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
+            'category_id'=>'required|exists:categories,id',
+            'souscategory_id'=>'required|exists:souscategories,id',
+            'videos'=>'required|array',
+            'videos.*' => 'file|max:20480'
         ]);
-        if(!$validate->fails()){
-            return response()->json([
-                'status'=>422,
-                'errors'=>$validate->messages()   
-            ]);
-        }
-        else {
-            $image_path = $request->file('image_url')->store('images','public');
+            $file = $request->file('image_url');
+            $name = $request->file('image_url')->getClientOriginalName();
+            $image_path =$file ->storeAs($name,'public');
             $formation= Formation::create([
                 "titre"=>$request->titre,
                 "description"=>$request->description,
@@ -38,14 +42,21 @@ class FormationsConrtroller extends Controller
                 "category_id"=>$request->category_id,
                 "souscategory_id"=>$request->souscategory_id,
             ]);
-            return response()->json([
-                'status'=>200,
-                'formation'=>$formation
-            ]);
-        }
+            
+            foreach($request->videos as $video){
+                $file = $video->getClientOriginalName();
+                $video_path = $file->store->store('videos', ['disk' => 'my_files']);
+                FormationVideo::create([
+                    'video_path'=>$video_path,
+                    'formation_id'=>$formation->id
+                ]);
+            };
+
+            return $this->index();
+        
     }
     public function show($id){
-        $formation = Formation::with('category','souscategory','histores','videos','videos')->find($id)->get();
+        $formation = Formation::with('category','souscategory','histories','videos','videos')->find($id)->get();
         if(!$formation){
           return response()->json([
             'status'=>404,

@@ -60,19 +60,20 @@
                 <div class="account">
                     <svg id="account-btn" viewBox="-0.5 -0.5 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" id="User-Circle--Streamline-Solar-Ar" height="24" width="24"><desc>User Circle Streamline Icon: https://streamlinehq.com</desc><path stroke="#000000" d="M5.4488125 5.4488125C5.4488125 7.0278125000000005 7.158125 8.014687499999999 8.5255625 7.2251875C9.1601875 6.8588125 9.551187500000001 6.1816249999999995 9.551187500000001 5.4488125C9.551187500000001 3.869875 7.841875 2.883 6.4744375 3.6725000000000003C5.8398125 4.038875 5.4488125 4.716 5.4488125 5.4488125" stroke-width="1"></path><path stroke="#000000" d="M0.6628125 7.5C0.6628125 12.7633125 6.3604375 16.0528125 10.918624999999999 13.4211875C13.034062500000001 12.199875 14.337187499999999 9.9426875 14.337187499999999 7.5C14.337187499999999 2.2366875 8.6395625 -1.0528125000000002 4.0813749999999995 1.5788125C1.9659375000000001 2.800125 0.6628125 5.0573125 0.6628125 7.5" stroke-width="1"></path><path d="M11.58125 12.96975C11.4725 10.9928125 10.8671875 9.551187500000001 7.5 9.551187500000001C4.132874999999999 9.551187500000001 3.5275625 10.9928125 3.4187499999999997 12.96975" stroke="#000000" stroke-linecap="round" stroke-width="1"></path></svg>
                     <div id="account-dropdown" class="account-dropdown invisible">
-                        <div class="info-acc">
-                            <h4>Mr  </h4>
-                            <p>admin@example.com</p>
+                        <div class="info-acc" style=" padding-bottom:5px">
+                            <h6 style='width:150px;'>Bonjours {{ Auth::user()->username }}  </h6>
+                            <p>{{ Auth::user()->email }} </p>
                         </div>
-                        <hr>
+                        <hr style="margin:0px">
                         <ul>
                             <li><i class="bi bi-person-fill"></i>Profile</li>
                             <li><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                <i class="bi bi-box-arrow-right"></i>
-                <a style="color:gray; text-transform:none; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Log out</a> </li>  
+                                        @csrf
+                                    </form>
+                                
+                                <a style="color:gray; text-transform:none; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="bi bi-box-arrow-right"></i>Log out</a>
+                            </li>  
                         </ul>
                     </div>
                 
