@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\VimeoService;
 
 class FormationVideoController extends Controller
 {
+    protected $vimeoService;
+
+    public function __construct(VimeoService $vimeoService){
+        $this->vimeoService = $vimeoService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -113,10 +119,27 @@ class FormationVideoController extends Controller
     {
         $video = FormationVideo::findOrFail($id);
         $video->delete();
-        return response()->json([
-            'status'=>200,
-            'message'=>'Video supprimée avec succès'
-        ]);
+        return route('formation.show');
     
+    }
+    public function show_course_videos($formation_id){
+        $videos = FormationVideo::where('formation_id',$formation_id)->get();
+        return view('admin/fomation_videos')->with('videos',$videos);
+
+    }
+    public function initialize_course($formation_id){
+        $videos = FormationVideo::where('formation_id',$formation_id)->delete();
+        return route('formations.index');
+    }
+    public function add_coursevideos(Request $request){
+        $validate = $request->validate([
+            'formation_id'=>'required|exists: formations,id',
+            'video_url'=>'required|file|mimes:mp4,mov,avi,wmv',
+        ]);
+        $videoUri = $this->vimeoService->uploadVideo($video);
+        FormationVideo::create([
+            'video_path'=>$videoUri,
+            'formation_id'=>$formation->id
+        ]);
     }
 }

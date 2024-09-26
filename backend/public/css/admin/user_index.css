@@ -5,14 +5,16 @@
     cursor: pointer;
 }
 .table-users-container{
-    background-color: aliceblue ;
-    padding: 20px 10px 0px 5px;
+    background-color: rgb(255, 255, 255) ;
+    padding: 20px;
+    padding-right: 50px;
     width: 100%;
-    border-radius: 20px;
-
+    border-radius: 5px;
    }
 
-
+.l{
+    color: rgb(0, 155, 103);
+}
 .users-table {
     min-width: 600px; /* Set a minimum width for better visualization on smaller screens */
 }
@@ -22,7 +24,7 @@ table .user-row:hover td{
 tr td a{
     text-wrap: nowrap;
 }
-tr td    a{
+tr td    a:hover{
     text-decoration: underline;
 }
 .user-row{

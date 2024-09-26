@@ -9,11 +9,18 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Formation;
 use App\Models\FormationVideo;
+use App\Services\VimeoService;
+
 class FormationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $vimeoService;
+
+    public function __construct(VimeoService $vimeoService){
+        $this->vimeoService = $vimeoService;
+    }
     public function index(){
         $formations  = Formation::with('category','souscategory','histories','videos')->get();
         return view('admin/formations')->with(['formations'=>$formations]);
@@ -24,31 +31,51 @@ class FormationsController extends Controller
     }
     public function store(Request $request){
         $validateData = $request->validate([
-            'titre'=>'required|string|unique:formations',
-            'description'=>'required|string',
-            'image_url'=>'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
-            'category_id'=>'required|exists:categories,id',
-            'souscategory_id'=>'required|exists:souscategories,id',
-            'videos'=>'required|array',
-            'videos.*' => 'file|max:20480'
+            'titre' => 'required|string|unique:formations',
+            'description' => 'required|string',
+            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
+            'category_id' => 'required|exists:categories,id',
+            'souscategory_id' => 'required|exists:souscategories,id',
+            'videos' => 'required|array',
+            'videos.*.video' => 'file'
+        ], [
+            'titre.required' => 'Le titre est requis.',
+            'titre.string' => 'Le titre doit être une chaîne de caractères.',
+            'titre.unique' => 'Le titre doit être unique.',
+            'description.required' => 'La description est requise.',
+            'description.string' => 'La description doit être une chaîne de caractères.',
+            'image_url.required' => 'L\'image est requise.',
+            'image_url.image' => 'Le fichier doit être une image.',
+            'image_url.mimes' => 'L\'image doit être au format jpeg, png, jpg, gif ou webp.',
+            'image_url.max' => 'L\'image ne peut pas dépasser 20 Mo.',
+            'category_id.required' => 'La catégorie est requise.',
+            'category_id.exists' => 'La catégorie sélectionnée n\'existe pas.',
+            'souscategory_id.required' => 'La sous-catégorie est requise.',
+            'souscategory_id.exists' => 'La sous-catégorie sélectionnée n\'existe pas.',
+            'videos.required' => 'Vous devez saisir au moins une vidéo.',
+            'videos.array' => 'Les vidéos doivent être un tableau.',
+            'videos.*.file' => 'Chaque vidéo doit être un fichier.'
         ]);
-            $file = $request->file('image_url');
-            $name = $request->file('image_url')->getClientOriginalName();
-            $image_path =$file ->storeAs($name,'public');
+        
+        $imagePath = $request->file('image_url')->store('images', 'public');
             $formation= Formation::create([
                 "titre"=>$request->titre,
                 "description"=>$request->description,
-                "image_url"=>$image_path,
+                "image_url"=>$imagePath,
                 "category_id"=>$request->category_id,
                 "souscategory_id"=>$request->souscategory_id,
             ]);
             
             foreach($request->videos as $video){
-                $file = $video->getClientOriginalName();
-                $video_path = $file->store->store('videos', ['disk' => 'my_files']);
+                if (isset($video['video']) && $video['video'] instanceof \Illuminate\Http\UploadedFile && $video['video']->isValid()) 
+                {
+                    $videoUri = $this->vimeoService->uploadVideo($video['video']);
+                }
                 FormationVideo::create([
-                    'video_path'=>$video_path,
-                    'formation_id'=>$formation->id
+                    'video_path'=>$videoUri,
+                    'formation_id'=>$formation->id,
+                    'titre'=>$video['titre'],
+                    'order'=>$video['ordre']
                 ]);
             };
 
@@ -56,28 +83,29 @@ class FormationsController extends Controller
         
     }
     public function show($id){
-        $formation = Formation::with('category','souscategory','histories','videos','videos')->find($id)->get();
+        $formation = Formation::with('category','souscategory','histories','videos')->find($id)    ;
         if(!$formation){
           return response()->json([
             'status'=>404,
             'message'=>'Formation Non trouvé'
           ]);  
         }
-        else{
-            return response()->json([
-                'formation'=>$formation
-            ]);
-        }
+        return view('admin/formation_show')->with('formation',$formation);
+        
+    }
+    public function edit($id){
+        $formation = formation::with('category','souscategory','histories','videos')->find($id);
+        return view('admin/formation_update')->with('formation',$formation);
     }
     public function update(Request $request , $id){
         $validate = Validator::make($request->all(),[
-            'titre'=>'string||unique:formations,titre,' . $formation->id,
-            'description'=>' string',
-            'image_url'=>'image|mimes:jpeg,png,jpg,gif,webp',
-            'category_id'=>'  exists: categories,id',
-            'souscategory_id'=>'  exists: souscategories,id',
-
+            'titre'=>'sometimes|string||unique:formations,titre,' . $formation->id,
+            'description'=>'sometimes| string',
+            'image_url'=>'sometimes|image|mimes:jpeg,png,jpg,gif,webp',
+            'category_id'=>'sometimes|exists:categories,id',
+            'souscategory_id'=>'sometimes|exists:souscategories,id',
         ]);
+        
         $formation =  Formation::findOrFail($id);
         if(!$formation){
             return response()->json([
@@ -92,7 +120,6 @@ class FormationsController extends Controller
         if ($request->file('image_url')) {
             $formation->image_url = $request->file('image_url')->store('images', 'public');
         }
-    
         
         $formation->save();
         return response()->json([
@@ -103,12 +130,10 @@ class FormationsController extends Controller
         };     
 
     }
-    public function delete( $id){
+    public function destroy( $id){
+        $videos = FormationVideo::where('formation_id',$id)->delete(); 
         $formation = Formation::findOrFail($id);
         $formation->delete();
-        return response()->json([
-            'status'=>200,
-            'message'=>'Formation supprimée avec succée'
-        ]); 
+        return $this->index();
     }
 }

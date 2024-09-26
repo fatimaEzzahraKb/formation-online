@@ -31,7 +31,10 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="body-container ">
+    <div class="full-container">
+
+    
+    <div class="body-container  ">
     <section class="navbar">
             <nav>
                 <div class="responsive-menu">
@@ -56,7 +59,7 @@
                             <ul>
                                 <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                                 <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                                <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
+                                <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
@@ -108,7 +111,7 @@
                 <ul>
                     <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                    <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                    <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                     <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
@@ -225,6 +228,7 @@
             </div>
         </section>
     </div>
+</div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script> 

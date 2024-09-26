@@ -55,7 +55,7 @@
                             <ul>
                                 <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                                 <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                                <li><a href="formations.html"><i class="bi bi-person-video3"></i>Formations</a></li>
+                                <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
@@ -107,7 +107,7 @@
                 <ul>
                     <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                    <li><a href="{{route('users.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                    <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                     <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
@@ -142,18 +142,16 @@
                     <tbody>
                         @foreach ($formations as $formation)
                         <tr class="user-row">
-                            <td> <img style='width:100px;' src="	https://img-c.udemycdn.com/course/240x135/1184692_84bb_2.jpg " alt=""></td>
+                            <td> 
+                            <img style='height:50px;' src="{{ asset('storage/'.$formation->image_url) }}" alt="">
+                        
+                            </td>
                             <td><a href="{{route('formations.show',$formation->id)}}">  {{$formation->titre }}   </a></td>
                             <!-- <td id="" > <textarea name="" id="description-textarea" style='height:150px;padding:5px' id=""> {{$formation->description }}</textarea></td> -->
                             <td>{{$formation->souscategory->nom}}</td>
                             <td>{{$formation->category->nom}}</td>
                             <td class="actions">
-                                    <form action="{{route('formations.edit',$formation->id)}}" method="GET" style="display:inline;" >
-                                            @csrf
-                                        <button type="submit" style="border:none; background:none; padding:0;">
-                                                <i class="bi bi-pencil-square text-secondary"></i>
-                                        </button>
-                                    </form>
+                            <a href="{{route('formations.show',$formation->id)}}"> <i class="bi bi-pencil-square " style="color: rgb(0, 155, 103)"></i> </a>
                             @if( Auth::user()->permission==="super_admin" )
                                     <form action="{{route('formations.destroy',$formation->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">
                                         @csrf

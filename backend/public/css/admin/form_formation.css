@@ -2,3 +2,39 @@
     display: flex;
     justify-content: space-around;
 }
+#formFile {
+    display: none; /* Hide the default file input */
+}
+
+.custom-file-upload {
+    height: 120px;
+    width: 150px !important;
+    cursor: pointer;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    color: #007BFF;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-file-upload:hover {
+    background-color: #007BFF;
+    color: white;
+}
+.video-input{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.video-input input[type="number"]{
+    width:100px
+}
+#video-inputs-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

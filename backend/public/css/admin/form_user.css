@@ -1,8 +1,9 @@
 .form-main-container{
-    background-color: aliceblue ;
+    background-color: rgb(255, 255, 255) ;
     padding: 20px 10px 0px 5px;
     width: 100%;
     border-radius: 20px;
+    box-shadow: 1px 1px 10px 1px rgb(221, 221, 221);
 }
 .main h1{
     font-family:  Helvetica, sans-serif;
@@ -10,13 +11,20 @@
 }
 .row-forms{
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     padding: 10px;
 }
 .row-forms input, .row-forms select, .row-forms label{
     width: 14rem ;
     display: flex;
     justify-content: start;
+}
+.row-forms textarea{
+    width: 20rem;
+    height: 150px;
+}
+#titre-input{
+    width: 20rem;
 }
 .error{
     color: rgb(255, 111, 111);
@@ -41,11 +49,10 @@
     flex-wrap: wrap;
 }
 
-@media screen and (max-width:545px) {
+@media screen and (max-width:660px) {
     .row-forms{
         flex-direction: column;
         gap: 2px;
-        align-items: center;
         padding-bottom: 10px;
     }
 }

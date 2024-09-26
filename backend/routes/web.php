@@ -28,6 +28,7 @@ Route::get('/user_info',[AuthController::class,'user']);
 Route::resource('categories', CategoryController::class);
 Route::get('formations',[FormationsController::class,'index'])->name('formations.index');
 Route::get('formations/{$id}',[FormationsController::class,'show'])->name('formations.show');
+Route::resource('formation_videos',FormationVideos::class)->except(['destroy']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -44,11 +45,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::middleware('superadmin')->group(function(){
             Route::resource('users',UsersController::class);
         Route::resource('formations',FormationsController::class);
+        Route::resource('formation_videos',FormationVideos::class);
+        
 
         });
         Route::resource('users',UsersController::class)->except(['destroy','create']);
         Route::resource('formations',FormationsController::class)->except(['destroy']);
-        
     });
     
     Route::get('home',function(){

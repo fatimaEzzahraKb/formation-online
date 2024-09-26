@@ -7,11 +7,22 @@
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(248, 252, 255) !important ;
-
+    
 }
+.full-container{
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+}
+ @media screen and (min-width:1500px) {
+    .full-container{
+    }
+    .body-container {
+    grid-template-columns: 30% 70% ;
 
+    }
+ }
 .body-container {
-    max-width: 1300px;
     display: grid;
     grid-template-areas: 
         "sidebar navbar"
@@ -20,7 +31,7 @@ body {
     grid-template-columns: 20% 80% ;
     grid-template-rows: min-content ;
     background-color: rgb(248, 252, 255);
-    text-align: center; 
+    
 }
 
 
@@ -50,6 +61,7 @@ body {
     background-color: white;
     border-radius: 15px;
     height: 30px;
+    margin-left: 50px;
 }
 
 .navbar nav .search svg {
@@ -338,8 +350,8 @@ body {
     }
     .navbar nav .search {
         justify-content: start;
-        width: 50%;
         margin-bottom: 10px;
+        margin-left: 0px;
     }
     .sidebar {
         display:none;
