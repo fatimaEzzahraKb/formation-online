@@ -24,9 +24,22 @@ class VimeoService{
         return $response;
     }
 
+    public function getVideos()
+    {
+        $response = $this->vimeo->request('/me/videos');
+        return $response['body']['data']; // Returns the array of videos
+    }
+
+
+    public function showVideos()
+    {
+        $videos = $this->vimeoService->getVideos();
+        return view('videos.index', compact('videos')); // Adjust the view name as necessary
+    }
+
     public function deleteVideo($videoUri)
     {
         $videoId = basename($videoUri);
-        return $this->vimeo->delete($videoId);
+        return $this->vimeo->request("/videos/{$videoId}",[],'DELETE');
     }
 }

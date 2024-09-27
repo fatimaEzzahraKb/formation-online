@@ -36,8 +36,10 @@ class FormationsController extends Controller
             'image_url' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'category_id' => 'required|exists:categories,id',
             'souscategory_id' => 'required|exists:souscategories,id',
-            'videos' => 'required|array',
-            'videos.*.video' => 'file'
+            'videos' => 'sometimes|array',
+            'videos.*.video' => 'sometimes|file',
+            'videos.*.titre' => 'sometimes|string',
+            'videos.*.ordre' => 'sometimes|integer|min:1',
         ], [
             'titre.required' => 'Le titre est requis.',
             'titre.string' => 'Le titre doit être une chaîne de caractères.',
@@ -66,16 +68,22 @@ class FormationsController extends Controller
                 "souscategory_id"=>$request->souscategory_id,
             ]);
             
-            foreach($request->videos as $video){
-                if (isset($video['video']) && $video['video'] instanceof \Illuminate\Http\UploadedFile && $video['video']->isValid()) 
+                
+            foreach($request->videos as $videoData){
+                $orders = collect($request->videos)->pluck('ordre');
+                if ($orders->count() !== $orders->unique()->count()) {
+                    return redirect()->back()->withErrors(['videos.*.ordre' => 'Les ordres des vidéos doivent être uniques.'])->withInput();
+                }
+                $video = $videoData['video'];
+                if (isset($videoData) && $video && $video->isValid()) 
                 {
-                    $videoUri = $this->vimeoService->uploadVideo($video['video']);
+                    $videoUri = $this->vimeoService->uploadVideo($video);
                 }
                 FormationVideo::create([
                     'video_path'=>$videoUri,
                     'formation_id'=>$formation->id,
-                    'titre'=>$video['titre'],
-                    'order'=>$video['ordre']
+                    'titre'=>$videoData['titre'],
+                    'ordre'=>$videoData['ordre']
                 ]);
             };
 
@@ -116,24 +124,51 @@ class FormationsController extends Controller
         }
         else{
           
-        $formation->update($request->only(['titre', 'description', 'category_id', 'souscategory_id']));
-        if ($request->file('image_url')) {
-            $formation->image_url = $request->file('image_url')->store('images', 'public');
-        }
-        
-        $formation->save();
-        return response()->json([
-            'status'=>200,
-            'message'=>'Formation  modifié avec succée',
-            'formation'=>$formation
-        ]);
-        };     
+            $formation->update($request->only(['titre', 'description', 'category_id', 'souscategory_id']));
+            if ($request->file('image_url')) {
+                $formation->image_url = $request->file('image_url')->store('images', 'public');
+            }
+            
+            $formation->save();
+            return $this->index();     
 
     }
+}
+
     public function destroy( $id){
         $videos = FormationVideo::where('formation_id',$id)->delete(); 
         $formation = Formation::findOrFail($id);
         $formation->delete();
         return $this->index();
+    }
+    public function add_videos(Request $request, $id){
+        Log::info($request->all());
+        $validateData = $request->all([
+            'videos' => 'required|array',
+            'videos.*.video' => 'required|file',
+            'videos.*.titre' => 'required|string',
+            'videos.*.ordre' => 'required|integer|min:1',
+        ],[
+            'videos.*.ordre' => 'chaque video doit avoir un ordre spécifié',
+            'videos.*.titre' => 'Chaque vidéo doit avoir un titre'
+        ]);
+        foreach($request->videos as $videoData){
+            $orders = collect($request->videos)->pluck('ordre');
+            if ($orders->count() !== $orders->unique()->count()) {
+                return redirect()->back()->withErrors(['videos.*.ordre' => 'Les ordres des vidéos doivent être uniques.'])->withInput();
+            }
+            $video = $videoData['video'];
+            if (isset($videoData) && $video && $video->isValid()) 
+            {
+                $videoUri = $this->vimeoService->uploadVideo($video);
+            }
+            FormationVideo::create([
+                'video_path'=>$videoUri,
+                'formation_id'=>$id,
+                'titre'=>$videoData['titre'],
+                'ordre'=>$videoData['ordre']
+            ]);
+        };
+        return $this->show($id);
     }
 }

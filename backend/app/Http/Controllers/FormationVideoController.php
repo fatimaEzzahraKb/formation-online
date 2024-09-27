@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services\VimeoService;
+use App\Models\FormationVideo;
 
 class FormationVideoController extends Controller
 {
@@ -70,7 +71,10 @@ class FormationVideoController extends Controller
         }
     
     }
-
+    public function edit($id){
+        $video = FormartionVideo::with('formation')->find($id);
+        return view('admin/video_update')->with('video',$video);
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -78,15 +82,10 @@ class FormationVideoController extends Controller
     {
         $validate = Validator::make($request->all(),[
             'formation_id'=>'required | exists: formations,id',
-            'video_url'=>'  file|mimes:mp4,mov,avi,wmv',
-
+            'video_url'=>'sometimes|file|mimes:mp4,mov,avi,wmv',
+            'titre'=>'string',
+            'ordre'=>'number|min:1'
         ]);
-        if ($validate->fails()) {
-            return response()->json([
-                'status' => 422,
-                'errors' => $validate->messages()
-            ]);
-        }
         $video =  FormationVideo::findOrFail($id);
         if(!$video){
             return response()->json([
@@ -96,30 +95,31 @@ class FormationVideoController extends Controller
 
         }
         else{
-            $video->formation_id = $request->formation_id;
-
-        if ($request->file('video_url')) {
-            $video->video_path = $request->file('video_url')->store('videos', 'public');
-        }
-    
+            if ($request->ordre->count() !== $request->ordre->unique()->count()) {
+                return redirect()->back()->withErrors(['videos.*.ordre' => 'Il y en a déjà une vidéo de cette ordre'])->withInput();
+            }
+            $video->update($request->only(['titre', 'ordre']));
+            if (isset($request->video)  && $request->video->isValid()) 
+            {
+                $videoUri = $this->vimeoService->uploadVideo($request->video);
+                $video->video_path = $videoUri ;
+            }
+            
         
         $video->save();
-        return response()->json([
-            'status'=>200,
-            'message'=>'video  modifié avec succée',
-            'video'=>$video
-        ]);
-        };     
+        return redirect()->route("formations.show",$request->formation_id);
     }
-
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $video = FormationVideo::findOrFail($id);
+        $formation_id = $video->formation_id;
+        $this->vimeoService->deleteVideo($video->video_path);
         $video->delete();
-        return route('formation.show');
+        return redirect()->route("formations.show",$formation_id);
     
     }
     public function show_course_videos($formation_id){

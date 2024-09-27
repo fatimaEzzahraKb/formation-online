@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FormationVideo extends Model
 {
     use HasFactory;
-    protected $fillable = ["video_path","formation_id"];
+    protected $fillable = ["video_path","formation_id","ordre","titre"];
     public function formation(){
         return $this->belongsTo(Formation::class);
     }

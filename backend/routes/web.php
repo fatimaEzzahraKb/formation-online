@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FormationsController;
+use App\Http\Controllers\FormationVideoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,13 +28,17 @@ Route::get('/', function () {
 Route::get('/user_info',[AuthController::class,'user']);
 Route::resource('categories', CategoryController::class);
 Route::get('formations',[FormationsController::class,'index'])->name('formations.index');
-Route::get('formations/{$id}',[FormationsController::class,'show'])->name('formations.show');
+Route::get('formations/{id}',[FormationsController::class,'show'])->name('formations.show');
 Route::resource('formation_videos',FormationVideos::class)->except(['destroy']);
+Route::resource('videos_formation',FormationVideoController::class)->only(['index',"show"]);
 
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
+    });
+    Route::get('formation_modif',function(){
+        return view('admin/formation_update');
     });
     Route::middleware('admin')->group(function(){
         Route::get('admin',function(){
@@ -45,12 +50,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::middleware('superadmin')->group(function(){
             Route::resource('users',UsersController::class);
         Route::resource('formations',FormationsController::class);
-        Route::resource('formation_videos',FormationVideos::class);
-        
+        Route::resource('formation_videos',FormationVideoController::class);
+        Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
+
 
         });
         Route::resource('users',UsersController::class)->except(['destroy','create']);
         Route::resource('formations',FormationsController::class)->except(['destroy']);
+        Route::resource('videos_formation',FormationVideoController::class)->except(['destroy']);
+        Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
     });
     
     Route::get('home',function(){
