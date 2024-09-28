@@ -77,46 +77,18 @@
                         @if($formation->videos->isNotEmpty())
                                 @foreach( $formation->videos as $video )
                                     <div class="video-display mt-3" >
-                                    <iframe src="https://player.vimeo.com/video/{{basename($video->video_path)}}?title=0&byline=0&portrait=0&dnt=1" width="300" height="150" frameborder="0" allowfullscreen></iframe>
+                                        <iframe src="https://player.vimeo.com/video/{{basename($video->video_path)}}" width="300" height="150" frameborder="0" allowfullscreen></iframe>
                                         <div class="video-details">
                                             <h3 style="text-transform:capitalize">{{$video->ordre}} - {{$video->titre}} </h3>   
                                         </div>
                                         
                                                 <div class="" style="display:flex;gap:10px;">
-                                                   <!-- Button trigger modal -->
-                                                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#myModal">
+                                                    <form action="{{route('formations.edit', $formation->id)}}" method="GET" style="display:inline;">
+                                                        @csrf
+                                                        <button class="btn " type="submit">
                                                         <i class="bi bi-pencil-square text-success" style="font-size:20px"></i>
-
                                                         </button>
-                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-
-                                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <form>
-                                                                <div class="mb-3">
-                                                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                                                    <input type="text" class="form-control" id="recipient-name">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="message-text" class="col-form-label">Message:</label>
-                                                                    <textarea class="form-control" id="message-text"></textarea>
-                                                                </div>
-                                                                </form>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Send message</button>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                        </div>
-                                                        
+                                                    </form>
                                                     @if(Auth::user()->permission === "super_admin")
                                                         <form action="{{route('formation_videos.destroy', $video->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette video')">
                                                             @csrf
@@ -124,11 +96,29 @@
                                                             <button type="submit" class="btn "> <i style="font-size:20px" class="bi bi-trash3 text-danger"></i>
                                                             </button>
                                                         </form>
-                                    </div>
-                                        
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Launch demo modal
+                                                        </button>
 
                                                         <!-- Modal -->
-                                                        
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                ...
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                                     @endif
                                                 </div>
                                     
@@ -202,9 +192,11 @@
 
                 container.appendChild(videoInputDiv);
             });
-            document.querySelector('.btn-primary').addEventListener('click', function() {
-                document.getElementById('modalForm').submit();
-            });
+            const myModal = document.getElementById('myModal')
+            const myInput = document.getElementById('myInput')
 
+            myModal.addEventListener('shown.bs.modal', () => {
+            myInput.focus()
+            })
         </script>
 @endsection

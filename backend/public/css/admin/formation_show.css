@@ -16,14 +16,27 @@
 .video-input{
     padding: 20px;
 }
+.video-display {
+    transition: transform 0.3s ease; /* Smooth transition for the scale effect */
+}
 .video-display:hover{
+    transform: scale(1.1);
+    animation: transform 10s ease;
     cursor: pointer;
     background-color: aliceblue;
     box-shadow: 1px 20px 50px 1px rgb(185, 185, 185);
 }
-
+iframe{
+    cursor: pointer;
+}
 @media screen and (max-width:395px) {
     iframe{
         width: 15rem;
     }
+}
+
+
+.show {
+    background: rgba(255, 255, 255, 0.582); 
+    
 }

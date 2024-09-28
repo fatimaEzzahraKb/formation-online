@@ -57,7 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
         Route::resource('users',UsersController::class)->except(['destroy','create']);
         Route::resource('formations',FormationsController::class)->except(['destroy']);
-        Route::resource('videos_formation',FormationVideoController::class)->except(['destroy']);
+        Route::resource('formation_videos',FormationVideoController::class)->except(['destroy']);
         Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
     });
     
