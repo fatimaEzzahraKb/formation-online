@@ -10,29 +10,22 @@ class CategoryController extends Controller
     public function index(){
         $categories  = Category::with('users','formations','souscategories')->get();
 
-        return response()->json( ['categories'=>$categories]);
+        return view('admin/categories')->with(['categories'=>$categories]);
+    }
+    public function create(){
+        return view('admin/category_add');
     }
     public function store(Request $request){
-        $validate = Validator::make($request->all(),[
+        $request->validate([
             'nom'=>'required|string|unique:categories',
             'description'=>'required | string',
         ]);
-        if( $validate->fails()){
-            return response()->json([
-                'status'=>422,
-                'errors'=>$validate->messages()   
-            ]);
-        }
-        else {
             $category= Category::create([
                 "nom"=>$request->nom,
                 "description"=>$request->description,
             ]);
-            return response()->json([
-                'status'=>200,
-                'category'=>$category
-            ]);
-        }
+            return $this->index();
+        
     }
     public function show($id){
         $category = Category::with('users','souscategories','formations')->find($id);
@@ -56,10 +49,7 @@ class CategoryController extends Controller
         ]);
         $category =  Category::findOrFail($id);
         if(!$category){
-            return response()->json([
-                'status'=>404,
-                'message'=>'Catégorie non trouvé'
-            ]);
+            return redirect()->route('notfound');
 
         }
         else{
@@ -68,20 +58,14 @@ class CategoryController extends Controller
                 'description'=>$request->description,
             ]);
             $category->save();
-            return response()->json([
-                'status'=>200,
-                'message'=>'Catégorie modifié avec succée '
-            ]);
+            return $this->index();
+
             
         };
     }
-    public function delete( $id){
-        $category = Category::findOrFail($id)
-        ;
+    public function destroy( $id){
+        $category = Category::findOrFail($id);
         $category->delete();
-        return response()->json([
-            'status'=>200,
-            'message'=>'Category deleted successfully'
-        ]); 
+        return $this->index(); 
     }
 }

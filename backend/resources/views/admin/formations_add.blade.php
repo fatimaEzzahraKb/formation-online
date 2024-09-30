@@ -111,12 +111,13 @@
             const categorySelect = document.getElementById('category-select');
             const subcategorySelect = document.getElementById('subcategory-select');
             const subcategoryContainer = document.getElementById('subcategory-container');
-
             const selectedOption = categorySelect.options[categorySelect.selectedIndex];
             const subcategories = selectedOption ? JSON.parse(selectedOption.dataset.souscategories) : [];
+            console.log(subcategories)
 
 
             if (subcategories.length > 0) {
+                subcategorySelect.innerHTML = '';
                 subcategories.forEach(subcategory => {
                     const option = document.createElement('option');
                     option.value = subcategory.id;
@@ -177,6 +178,38 @@
                 }
             }
         }
-       
+       // To add as much videos as we want 
+       document.getElementById('add-video-btn').addEventListener('click',function(){
+            const container = document.getElementById('video-inputs-container')
+            const videoCount = container.children.length;
+
+            const videoInputDiv = document.createElement('div');
+            videoInputDiv.classList.add('video-input');
+
+            const videoInput = document.createElement("input")
+            videoInput.type="file"
+            videoInput.classList.add("form-control")
+            videoInput.name=`videos[${videoCount}][video]`
+            videoInput.accept="video/*"
+            
+            const titleInput = document.createElement("input")
+            titleInput.type="text"
+            titleInput.classList.add("form-control")
+            titleInput.name=`videos[${videoCount}][titre]`
+            titleInput.placeholder="Titre de la video"
+
+            const orderInput = document.createElement("input")
+            orderInput.classList.add("form-control")
+            orderInput.type="number"
+            orderInput.name=`videos[${videoCount}][ordre]`
+            orderInput.placeholder="Ordre"
+
+            videoInputDiv.appendChild(videoInput);
+            videoInputDiv.appendChild(titleInput);
+            videoInputDiv.appendChild(orderInput);
+
+            container.appendChild(videoInputDiv)
+
+        })
     </script>
 @endsection

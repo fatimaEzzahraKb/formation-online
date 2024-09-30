@@ -54,16 +54,18 @@
                                 {{$user->email}}
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
+                            <hr>@if($user->created_at)
+                            <div class="row"> 
                                 <div class="col-sm-3">
                                 <h6 class="mb-0">Member depuis</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
+                                   
                                 {{$user->created_at->format('Y-M-d')}}
+                                
                                 </div>
                             </div>
-                            <hr>
+                            <hr>@endif
                             @if(Auth::user()->permission === "super_admin")
                                 <div class="row">
                                     <div class="" style="display:flex; justify-content:space-between;">

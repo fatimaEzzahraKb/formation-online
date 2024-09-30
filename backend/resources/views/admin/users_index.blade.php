@@ -47,7 +47,7 @@
                                     <form action="{{route('users.edit',$user->id)}}" method="GET" style="display:inline;" >
                                             @csrf
                                         <button type="submit" style="border:none; background:none; padding:0;">
-                                                <i class="bi bi-pencil-square text-secondary"></i>
+                                                <i class="bi bi-pencil-square text-success"></i>
                                         </button>
                                     </form>
                             @if( Auth::user()->permission==="super_admin" )

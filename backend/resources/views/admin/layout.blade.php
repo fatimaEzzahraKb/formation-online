@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="{{asset('css/admin/user_show.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/categories.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/formation_show.css')}}">
-    <link rel="stylesheet" href="../css/admin/form_user.css">
-    <link rel="stylesheet" href="../css/admin/form_formation.css">
+    <link rel="stylesheet" href="{{asset('css/admin/form_user.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/form_formation.css')}}">
     
     <link rel="stylesheet" href="{{asset('css/admin/dashboard.css')}}">
         <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">

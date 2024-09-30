@@ -13,21 +13,44 @@
     margin-top: 40px;
     border-bottom: 1px solid rgb(218, 231, 241);
   }
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center ;
+  }
   .category-item h2{
     font-size: 30px;
-    background-color: rgb(251, 253, 255);
-    margin: 10px;
+    background-color: rgb(251, 253, 255); 
     border-radius: 20px;
-    
+    text-align: start;
   }
-  .categories .category-item:first-of-type h2 {
+  .category-actions {
+    display: flex;
+    gap: 20px;
+  }
+  .trash{
+    color: rgb(255, 98, 98);
+  }
+  .modify-icon {
+    color: rgb(0, 150, 7); /* Change to your desired hover color */
+}
+.bi-trash3:hover{
+  color: rgb(170, 2, 2);
+}
+.modify-icon:hover {
+  color: rgb(1, 110, 8); /* Change to your desired hover color */
+}
+    .categories .category-item:first-of-type h2 {
     color:#952aff;
 }
 .categories .category-item:nth-of-type(2) h2 {
     color:#4c49ea;
 }
 .categories .category-item:nth-of-type(3) h2 {
-    color:#3ecd5e;
+    color:#b53ecd;
+}
+.categories .category-item:nth-of-type(1) h2 {
+  color:#3ecd5e;
 }
 .categories .category-item:nth-of-type(4) h2 {
     color:#e44002;
@@ -39,10 +62,10 @@
     display: flex;
     -webkit-box-align: start;
     -ms-flex-align: start;
-    align-items: flex-start;
+    align-items: center;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-  
+    
     padding: 10px 0;
   }
   .ag-courses_item {
@@ -136,13 +159,7 @@
     background-color: #4c49ea;
 
   }
-  .purple{
-    background-color: #952aff;
-  }
-  .orange{
-    background-color: #f9b234;
 
-  }
  
   @media only screen and (max-width: 979px) {
     .ag-courses_item {
@@ -178,3 +195,53 @@
       font-size: 16px;
     }
   }
+  .add-btn{
+    margin-left: 50px;
+    height: 60px;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .add-btn i:hover{
+    color: #d18400;
+  }
+  .add-icon i{
+    color:#f9b234;
+    font-size:25px;
+     display:flex;
+     justify-content:center;
+      align-items:center
+  }
+  .show{
+    background-color: #ffffff73;
+  }
+  @keyframes actionsAppear{
+    from{
+      position: relative;
+      top: 20px;
+    }
+    to{
+      position: relative;
+      top: 0px;
+    }
+  }
+  .actions-souscat{
+    margin-top: 20px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center ;
+    color: black;
+    gap: 20px;
+  }
+.modify-icon-souscat:hover{
+  color: #007519;
+}
+.ag-courses_item:hover .actions-souscat{
+  animation:  actionsAppear 0.3s ease;
+  color: rgb(0, 0, 0);
+  background: #ffffff;
+  border-radius: 20px;
+}

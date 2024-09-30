@@ -103,11 +103,12 @@ class FormationsController extends Controller
     }
     public function edit($id){
         $formation = formation::with('category','souscategory','histories','videos')->find($id);
-        return view('admin/formation_update')->with('formation',$formation);
+        $categories = Category::with('souscategories')->get();
+        return view('admin/formation_update')->with(['formation' => $formation, 'categories' => $categories]);
     }
     public function update(Request $request , $id){
         $validate = Validator::make($request->all(),[
-            'titre'=>'sometimes|string||unique:formations,titre,' . $formation->id,
+            'titre'=>'sometimes|string||unique:formations,titre,' . $id,
             'description'=>'sometimes| string',
             'image_url'=>'sometimes|image|mimes:jpeg,png,jpg,gif,webp',
             'category_id'=>'sometimes|exists:categories,id',
@@ -116,21 +117,21 @@ class FormationsController extends Controller
         
         $formation =  Formation::findOrFail($id);
         if(!$formation){
-            return response()->json([
-                'status'=>404,
-                'message'=>'Formation non trouvé'
-            ]);
+            return redirect()->route('notfound');
 
         }
         else{
           
-            $formation->update($request->only(['titre', 'description', 'category_id', 'souscategory_id']));
+            $formation->update($request->only(['titre', 'description']));
             if ($request->file('image_url')) {
                 $formation->image_url = $request->file('image_url')->store('images', 'public');
             }
-            
+            if($request->category_id !== null){
+                $formation->category_id = $request->category_id;
+                $formation->souscategory_id = $request->souscategory_id;
+            }
             $formation->save();
-            return $this->index();     
+            return $this->show($id);     
 
     }
 }

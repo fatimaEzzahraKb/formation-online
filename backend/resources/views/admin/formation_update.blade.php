@@ -11,14 +11,15 @@
                         </ol>
                     </nav>
                     <!-- /Breadcrumb -->
-            <h2 >Ajouter Une Nouvelle formation</h2 >
+            <h2 style="text-align:start" >Metter à jour</h2  >
             <div class="form-main-container">
-                <form action="{{route('formations.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('formations.update',$formation->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="mb-3  row-forms ">
                     <label for="titre" class="form-label">Titre : </label>
                     <div class="">
-                        <input type="text" class="form-control" name="titre" id="titre-input" aria-describedby="emailHelp">
+                        <input type="text" class="form-control" name="titre" value=" {{$formation->titre}} " id="titre-input" aria-describedby="emailHelp">
                     @error('titre')
                             <p class="error"> {{$message}} </p>
                         @enderror
@@ -28,7 +29,7 @@
                 <div class="mb-3 row-forms ">
                     <label for="exampleInputEmail1" class="form-label">Description :</label>
                     <div class="inputs">
-                        <textarea name="description" id="description" class="form-control"></textarea>
+                        <textarea name="description" id="description"  class="form-control">{{$formation->description}} </textarea>
                     @error('description')
                             <p class="error"> {{$message}} </p>
                     @enderror
@@ -41,8 +42,8 @@
                     <div class="inputs">
                         <div class="mb-3 " id="image-input">
                         <label for="formFile" id="form-label" class="custom-file-upload">
-                        <i class="bi bi-upload"></i>
-                        Choisir une image: 
+                        <!-- <i class="bi bi-upload"></i> -->
+                        <img src="{{ asset('storage/'.$formation->image_url) }}"   style='height:120px;object-fit:cover;border-radius:5px' >
                         </label>
                         <input accept="image/*" name="image_url" type="file" id="formFile" class="file-input" onchange="displayImage()">
                         <p id="change-msg" style="display:none; font-size:13px"> Clickez sur l'image pour changer</p>
@@ -53,22 +54,7 @@
                     </div>
                     
                 </div>
-                <div class="mb-3 row-forms">
-                        <label for="formFileMultiple" class="form-label">Vidéos:</label>
-                        <div id="video-inputs-container" >
-                        </div>
-                        <div style="display:flex;align-items:end;">
-                        <button  type="button" class=" btn btn-secondary" id="add-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
-
-                        </div>
-                
-                        
-                       
-                    </div>
-                     @error('videos')
-                                    <p class="error"> {{$message}} </p>
-                            @enderror
-
+               
                     <div class="row-flex mb-3  row-forms" id="category">
                             <label for="">Catégorie : </label> 
                                 <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
@@ -94,7 +80,7 @@
                                 @endforeach
                              @endif
                          </div>
-                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Créer   </button>
+                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Modifier   </button>
                             
                         </form>
                         

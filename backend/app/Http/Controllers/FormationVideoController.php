@@ -95,8 +95,12 @@ class FormationVideoController extends Controller
 
         }
         else{
-            if ($request->ordre->count() !== $request->ordre->unique()->count()) {
-                return redirect()->back()->withErrors(['videos.*.ordre' => 'Il y en a déjà une vidéo de cette ordre'])->withInput();
+            $existingVideo = FormationVideo::where('formation_id',$video->formation_id)
+            ->where('ordre',$request->ordre)
+            ->where('id','!=',$id)
+            ->first();
+            if($existingVideo){
+                return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
             }
             $video->update($request->only(['titre', 'ordre']));
             if (isset($request->video)  && $request->video->isValid()) 
@@ -107,7 +111,7 @@ class FormationVideoController extends Controller
             
         
         $video->save();
-        return redirect()->route("formations.show",$request->formation_id);
+        return redirect()->route("formations.show",$video->formation_id);
     }
     }
     /**

@@ -200,3 +200,30 @@
             })
         </script>
 @endsection
+
+@section('scripts')
+<script>
+    const add_subcategory_model = document.getElementById('staticBackdrop');
+    add_subcategory_model.addEventListener('show.bs.modal', function(event) {
+        const btn = event.relatedTarget;
+        const category_id = btn.getAttribute('data-category-id');
+        const category_nom = btn.getAttribute('data-category-nom');
+        const category_nom_span = document.getElementById('category_nom');
+        category_nom_span.innerText = category_nom;
+
+        // Clear existing hidden inputs
+        const modal_form = document.getElementById('modal_form');
+        const existingInput = modal_form.querySelector('input[name="category_id"]');
+        if (existingInput) {
+            modal_form.removeChild(existingInput);
+        }
+
+        // Create and append new hidden input
+        const input_hidden = document.createElement('input');
+        input_hidden.type = 'hidden';
+        input_hidden.name = "category_id";
+        input_hidden.value = category_id;
+        modal_form.appendChild(input_hidden);
+    });
+</script>
+@endsection

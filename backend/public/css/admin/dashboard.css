@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: rgb(248, 252, 255) !important ;
+    background-color: rgb(248, 252, 255)  ;
     
 }
 .full-container{
@@ -15,8 +15,7 @@ body {
     flex-direction: column;
 }
  @media screen and (min-width:1500px) {
-    .full-container{
-    }
+    
     .body-container {
     grid-template-columns: 30% 70% ;
 
@@ -387,4 +386,11 @@ body {
     .account { 
         text-align: center; 
     }
+}
+
+
+/* USERS Dashboard TABLE */
+
+.users-dashboard-table table tbody {
+    border: #000;
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
+    <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -18,6 +19,17 @@
 
     <!-- Apex charts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+        
+     <!-- Data Table -->
+     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit.min.js"></script>
+     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.uikit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.semanticui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
 
     <title>Document</title>
 </head>
@@ -48,7 +60,7 @@
                                 <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                                 <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                                 <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
-                                <li>  <a href="categories.html"><i class="bi bi-card-list"></i> Catégories</a></li>
+                                <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                                 <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
                         </nav>
@@ -100,17 +112,18 @@
                     <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                     <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
-                    <li>  <a href="{{route('users.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
+                    <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
                     <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
             </nav>
         </section>
         <section class="main container">
+            <h1 style="margin-bottom:50px"> Bienvenue {{Auth::user()->username}} 👋</h1>
             <div class="main-cards">
                 <div class="card-dashboard">
                     <i class="bi bi-collection-play"></i>
                     <div>
-                    <h1 id="nombre-formations">200</h1>
+                    <h1 id="nombre-formations"> {{$formations->count()}} </h1>
                     <h4>  Formations</h4>    
                     </div>
                     
@@ -118,14 +131,14 @@
                 <div class="card-dashboard">
                     <i class="bi bi-people-fill"></i>
                     <div>
-                    <h1 id="nombre-utilisateurs">20</h1>
+                    <h1 id="nombre-utilisateurs"> {{$users->count()}} </h1>
                     <h4>  Utilisateurs</h4>
                     </div>
                 </div>
                 <div class="card-dashboard">
                     <i class="bi bi-card-list"></i> 
                     <div> 
-                    <h1 id="nombre-categorie">200</h1>
+                    <h1 id="nombre-categorie"> {{$categories->count()}} </h1>
                     <h4>  Catégorie</h4>
                     </div>
                 </div>
@@ -135,10 +148,11 @@
             <canvas id="myBarChart" width="100" height="100"></canvas>
             <canvas id="chart" width="100" height="100"></canvas>
             </div>
+            <p> {{$categories_chart}} </p>
+            
         </section>
     </div>
     <script>
-
         const account_btn = document.getElementById('account-btn')
         const account_dropdown = document.getElementById("account-dropdown")
             function ToggleClass(classname,element){

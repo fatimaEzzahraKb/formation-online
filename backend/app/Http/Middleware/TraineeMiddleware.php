@@ -18,7 +18,7 @@ class TraineeMiddleware
         if($request->user() && $request->user()->permission  ==="stagiaire"){
         return $next($request);}
         elseif($request->user() && $request->user()->permission  ==="admin" || $request->user()->permission  ==="super_admin"){
-            return response()->route('admin');
+            return redirect()->route('admin');
         }
         else {
             return response()->view('notfound',[],403);

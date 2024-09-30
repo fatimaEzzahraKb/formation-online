@@ -85,6 +85,12 @@
    </header>
    <div class="hero per-container">
     <h3>Nous sommes ravis de vous retrouver, 'nom utilisateur'</h3>
+    <p><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                <i class="bi bi-box-arrow-right"></i>
+                                <a style="color:gray; text-transform:none; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Log out</a></p>
     <div id="carouselExampleFade" class="carousel slide carousel-fade">
      <div class="carousel-inner">
       <div id="first-carousel" class="carousel-item active">

@@ -38,7 +38,7 @@
                             <td>{{$formation->souscategory->nom}}</td>
                             <td>{{$formation->category->nom}}</td>
                             <td class="actions">
-                            <a href="{{route('formations.show',$formation->id)}}"> <i class="bi bi-pencil-square " style="color: rgb(0, 155, 103)"></i> </a>
+                            <a href="{{route('formations.edit',$formation->id)}}"> <i class="bi bi-pencil-square " style="color: rgb(0, 155, 103)"></i> </a>
                             @if( Auth::user()->permission==="super_admin" )
                                     <form action="{{route('formations.destroy',$formation->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">
                                         @csrf
