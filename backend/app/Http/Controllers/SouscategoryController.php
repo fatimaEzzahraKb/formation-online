@@ -28,7 +28,7 @@ class SouscategoryController extends Controller
             return redirect()->route('categories.index');
     }
     public function show($id){
-        $souscategory = Souscategory::with('users','category','formations')->find($id);
+        $souscategory = Souscategory::with('userList','category','formations')->find($id);
         if(!$souscategory){
           return response()->json([
             'status'=>404,
@@ -36,9 +36,7 @@ class SouscategoryController extends Controller
           ]);  
         }
         else{
-            return response()->json([
-                'souscategory'=>$souscategory
-            ]);
+            return view('admin/souscategory_show',compact('souscategory'));
         }
     }
     public function update(Request $request , $id){

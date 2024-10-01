@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
                 return redirect()->route('admin');
             }
             elseif ($user->permission ==="stagiaire"){
-                return redirect()->route('home');
+                return redirect()->route('acceuil');
             }
         }
 

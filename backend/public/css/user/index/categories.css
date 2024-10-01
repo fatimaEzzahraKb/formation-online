@@ -1,0 +1,11 @@
+a.g-courses-item_link{
+    text-decoration: none;
+}
+.categories{
+    font-size: 20px;
+    text-align: center;
+}
+#cat-name{
+    text-decoration: underline #bc35ff;
+    line-height: 100px;
+}

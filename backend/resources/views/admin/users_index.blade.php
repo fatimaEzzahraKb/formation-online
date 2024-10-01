@@ -35,7 +35,7 @@
                             <td> <a href="{{route('users.show',$user->id)}}"> {{$user->username}}</a></td>
                             <td> {{$user->email}} </td>
                             <td> {{$user->permission }}   </td>
-                            <td>{{$user->category ? $user->category->nom : 'aucune' }}</td>
+                            <td>{{$user->category ? $user->category->nom : '__' }}</td>
                             <td>
                                 @if ($user->souscategoriesList->isNotEmpty())
                                     {{$user->souscategoriesList->pluck('nom')->join(',')}}

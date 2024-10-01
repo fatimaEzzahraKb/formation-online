@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
+
+    <!-- Sementic UI (for pagination) -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -20,16 +24,10 @@
     <!-- Apex charts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-        
-     <!-- Data Table -->
-     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit.min.js"></script>
-     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
-     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.uikit.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.semanticui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    <!-- Font style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
     <title>Document</title>
 </head>
@@ -144,12 +142,74 @@
                 </div>
             </div>
             <div class="charts">
+            <input type="hidden" id='charts_data' data-categories ='@json($categories_chart)' data-users = '@json($users_chart)' >
             <canvas id="myPieChart" width="100" height="100"></canvas>
             <canvas id="myBarChart" width="100" height="100"></canvas>
             <canvas id="chart" width="100" height="100"></canvas>
             </div>
-            <p> {{$categories_chart}} </p>
-            
+            <div class="tables-dashboard">
+                <a href=" {{route('users.index')}} ">
+                    <h3>Utilisateurs</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Catégories</th>
+                            <th scope="col">Sous-catégories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                            <tr>
+
+                            </tr>
+                                <td> {{$user->id}} </td>
+                                <td> {{$user->username}} </td>
+                                <td> {{$user->email}} </td>
+                                <td> @if($user->category) {{$user->category->nom}} @endif </td>
+                                <td> 
+                                    @if($user->souscategoriesList->isEmpty())
+                                        __
+                                    @else
+                                    {{$user->souscategoriesList->pluck('nom')->join(',')}}
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {{ $users->links('vendor.pagination.semantic-ui') }} 
+                </a>
+            </div>
+            <div class="tables-dashboard">
+                <a href=" {{route('formations.index')}} ">
+                    <h3>Formations</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Catégories</th>
+                            <th scope="col">Sous-catégories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($formations as $formation)
+                            <tr>
+
+                            </tr>
+                                <td> {{$formation->id}} </td>
+                                <td> {{$formation->titre}} </td>
+                                <td> {{$formation->category->nom}} </td>
+                                <td>  {{$formation->souscategory->nom}} </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {{ $formations->links('vendor.pagination.semantic-ui') }} 
+                </a>
+            </div>
         </section>
     </div>
     <script>
@@ -168,22 +228,31 @@
                 }
     });
         const ctx = document.getElementById('myPieChart').getContext('2d');
+        const categories_pie_data = document.getElementById('charts_data').getAttribute('data-categories')
+        const categories = JSON.parse(categories_pie_data)
+        const pie_labels = categories.map(category => category.nom)
+        const pie_data = categories.map(category => category.total)
+        
         const myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Red', 'Blue', 'Green'],
+                labels: pie_labels,
                 datasets: [{
                     label: 'My First Dataset',
-                    data: [300, 50, 100],
+                    data: pie_data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
+                        'rgb(205, 248, 205)',
+                        "#ff8c8c",
+                        '#fffed8',
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
+                        ' rgb(30, 218, 30)',
+                        "#ff562c",
+                        "#fffb2c",
                     ],
                     borderWidth: 1
                 }]
@@ -196,28 +265,36 @@
                     },
                     title: {
                         display: true,
-                        text: 'Pie Chart Example'
+                        text: 'Nombre de formation par sous-catégorie'
                     }
                 }
             }
         });
         const barCtx = document.getElementById('myBarChart').getContext('2d');
+        const users_bar_data = document.getElementById('charts_data').getAttribute('data-users')
+        const users = JSON.parse(users_bar_data)
+        const bar_labels = users.map(user => user.nom )
+        const bar_data = users.map(user => user.nom !== null ? user.total : null)
         const myBarChart = new Chart(barCtx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow'],
+                labels: bar_labels,
                 datasets: [{
-                    label: 'Votes',
-                    data: [12, 19, 3],
+                    label: 'Nombre d\'utilisateur par catégorie',
+                    data: bar_data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
-                        'rgb(205, 248, 205)'
+                        'rgb(205, 248, 205)',
+                        "#ff8c8c",
+                        '#fffed8',
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
-                        ' rgb(30, 218, 30)'
+                        ' rgb(30, 218, 30)',
+                        "#ff562c",
+                        "#fffb2c",
                     ],
                     borderWidth: 1
                 }]
@@ -235,7 +312,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Bar Chart Example'
+                        text: 'Nombre d\'utilisateur par catégorie'
                     }
                 }
             }
@@ -246,10 +323,10 @@
             },
             series: [{
                 name: 'sales',
-                data: [30,40,35,50,49,60,70,91,125]
+                data: bar_data
             }],
             xaxis: {
-                categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+                categories: bar_labels
             }
             }
 

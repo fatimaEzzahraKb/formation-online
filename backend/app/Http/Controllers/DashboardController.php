@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     function datavisualisation(){
-        $formations  = Formation::with('category','souscategory','histories','videos')->get();
-        $users = User::with('category','souscategoriesList','favoris','histories')->get();
+        $formations  = Formation::with('category','souscategory','histories','videos')->paginate(5);
+        $users = User::with('category','souscategoriesList','favoris','histories')->paginate(5);
         $souscategories = Souscategory::with('users');
         $categories = Category::with('souscategories');
         $categories_chart = DB::table('formations')
@@ -20,7 +20,13 @@ class DashboardController extends Controller
         ->leftJoin('souscategories', 'formations.souscategory_id', '=', 'souscategories.id')
         ->groupBy('souscategories.nom')  
         ->get();
+        $users_chart = DB::table('users')
+        ->select('categories.nom', DB::raw('count(users.id) as total'))
+        ->leftJoin('categories', 'users.category_id', '=', 'categories.id')
+        ->groupBy('categories.nom')  
+        ->where('categories.nom','!=','null')
+        ->get();
 
-        return view('admin/admin_dashboard', compact('formations', 'users', 'souscategories', 'categories','categories_chart'));
+        return view('admin/admin_dashboard', compact('formations', 'users','users_chart', 'souscategories', 'categories','categories_chart'));
     }
 }

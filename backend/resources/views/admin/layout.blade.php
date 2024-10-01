@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{asset('css/admin/formation_show.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/form_user.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/form_formation.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/souscategory_show.css')}}">
     
     <link rel="stylesheet" href="{{asset('css/admin/dashboard.css')}}">
         <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
@@ -50,8 +51,8 @@
 <body>
     <div class="body-container ">
         
-        @include('partials.navbar')
-        @include('partials.sidebar')
+        @include('admin.partials.navbar')
+        @include('admin.partials.sidebar')
 
         <section class="main container">
             @yield('content')

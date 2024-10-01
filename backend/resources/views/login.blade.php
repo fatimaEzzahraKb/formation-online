@@ -23,7 +23,7 @@
                 @csrf
 				<div class="login__field">
                     <i class="login__icon bi bi-person-fill"></i>
-					<input type="text" class="login__input" name="email" placeholder="User name / Email">
+					<input type="text" class="login__input" name="email" placeholder=" Email">
 				@error('email')
                     <p class="error"> {{$message}} </p>
                 @enderror

@@ -32,7 +32,7 @@
     color: rgb(255, 98, 98);
   }
   .modify-icon {
-    color: rgb(0, 150, 7); /* Change to your desired hover color */
+    color: rgb(142, 153, 156); /* Change to your desired hover color */
 }
 .bi-trash3:hover{
   color: rgb(170, 2, 2);
@@ -70,7 +70,7 @@
   }
   .ag-courses_item {
     -ms-flex-preferred-size: calc(33.33333% - 30px);
-    flex-basis: calc(33.33333% - 30px);
+    flex-basis: calc(25.33333% );
   
     margin: 0 15px 30px;
   
@@ -82,9 +82,9 @@
     display: block;
     padding: 30px 20px;
     background-color: #121212;
-  
+    text-decoration: none;
     overflow: hidden;
-  
+    cursor: pointer;
     position: relative;
   }
   .ag-courses-item_link:hover,
@@ -98,12 +98,12 @@
     transform: scale(10);
   }
   .ag-courses-item_title {
-    min-height: 87px;
+    min-height: 70px;
     margin: 0 0 25px;
   line-height: 27px;
     overflow: hidden;
     font-weight: bold;
-    font-size: 21px;
+    font-size: 18px;
     color: #FFF;
   
     z-index: 2;
@@ -161,17 +161,27 @@
   }
 
  
-  @media only screen and (max-width: 979px) {
+  @media only screen and (max-width: 900px) {
+    
     .ag-courses_item {
-      -ms-flex-preferred-size: calc(50% - 30px);
-      flex-basis: calc(50% - 30px);
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
     }
     .ag-courses-item_title {
-      font-size: 24px;
+      font-size: 18px;
+    }
+    .show-link{
+      top: 0px !important;
+      bottom: 20%;
+      right: 0px !important;
+      left: 20% !important;
+      width: 100%;
+      margin-top: 0px !important;
     }
   }
   
   @media only screen and (max-width: 767px) {
+   
     .ag-format-container {
       width: 96%;
     }
@@ -210,7 +220,7 @@
   }
   .add-icon i{
     color:#f9b234;
-    font-size:25px;
+    font-size:35px;
      display:flex;
      justify-content:center;
       align-items:center
@@ -236,6 +246,13 @@
     color: black;
     gap: 20px;
   }
+  .actions-souscat a{
+    height: 10px;
+  }
+  .show-icon{
+    font-size: 20px;
+    cursor: pointer;
+  }
 .modify-icon-souscat:hover{
   color: #007519;
 }
@@ -244,4 +261,15 @@
   color: rgb(0, 0, 0);
   background: #ffffff;
   border-radius: 20px;
+}
+.show-link{
+  position:relative;
+  top: 120px;
+  right: 20%;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  display: block;
+}
+.show-link i{
+  font-style: 50px;
 }

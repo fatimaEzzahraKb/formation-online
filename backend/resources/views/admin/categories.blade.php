@@ -29,11 +29,12 @@
           @foreach ($category->souscategories as $souscategory)
 
               <div class="ag-courses_item purple">
-                <a href="#" class="ag-courses-item_link">
+                <a class="ag-courses-item_link">
                   <div class="ag-courses-item_bg"></div>
           
                   <div class="ag-courses-item_title" style="text-transform:capitalize">
                     {{$souscategory->nom}}
+                   
                   </div>
                   <div class="ag-courses-item_date-box">
                     <span class="ag-courses-item_date">
@@ -41,8 +42,7 @@
                     </span>
                     Formations
                     <div class="actions-souscat">
-                    <i class="bi bi-pencil-square modify-icon-souscat" data-bs-toggle="modal" id="open-modify-subcat" data-bs-target="#ModifySubCatModal" data-souscat-id="{{$souscategory->id}}" data-souscat-nom = "{{$souscategory->nom}}" data-souscat-description="{{$souscategory->description}}" style="font-size:20px ;" ></i>
-                    
+                  <i class="bi bi-pencil-square modify-icon-souscat" data-bs-toggle="modal" id="open-modify-subcat" data-bs-target="#ModifySubCatModal" data-souscat-id="{{$souscategory->id}}" data-souscat-nom = "{{$souscategory->nom}}" data-souscat-description="{{$souscategory->description}}" style="font-size:20px ;" ></i>                    
                   @if( Auth::user()->permission==="super_admin" )
                         <form action="{{route('souscategories.destroy',$souscategory->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette sous-catégorie')">
                             @csrf
@@ -51,14 +51,15 @@
                                 <i href="" class="bi bi-trash3 trash-souscat " style="font-size:20px"></i></button>
                         </form>
                   @endif    
+
               </div>
                   </div> 
                   
                 </a>
-                
+               
               </div>
-             
-              
+              <a href="{{ route('souscategories.show', $souscategory->id) }}" class="show-link">Voir</a>
+                      
           @endforeach
           <div class="add-btn">
                 <div class="add-icon" style="dislay:flex; justify-content:center; align-items:center">
@@ -199,7 +200,7 @@
         const subcategory_nom =  modify_btn.getAttribute('data-souscat-nom')
         const subcategory_description =  modify_btn.getAttribute('data-souscat-description')
         const sub_cat_title = document.getElementById('sub-cat_nom')
-        sub_cat_title.innerText = category_nom
+        sub_cat_title.innerText = subcategory_nom
         const subcat_nom = document.getElementById('subcat-nom')
         subcat_nom.value= subcategory_nom
         const subcat_desc = document.getElementById('subcat-desc')

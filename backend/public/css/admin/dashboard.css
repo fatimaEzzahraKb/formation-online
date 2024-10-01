@@ -389,8 +389,25 @@ body {
 }
 
 
-/* USERS Dashboard TABLE */
+/*  Dashboard TABLES */
 
-.users-dashboard-table table tbody {
-    border: #000;
+.tables-dashboard {
+    background-color: rgb(255, 252, 243);
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 20px;
+}
+.tables-dashboard a{
+    color: #000;
+    text-decoration: none;
+}
+.tables-dashboard h3{
+    text-align: center;
+    margin: 15px;
+    font-family: "Outfit", sans-serif;
+}
+.tt{
+    color: #ff8c8c;
+    color: #ff562c;
 }

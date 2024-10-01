@@ -1,0 +1,17 @@
+.formations-scat{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    padding: 20px;
+    background-color: aliceblue;
+    gap: 20px;
+}
+.formations-scat h3{
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+.formations-scat-card{
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}

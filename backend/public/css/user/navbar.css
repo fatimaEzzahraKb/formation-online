@@ -113,7 +113,7 @@ justify-content: start;
  border: none;
  outline: none;
 }
-.menu ul{
+.menu-list{
  display: flex;
  justify-content: space-between;
  gap: 30px;
