@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     function datavisualisation(){
-        $formations  = Formation::with('category','souscategory','histories','videos')->paginate(5);
-        $users = User::with('category','souscategoriesList','favoris','histories')->paginate(5);
+        $formations  = Formation::with('category','souscategory','videos')->paginate(5);
+        $users = User::with('category','souscategoriesList','favoris')->paginate(5);
         $souscategories = Souscategory::with('users');
         $categories = Category::with('souscategories');
         $categories_chart = DB::table('formations')
@@ -26,7 +26,8 @@ class DashboardController extends Controller
         ->groupBy('categories.nom')  
         ->where('categories.nom','!=','null')
         ->get();
-
-        return view('admin/admin_dashboard', compact('formations', 'users','users_chart', 'souscategories', 'categories','categories_chart'));
+        $user_total = User::count();
+        $formation_total = Formation::count();
+        return view('admin/admin_dashboard', compact('user_total','formation_total','formations', 'users','users_chart', 'souscategories', 'categories','categories_chart'));
     }
 }

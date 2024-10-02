@@ -8,10 +8,11 @@
  <link rel="stylesheet" href="{{asset('css/user/index/hero.css')}}">
  <link rel="stylesheet" href="{{asset('css/user/footer.css')}}">
   <link rel="stylesheet" href="{{asset('css/user/index/formation.css')}}">
-  <link rel="stylesheet" href="{{asset('css/user/index/formation.css')}}">
   <link rel="stylesheet" href="{{asset('css/user/header.css')}}">
   <link rel="stylesheet" href="{{asset('css/admin/categories.css')}}">
   <link rel="stylesheet" href="{{asset('css/user/index/categories.css')}}">
+  <link rel="stylesheet" href="{{asset('css/user/formation_show.css')}}">
+  <link rel="stylesheet" href="{{asset('css/user/favoris.css')}}">
 
  <!-- font links -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +33,7 @@
 <body >
     @include('user.partials.header')
 
-    <section class="main container">
+    <section class="main ">
         @yield('content')
     </section>  
     @include('user.partials.footer')

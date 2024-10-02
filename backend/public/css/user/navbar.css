@@ -22,16 +22,7 @@ header{
   padding: 20px;
   box-sizing: border-box;
 }
-nav{
- display: flex;
- justify-content: space-around  ;
- align-items: center;
- width: 100%;
- position: fixed;
- color: black;
- padding: 50px;
- margin: 20px;
-}
+
 nav a {
  text-decoration: none;
  color: black;
@@ -174,12 +165,7 @@ ul{
  .menu{
   display: none;
  }
- .responsive-menu{
-   display: flex;
- justify-content: space-between;
- align-items: center; 
- width: 70px;
- }
+
  .responsive-menu button{
   display: flex;
  justify-content: center;
@@ -194,17 +180,22 @@ header{
  menu{
    display: none;
  }
- 
+   .search{
+      display: none;
+      visibility: hidden;
+  }
+  .responsive-menu{
+   display: flex;
+ justify-content: space-between;
+ align-items: center; 
+ width: 70px;
+ }
 }
 @media screen and (max-width:550px) {
   nav{
     gap: 20px;
   }
-  .search{
-      display: none;
-      visibility: hidden;
-  }
- 
+
 }
 .responsive-search-btn{
   display: flex;

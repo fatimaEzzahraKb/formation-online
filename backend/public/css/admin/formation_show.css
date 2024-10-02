@@ -17,7 +17,7 @@
     padding: 20px;
 }
 .video-display {
-    transition: transform 0.3s ease; /* Smooth transition for the scale effect */
+    transition: transform 0.3s ease; 
 }
 .video-display:hover{
     transform: scale(1.1);

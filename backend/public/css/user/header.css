@@ -32,6 +32,10 @@
 }
 .dropdown-links-list li{
     margin:  0px 5px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-left: 30px;
 }
 .dropdown-links-list li:hover{
     background-color: rgb(232, 243, 250);

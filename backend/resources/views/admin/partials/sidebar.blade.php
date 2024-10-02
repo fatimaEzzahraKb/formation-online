@@ -10,7 +10,7 @@
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                     <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
-                    <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
+                    <li><a href="{{route('settings')}}"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
             </nav>
         </section>

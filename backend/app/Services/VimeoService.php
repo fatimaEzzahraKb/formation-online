@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use Vimeo\Vimeo;
-
+use Illuminate\Support\Facades\Http;
 class VimeoService{
 
     protected $vimeo;
@@ -27,19 +27,29 @@ class VimeoService{
     public function getVideos()
     {
         $response = $this->vimeo->request('/me/videos');
-        return $response['body']['data']; // Returns the array of videos
+        return $response['body']['data']; 
     }
 
 
     public function showVideos()
     {
         $videos = $this->vimeoService->getVideos();
-        return view('videos.index', compact('videos')); // Adjust the view name as necessary
+        return view('videos.index', compact('videos')); 
     }
 
     public function deleteVideo($videoUri)
     {
         $videoId = basename($videoUri);
         return $this->vimeo->request("/videos/{$videoId}",[],'DELETE');
+    }
+    public function getVideoDuration($videoId)
+    {
+        $response = $this->vimeo->request("/videos/{$videoId}");
+
+        if ($response['status'] === 200) {
+            return $response['body']['duration']; 
+        }
+
+        return null; 
     }
 }

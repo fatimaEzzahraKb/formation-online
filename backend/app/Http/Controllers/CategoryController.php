@@ -24,7 +24,7 @@ class CategoryController extends Controller
                 "nom"=>$request->nom,
                 "description"=>$request->description,
             ]);
-            return $this->index();
+            return redirect()->route('categories.index');
         
     }
     public function show($id){
@@ -58,7 +58,7 @@ class CategoryController extends Controller
                 'description'=>$request->description,
             ]);
             $category->save();
-            return $this->index();
+            return back();
 
             
         };
@@ -66,6 +66,6 @@ class CategoryController extends Controller
     public function destroy( $id){
         $category = Category::findOrFail($id);
         $category->delete();
-        return $this->index(); 
+        return back(); 
     }
 }

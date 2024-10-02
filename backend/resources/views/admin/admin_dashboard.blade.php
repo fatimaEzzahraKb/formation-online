@@ -59,7 +59,7 @@
                                 <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                                 <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                                 <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
-                                <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
+                                <li><a href="{{route('settings')}}"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
                         </nav>
                
@@ -83,7 +83,6 @@
                         </div>
                         <hr  style="margin:0px">
                         <ul>
-                            <li><i class="bi bi-person-fill"></i>Profile</li>
                             <li><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -111,7 +110,7 @@
                     <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
                     <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
                     <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
-                    <li><a href="paramètre.html"><i class="bi bi-gear"></i>Paramètres</a></li>
+                    <li><a href="{{route('settings')}}"><i class="bi bi-gear"></i>Paramètres</a></li>
                 </ul>
             </nav>
         </section>
@@ -121,7 +120,7 @@
                 <div class="card-dashboard">
                     <i class="bi bi-collection-play"></i>
                     <div>
-                    <h1 id="nombre-formations"> {{$formations->count()}} </h1>
+                    <h1 id="nombre-formations"> {{$formation_total}} </h1>
                     <h4>  Formations</h4>    
                     </div>
                     
@@ -129,7 +128,7 @@
                 <div class="card-dashboard">
                     <i class="bi bi-people-fill"></i>
                     <div>
-                    <h1 id="nombre-utilisateurs"> {{$users->count()}} </h1>
+                    <h1 id="nombre-utilisateurs"> {{$user_total}} </h1>
                     <h4>  Utilisateurs</h4>
                     </div>
                 </div>

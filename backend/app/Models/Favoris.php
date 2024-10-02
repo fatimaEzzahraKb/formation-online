@@ -9,10 +9,13 @@ class Favoris extends Model
 {   
         
     use HasFactory;
+    protected $fillable = ['user_id','formation_id'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
+    
     public function formation(){
-        return $this->hasOne(Formation::class);
+        return $this->belongsTo(Formation::class);
     }
 }

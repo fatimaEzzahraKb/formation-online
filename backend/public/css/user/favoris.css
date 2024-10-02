@@ -1,0 +1,57 @@
+.favoris-container h3{
+    margin: 50px;
+}
+.favoris-formation{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.favoris-data{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+}
+@media screen and (max-width:600px) {
+    .favoris-data{
+        flex-direction: column;
+        text-align: center;
+    }
+    .favoris-formation{
+        align-items: start;
+    }
+}
+.favoris-data h5 {
+    color: black ;
+    text-decoration: none;
+    line-height: 30px;
+}
+a.favoris-data{
+    text-decoration-color: blueviolet;
+    width: 100%;
+}
+.favoris-data img{
+    width: 230px;
+}
+.delete-favoris{
+    color: gray;
+    background-color: transparent;
+    border: none;
+}
+.fav-line{
+    color: gainsboro;
+    width: 100%;
+}
+.favoris-formation:hover{
+    background-color: rgb(245, 251, 255);
+    transform: scale(1.04);
+    box-shadow: 1px 10px 30px 1px rgb(194, 194, 194) ;
+    transition: transform 0.3s ease;
+    
+}
+.favoris-formation{
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease; 
+}

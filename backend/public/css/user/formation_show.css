@@ -1,0 +1,77 @@
+.main-breadcrumb{
+    margin: 30px 0px;
+}
+.formation-carte{
+    padding-top: 30px;
+}
+.carte-header{
+    display: flex;
+    gap: 30px;
+    padding: 10px;
+}
+.carte-img{
+    display: flex;
+    height: 100%;
+}
+.carte-img img{
+    width: 450px ;
+    height: 100%;
+}
+.card-right{
+    display: flex;
+    flex-direction: column;
+}
+.card-right form {
+    display: flex;
+    justify-content: end;
+}
+.card-data{
+    width: 100%;
+}
+.card-data h2{
+    font-weight: 700;
+}
+.card-data p{
+    
+    text-wrap: wrap;
+}
+        .video-display:hover{
+            background-color: rgb(245, 251, 255);
+            transform: scale(1.08);
+            box-shadow: 1px 10px 30px 1px rgb(194, 194, 194) ;
+            transition: transform 0.3s ease;
+            
+        }
+        .video-display{
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease; 
+        }
+.ControlBar_module_progressBarAndButtons__0f8e1b0f a.Link_module_link__5efef3b8  {
+    display: none !important;
+}
+.vimeo-player svg{
+    display: none !important;
+}
+@media screen and (max-width:770px){
+    .carte-header{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .card-data{
+        width: 100%;
+    }
+    .carte-img{
+        justify-content: center;
+    }
+    .video-display{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}
+.souscat-show-container {
+    margin-top: 60px;
+}

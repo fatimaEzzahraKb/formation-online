@@ -22,7 +22,7 @@ class FormationsController extends Controller
         $this->vimeoService = $vimeoService;
     }
     public function index(){
-        $formations  = Formation::with('category','souscategory','histories','videos')->get();
+        $formations  = Formation::with('category','souscategory','videos')->get();
         return view('admin/formations')->with(['formations'=>$formations]);
     }
     public function create(){
@@ -91,7 +91,7 @@ class FormationsController extends Controller
         
     }
     public function show($id){
-        $formation = Formation::with('category','souscategory','histories','videos')->find($id)    ;
+        $formation = Formation::with('category','souscategory','videos')->find($id)    ;
         if(!$formation){
           return response()->json([
             'status'=>404,
@@ -102,7 +102,7 @@ class FormationsController extends Controller
         
     }
     public function edit($id){
-        $formation = formation::with('category','souscategory','histories','videos')->find($id);
+        $formation = formation::with('category','souscategory','videos')->find($id);
         $categories = Category::with('souscategories')->get();
         return view('admin/formation_update')->with(['formation' => $formation, 'categories' => $categories]);
     }

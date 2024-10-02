@@ -19,7 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('category','souscategoriesList','favoris','histories')->get();
+        $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
         return view('admin/users_index',compact('users','souscategories'));
     }

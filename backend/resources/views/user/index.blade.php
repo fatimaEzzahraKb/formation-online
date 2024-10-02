@@ -48,7 +48,7 @@
    </div>
    </div>
    <div class="formations-container ">
-    <h1>Formations</h1>
+    <h1><i class="bi bi-caret-right-fill" style="color:#bc35ff"></i> Formations</h1>
    
    <div class="formations">
     <!-- les formations sous format de cards -->
@@ -76,18 +76,17 @@
             </svg>
             {{$formation->created_at->format('Y-m-d')}}
           </div>
-          
-          </a>    
+          </a>  
               @endif
           @endforeach
         
      </div>
    </div>
   </div>
-  <div class=" categories">
+  <div class=" categories container">
     
-        <h2>  Catégorie: <span id="cat-name"> {{Auth::user()->category->nom}}</span> </h2>
-        <p> Sous-catégories que vous pouvez parcourir: </p>
+        <h2><i class="bi bi-caret-right-fill" style="color:#bc35ff"></i>  Catégorie: <span id="cat-name"> {{Auth::user()->category->nom}}</span> </h2>
+        <p> Les sujets que vous pouvez parcourir: </p>
           <div class="category-item">
     
         
@@ -96,7 +95,7 @@
         @foreach( Auth::user()->souscategoriesList as $souscategory)
 
               <div class="ag-courses_item purple">
-                <a href="" class="ag-courses-item_link">
+                <a href="{{route('souscategories_formations',$souscategory->id)}}" class="ag-courses-item_link">
                   <div class="ag-courses-item_bg"></div>
           
                   <div class="ag-courses-item_title" style="text-transform:capitalize">

@@ -282,9 +282,11 @@ body {
 }
 
 .charts {
+    margin-top: 25px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    font-size: 20px;
 }
 
 .responsive-menu{
@@ -392,11 +394,18 @@ body {
 /*  Dashboard TABLES */
 
 .tables-dashboard {
-    background-color: rgb(255, 252, 243);
     padding: 10px;
     border-radius: 20px;
     cursor: pointer;
     margin: 20px;
+}
+.tables-dashboard:first-child{
+    background-color: rgba(54, 162, 235, 0.2)';
+
+}
+.tables-dashboard:nth-child(2){
+    background-color: rgb(205, 248, 205);
+
 }
 .tables-dashboard a{
     color: #000;

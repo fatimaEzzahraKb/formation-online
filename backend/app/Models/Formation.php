@@ -24,6 +24,9 @@ class Formation extends Model
     public function histories(){
         return $this->hasMany(History::class);
     }
+    public function favoris(){
+        return $this->belongsToMany(Favoris::class);
+    }
     public function videos(){
         return $this->hasMany(FormationVideo::class);
     }

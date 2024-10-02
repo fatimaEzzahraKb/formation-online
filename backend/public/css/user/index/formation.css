@@ -35,11 +35,7 @@
 	padding: 1.25rem;
 	position: relative;
 	transition: .15s ease-in;
-	
-	&:hover, &:focus-within {
-		box-shadow: 0 0 0 2px #16C79A, 0 10px 60px 0 rgba(#000, .1);
-			transform: translatey(-5px);
-	}
+
 }
 
 .card-image {
@@ -137,7 +133,6 @@ a {
     display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-    grid-template-columns: auto auto auto ;
     gap: 30px   ;
     cursor: pointer;
     
@@ -176,7 +171,8 @@ text-decoration: none !important;
 }
 .line-card{ 
     margin: 0 !important;
-    background-color: #787878;
+    background-color: #bc35ff;
+	color: #bc35ff;
 }
 
 @media screen and (max-width:670px){

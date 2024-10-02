@@ -10,30 +10,25 @@ use App\Models\Favoris;
 class FavorisController extends Controller
 {
     //
-    public function userfavoris(){
-        $favoris  = Favoris::with('users','formation')->where(auth()->id(),'user_id')->get();
-
-        return response()->json( ['favoris'=>$favoris]);
+    public function index(){
+        $favoris  = Favoris::with('user','formation')->where('user_id',Auth::user()->id)->get();
+        
+            return view('user/favoris',compact('favoris'));
+        
     }
     public function store(Request $request){
         
             $favoris= Favoris::create([
-                "user_id"=>$request->user_id,
+                "user_id"=>Auth::user()->id,
                 "formation_id"=>$request->formation_id,
             ]);
-            return response()->json([
-                'status'=>200,
-                'favoris'=>$favoris
-            ]);
+            return back();
         
     }
     
-    public function delete( $id){
+    public function destroy( $id){
         $favoris = Favoris::findOrFail($id);
         $favoris->delete();
-        return response()->json([
-            'status'=>200,
-            'message'=>'favoris deleted successfully'
-        ]); 
+        return back(); 
     }
 }
