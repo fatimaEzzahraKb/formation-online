@@ -1,0 +1,22 @@
+.image-banner_container{
+    width: 100vw;
+    max-width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+#banner_about{
+    width: 100%;
+}
+.top-content{
+    margin: 50px 10px;
+    display: flex;
+    gap: 20px;
+}
+.top-content img{
+    width: 450px;
+}
+.end-content p{
+    padding: 20px 15px;
+    text-align: center;
+}

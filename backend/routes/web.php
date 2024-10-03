@@ -52,7 +52,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::middleware('stagiaire')->group(function(){
         Route::resource('favoris',FavorisController::class);
-        
+        Route::get('about',function(){
+            return view('user/about');
+        })->name('about');
         Route::get('home', function() {
             return view('user/index');
             })->name('home');

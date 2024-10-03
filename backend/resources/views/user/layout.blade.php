@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{asset('css/user/index/categories.css')}}">
   <link rel="stylesheet" href="{{asset('css/user/formation_show.css')}}">
   <link rel="stylesheet" href="{{asset('css/user/favoris.css')}}">
+  <link rel="stylesheet" href="{{asset('css/user/about.css')}}">
 
  <!-- font links -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
