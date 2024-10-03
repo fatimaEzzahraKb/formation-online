@@ -21,7 +21,8 @@ class UsersController extends Controller
     {
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
-        return view('admin/users_index',compact('users','souscategories'));
+        $success = null;
+        return view('admin/users_index',compact('users','souscategories','success'));
     }
     public function create()
     {
@@ -72,7 +73,10 @@ class UsersController extends Controller
             }
            
             
-            return $this->index();
+        $users = User::with('category','souscategoriesList','favoris')->get();
+        $souscategories = Souscategory::with('users');
+        $success = "success";
+        return view('admin/users_index',compact('users','souscategories','success'));
         }
             
             
@@ -83,7 +87,7 @@ class UsersController extends Controller
     }
     public function edit(string $id)
     {
-        $user = User::with('category','souscategoriesList','favoris','histories')->find($id);
+        $user = User::with('category','souscategoriesList','favoris')->find($id);
         $categories = Category::with('souscategories')->get();
         return view('admin/user_update',compact('user','categories'));
     }

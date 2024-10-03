@@ -7,9 +7,9 @@
             </div>
             @endif
             <div class="users">
-                <h1>Formations</h1>
+                <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Formations</h1>
                 @if(Auth::user()->permission==="super_admin")
-                    <div class="btn-add text-end" ><button class="btn btn-primary "> <a href="{{route('formations.create')}}" style="color:white; text-transform:none;">Ajouter une Formation</a> </button></div>
+                    <div class="btn-add text-end" ><button class="btn btn-info "> <a href="{{route('formations.create')}}" style="color:white; text-transform:none;">Ajouter une Formation</a> </button></div>
                 @endif
                 <div class="table-users-container" style="overflow-x:auto;">
                 <table id="example" class="ui celled table users-table " style="width:100%">

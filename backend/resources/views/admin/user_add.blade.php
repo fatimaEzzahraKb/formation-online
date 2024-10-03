@@ -1,7 +1,7 @@
 @extends('admin.layout')
 @section('title','Ajouter Utilisateur')
 @section('content')
-            <h2>Ajouter Un Nouveau utilisateur</h2>
+            <h2><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Ajouter Un Nouveau utilisateur</h2>
             <div class="form-main-container">
                 <form action="{{route('users.store')}}" method="POST">
                 @csrf
@@ -95,12 +95,13 @@
                             </div>
 
                             </div>
-                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Submit</button>
+                            <button type="submit" class="col-2 btn btn-info submit-add-user">Submit</button>
 
                         </form>
                         
 @endsection
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
 
 const permissionRadios = document.querySelectorAll('input[name="permission"]');
@@ -134,7 +135,9 @@ function updateSubcategories() {
 
 
     if (subcategories.length > 0) {
+         subcategorySelect.innerHTML = ''
         subcategories.forEach(subcategory => {
+           
             const checkbox = document.createElement('input');
             const label = document.createElement('p')
             checkbox.setAttribute('type','checkbox')
@@ -157,6 +160,16 @@ function updateSubcategories() {
 
 }
 
+
+function notificationAlert(){
+    var notyf = new Notyf();
+const notification = notyf.success('Utilis&teur ajouté avec succés');
+notification.on('click', ({target, event}) => {
+  // target: the notification being clicked
+  // event: the mouseevent
+  window.location.href = '/';
+});
+}
 
     </script>
 @endsection

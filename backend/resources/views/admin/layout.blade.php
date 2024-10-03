@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <!-- pages styles -->
-    
+    <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/user_show.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/categories.css')}}">
@@ -15,20 +15,25 @@
     <link rel="stylesheet" href="{{asset('css/admin/souscategory_show.css')}}">
     
     <link rel="stylesheet" href="{{asset('css/admin/dashboard.css')}}">
-        <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
-        <link rel="stylesheet" href="{{asset('css/admin/form_user.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/user_index.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/form_user.css')}}">
+
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="{{asset('css/admin/categories.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
+
+    <!-- Sementic UI (for pagination) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
     <!-- Bootsrap links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
    <script src="{{asset('css/bootstrap-5.3.3-dist/js/bootstrap.min.js')}}"></script>
-        <script src="{{asset('css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js')}}"></script>
-        <link rel="stylesheet" href="{{asset('css/bootstrap-5.3.3-dist/css/bootstrap.min.css')}}">
+    <script src="{{asset('css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/bootstrap-5.3.3-dist/css/bootstrap.min.css')}}">
 
     <!-- chartjs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -46,6 +51,13 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.semanticui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+    
+    <!-- Noty Alerts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <title>Document</title>
 </head>
 <body>

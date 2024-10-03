@@ -11,7 +11,7 @@
                         </ol>
                     </nav>
                     <!-- /Breadcrumb -->
-            <h2 >Ajouter Une Nouvelle Catégorie</h2 >
+            <h2 ><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Ajouter Une Nouvelle Catégorie</h2 >
             <div class="form-main-container">
                 <form action="{{route('categories.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -42,7 +42,7 @@
                                 @endforeach
                              @endif
                          </div>
-                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Créer   </button>
+                            <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             
                         </form>
                         

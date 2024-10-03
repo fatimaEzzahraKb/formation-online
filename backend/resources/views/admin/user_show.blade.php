@@ -101,11 +101,7 @@
                                     <ul>
                                         @foreach( $user->souscategoriesList as $souscategory)
                                             <li style="text-transform:capitalize;"> <a href="" ><span>{{ $souscategory->nom}}</span></a> </li>
-                                            <li><span>Consectetur adipisicing elit</span></li>
-                                            <li><span>Ut labore et dolore magna aliqua</span></li>
-                                            <li><span>Ut enim ad minim veniam</span></li>
-                                            <li><span>Quis nostrud exercitation ullamco</span></li>
-                                            <li><span>Laboris nisi ut aliquip ex</span></li>
+                                            
                                         @endforeach 
                                     </ul>
                                 </div>

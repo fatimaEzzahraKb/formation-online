@@ -2,7 +2,7 @@
 @section('title','home')
 @section('content')
    <div class="souscat-show-container container ">
-    <h2 > <i class="bi bi-caret-right-fill" style="color:#bc35ff"></i>Formations Sur le sujet  <span style="text-transform:capitalize;"> {{$souscategory->nom}} </span></h2>
+    <h2 > <i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Formations Sur le sujet  <span style="text-transform:capitalize;"> {{$souscategory->nom}} </span></h2>
    
    <div class="formations">
     <!-- les formations sous format de cards -->

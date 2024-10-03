@@ -1,3 +1,17 @@
+.top h1{
+    padding-left: 20px;
+    font-family: "Sriracha", cursive;
+    font-weight: 500;
+    font-style: normal;
+}
+.top .V{
+    font-weight: 700;
+    color: rgb(0, 204, 255);
+}
+.top{
+    text-align: center;
+}
+
 .dropdown-acc{
     position: absolute;
     right: 2%;
@@ -40,4 +54,77 @@
 .dropdown-links-list li:hover{
     background-color: rgb(232, 243, 250);
     font-weight: 500;
+}
+
+/* SEARCH */
+.visible-search{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 10px;
+    align-items: center;
+  }
+  .invisible-search{
+    display: none   ;
+
+  }
+.results-desk{
+    position: absolute;
+    z-index: 200;
+    top: 85%;
+    left: 32%;
+    height: auto;
+    width: auto;
+    min-height: 100px;
+    min-width: 250px;
+    background-color: rgb(255, 255, 255);
+    /* box-shadow: 1px 3px 13px 1px gray;    */
+    border: 0.1px solid rgb(219, 219, 219);
+    padding: 5px 15px;
+}
+.results-desk ul{
+    margin: 0px;
+    padding: 0px;
+}
+@media screen and (min-width:1304px) {
+    .results-desk{
+        left:500px !important;
+    }
+}
+@media screen and (min-width:970px) and(max-width:1303px) {
+    .results-desk{
+        left:50% !important;
+    }
+}
+li.result-item {
+    list-style: none;   
+}
+li.result-item a{
+    display: flex;
+    align-items: center;   
+    padding: 5px 5px; 
+    gap: 20px;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+li.result-item:hover{
+    background-color: aliceblue;
+}
+
+.results-resp li.result-item p{
+font-size: 20px;
+font-weight: 500;
+}
+.search-images{
+    width:70px;
+    height: auto;
+}
+.search-images-resp{
+    width:150px;
+    height: auto;
+}
+.search-images-resp{
+    width:150px;
+    height: auto;
 }

@@ -11,7 +11,7 @@
                         </ol>
                     </nav>
                     <!-- /Breadcrumb -->
-            <h2 style="text-align:start" >Metter à jour</h2  >
+            <h2 style="text-align:start" ><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Metter à jour</h2  >
             <div class="form-main-container">
                 <form action="{{route('formations.update',$formation->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -80,7 +80,7 @@
                                 @endforeach
                              @endif
                          </div>
-                            <button type="submit" class="col-2 btn btn-primary submit-add-user">Modifier   </button>
+                            <button type="submit" class="col-2 btn btn-info submit-add-user">Modifier   </button>
                             
                         </form>
                         

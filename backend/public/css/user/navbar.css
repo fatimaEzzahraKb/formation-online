@@ -12,6 +12,21 @@ header{
  border-bottom: 1px solid rgb(174, 174, 174);
 
 }
+.top h1{
+  font-family: "Sriracha", cursive;
+  font-weight: 500;
+  font-style: normal;
+}
+.top .V{
+  font-weight: 700;
+  color: rgb(0, 204, 255);
+}
+@media screen and (max-width:930px){
+  .top h1{
+      font-size: 25px;
+      text-align: center;
+  }
+}
 .account{
   cursor: pointer;
 }
@@ -57,11 +72,11 @@ menu a {
   text-decoration: none;
 }
 .menu  svg:hover{
-  color: #bc35ff;
-  stroke:#bc35ff;
+  color: rgb(0, 204, 255);
+  stroke:rgb(0, 204, 255);
 }
 .menu svg:hover path{
-  stroke:#bc35ff;
+  stroke:rgb(0, 204, 255);
 }
 .menu .text-link::after {
   content: '';
@@ -70,7 +85,7 @@ menu a {
   bottom: 0;
   width: 0;
   height: 2px; /* Border thickness */
-  background-color: #bc35ff; /* Border color */
+  background-color: rgb(0, 204, 255); /* Border color */
   transition: width 0.3s linear;
 }
 
@@ -138,11 +153,11 @@ header button {
  list-style: none;
 }
 .offcanvas-body ul  li:hover{
- color:#bc35ff;
+ color:rgb(0, 204, 255);
  
 }
 .offcanvas-body  ul  li:hover >a{
- color:#bc35ff;
+ color:rgb(0, 204, 255);
 
 }
 .offcanvas-body >ul> li> a{
@@ -162,8 +177,8 @@ ul{
 }
 
 @media screen and (max-width:870px){
- .menu{
-  display: none;
+ .menu, .results-desk{
+  display: none !important;
  }
 
  .responsive-menu button{
@@ -210,6 +225,8 @@ header{
   z-index: 100;
   width: 100vw;
   height: 100vh;
+  min-width: 100vw;
+  overflow-y: auto;
 }
 
 .visible {

@@ -3,9 +3,9 @@
 @section('title', 'Catégories')
 @section('content')
 <div class="categories">
-    <h1>Catégories</h1>
+    <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Catégories</h1>
     @if(Auth::user()->permission==="super_admin")
-        <div class="btn-add text-end" ><button class="btn btn-primary "> <a href="{{route('categories.create')}}" style="color:white; text-transform:none;">Ajouter une Catégorie</a> </button></div>
+        <div class="btn-add text-end" ><button class="btn btn-info "> <a href="{{route('categories.create')}}" style="color:white; text-transform:none;">Ajouter une Catégorie</a> </button></div>
     @endif
   @foreach($categories as $category)
   <div class="category-item">

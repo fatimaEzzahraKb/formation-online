@@ -45,8 +45,13 @@ class UserPagesController extends Controller
         $fromSubCat = $request->has('fromSubCat') ? true : false;
         return view('user/formation_show',compact('formation','fromSubCat','isFavorite','favorite'));
     }
-    public function search_bar(){
-        
+    public function search(Request $request){
+        $query = $request->input('query');
+        $souscategoriesIds = Auth::user()->souscategoriesList->pluck('id')->toArray();
+
+        $results = Formation::where('titre','LIKE',"%{$query}%")->whereIn('souscategory_id',$souscategoriesIds)->get();
+
+        return response()->json($results);
     }
     public function favoris_show(){
         

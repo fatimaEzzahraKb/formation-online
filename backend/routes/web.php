@@ -59,7 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('formation/{id}',[UserPagesController::class,'formation_show'])->name('user_formation.show');
         Route::get('acceuil',[UserPagesController::class,'acceuil'])->name('acceuil');
         Route::get('souscategories_formations/{id}',[UserPagesController::class,'subcategory_show'])->name('souscategories_formations');
-        
+        Route::get('search',[UserPagesController::class,'search'])->name('search');
     });
         
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');

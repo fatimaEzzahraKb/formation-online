@@ -3,15 +3,16 @@
 @section('title','Utilisateurs')
 
 @section('content')
-            @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{session('success')}}
+            @if($success)
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Utilisateur ajouté avec succées
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @endif
             <div class="users">
-                <h1>Utilisateurs</h1>
+                <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Utilisateurs</h1>
                 @if(Auth::user()->permission==="super_admin")
-                    <div class="btn-add text-end" ><button class="btn btn-primary "> <a href="{{route('users.create')}}" style="color:white; text-transform:none;">Ajouter un utilisateur</a> </button></div>
+                    <div class="btn-add text-end" ><button class="btn btn-info "> <a href="{{route('users.create')}}" style="color:white; text-transform:none;">Ajouter un utilisateur</a> </button></div>
                 @endif
                 <div class="table-users-container" style="overflow-x:auto;">
                 <table id="example" class="ui celled table users-table " style="width:100%">

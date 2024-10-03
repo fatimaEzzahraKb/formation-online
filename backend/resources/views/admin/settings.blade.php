@@ -3,7 +3,7 @@
 
 @section('content')
                 
-    <h1>Modifier utilisateur</h1>
+    <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Modifier Vos données</h1>
     <div class="form-main-container">
         <form action="{{route('users.update',Auth::user()->id)}}" method="POST">
         @csrf
@@ -39,7 +39,7 @@
             @enderror
         </div>
         </div>
-    <button type="submit" class="btn btn-primary submit-add-user">Submit</button>
+    <button type="submit" class="btn btn-info submit-add-user col-2">Submit</button>
 
     </form>
     </div>

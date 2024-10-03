@@ -48,7 +48,7 @@
    </div>
    </div>
    <div class="formations-container ">
-    <h1><i class="bi bi-caret-right-fill" style="color:#bc35ff"></i> Formations</h1>
+    <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Formations</h1>
    
    <div class="formations">
     <!-- les formations sous format de cards -->
@@ -85,7 +85,7 @@
   </div>
   <div class=" categories container">
     
-        <h2><i class="bi bi-caret-right-fill" style="color:#bc35ff"></i>  Catégorie: <span id="cat-name"> {{Auth::user()->category->nom}}</span> </h2>
+        <h2><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>  Catégorie: <span id="cat-name"> {{Auth::user()->category->nom}}</span> </h2>
         <p> Les sujets que vous pouvez parcourir: </p>
           <div class="category-item">
     

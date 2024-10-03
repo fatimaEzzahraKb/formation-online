@@ -50,7 +50,7 @@
                 <div class="card videos-card mb-3 mt-8">
                     <div class="card-body">
                         <div class="videos-container">
-                            <h4><i class="bi bi-caret-right-fill" style="color:#bc35ff"></i> Vidéos: </h4>
+                            <h4><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Vidéos: </h4>
                             @if($formation->videos->isNotEmpty())
                                 @foreach($formation->videos->sortBy('ordre') as $video)
                                       
