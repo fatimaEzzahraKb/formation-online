@@ -14,10 +14,10 @@
         <span class="category-actions"> 
         <i class="bi bi-pencil-square modify-icon" data-cat-id="{{$category->id}}" data-cat-nom = "{{$category->nom}}" data-cat-description="{{$category->description}}" data-bs-toggle="modal" data-bs-target="#modifyCat" style="font-size:20px ;" ></i>
             @if( Auth::user()->permission==="super_admin" )
-                    <form action="{{route('categories.destroy',$category->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette catégorie')">
+                    <form action="{{route('categories.destroy',$category->id)}}" method="post" style="display:inline;" >
                         @csrf
                         @method('DELETE')
-                        <button type="submit" style="border:none; background:none; padding:0;">
+                        <button type="button" style="border:none; background:none; padding:0;" onclick="confirmDelete(this)">
                             <i href="" class="bi bi-trash3 trash" style="font-size:20px"></i></button>
                     </form>
             @endif    
@@ -28,7 +28,7 @@
             <div class="ag-courses_box">
           @foreach ($category->souscategories as $souscategory)
 
-              <div class="ag-courses_item purple">
+  <div class="ag-courses_item purple">
                 <a class="ag-courses-item_link">
                   <div class="ag-courses-item_bg"></div>
           
@@ -44,21 +44,25 @@
                     <div class="actions-souscat">
                   <i class="bi bi-pencil-square modify-icon-souscat" data-bs-toggle="modal" id="open-modify-subcat" data-bs-target="#ModifySubCatModal" data-souscat-id="{{$souscategory->id}}" data-souscat-nom = "{{$souscategory->nom}}" data-souscat-description="{{$souscategory->description}}" style="font-size:20px ;" ></i>                    
                   @if( Auth::user()->permission==="super_admin" )
-                        <form action="{{route('souscategories.destroy',$souscategory->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette sous-catégorie')">
+                        <form action="{{route('souscategories.destroy',$souscategory->id)}}" method="post" style="display:inline;" onclick="confirmDelete(this)">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" style="border:none; background:none; padding:0;">
+                            <button type="button" style="border:none; background:none; padding:0;">
                                 <i href="" class="bi bi-trash3 trash-souscat " style="font-size:20px"></i></button>
                         </form>
                   @endif    
-
+                  <form action="{{ route('souscategories.show', $souscategory->id) }}" method="get" style="display:inline;"  >
+                            @csrf
+                            <button type="submit"  style="border:none; background:none; padding:0;">
+                            <i class="bi bi-eye show-icon"  style="font-size:20px"></i></button>
+                    </form>
               </div>
                   </div> 
                   
                 </a>
                
               </div>
-              <a href="{{ route('souscategories.show', $souscategory->id) }}" class="show-link">Voir</a>
+
                       
           @endforeach
           <div class="add-btn">
@@ -226,6 +230,25 @@
       document.getElementById('submit-cat-modif').addEventListener('click',function(){
         document.getElementById('modif_cat_form').submit()
       })
+
+      // SWEET ALERT DELETE CONFIRM
+      function confirmDelete(button){
+        const form = $(button).closest('form');
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+                text: "Vous ne pourrez pas récupérer cet utilisateur!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, supprimer!',
+                cancelButtonText: 'Annuler'
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                        form.submit();
+                }
+        })
+}
   </script>
 
 @endsection

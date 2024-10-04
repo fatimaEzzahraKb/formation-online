@@ -25,6 +25,7 @@ class SouscategoryController extends Controller
                 "nom"=>$request->nom,
                 "description"=>$request->description,
             ]);
+            alert()->success('Sous-catégorie ajoutée avec succés', 'success')->position('middle');
             return redirect()->route('categories.index');
     }
     public function show($id){
@@ -54,6 +55,7 @@ class SouscategoryController extends Controller
                 'description'=>$request->description,
             ]);
             $souscategory->save();
+            alert()->success('Sous-catégorie modifiée avec succés', 'success')->position('middle');
             return redirect()->route('categories.index');
             
         };
@@ -61,6 +63,7 @@ class SouscategoryController extends Controller
     public function destroy( $id){
         $souscategory = Souscategory::findOrFail($id);
         $souscategory->delete();
+        alert()->success('Sous-catégorie supprimée avec succés', 'success')->position('middle');
         return redirect()->route('categories.index'); 
     }
 }

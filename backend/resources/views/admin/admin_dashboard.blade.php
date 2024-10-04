@@ -29,7 +29,7 @@
             </div>
             <div class="charts">
             <input type="hidden" id='charts_data' data-categories ='@json($categories_chart)' data-users = '@json($users_chart)' >
-            <canvas id="myPieChart" width="100" height="100"></canvas>
+            <canvas id="myPieChart" width="100" height="100" style="font-size:50px"></canvas>
             <canvas id="myBarChart" width="100" height="100"></canvas>
             <canvas id="chart" width="100" height="100"></canvas>
             </div>
@@ -112,7 +112,7 @@
             data: {
                 labels: pie_labels,
                 datasets: [{
-                    label: 'My First Dataset',
+                    label: 'Formations',
                     data: pie_data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -136,10 +136,18 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels:{
+                            font:{
+                                size:15
+                            }
+                        }
                     },
                     title: {
                         display: true,
-                        text: 'Nombre de formation par sous-catégorie'
+                        text: 'Nombre de formation par sous-catégorie',
+                        font: {
+                        size: 20 // Set font size for legend labels
+                    }
                     }
                 }
             }
@@ -183,10 +191,18 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels:{
+                            font:{
+                                size:15
+                            }
+                        }
                     },
                     title: {
                         display: true,
-                        text: 'Nombre d\'utilisateur par catégorie'
+                        text: 'Nombre d\'utilisateur par catégorie',
+                        font: {
+                        size: 20 // Set font size for legend labels
+                    }
                     }
                 }
             }
@@ -207,5 +223,6 @@
         var chart = new ApexCharts(document.querySelector("#chart"), options);
 
         chart.render();
+        
         </script>
 @endsection

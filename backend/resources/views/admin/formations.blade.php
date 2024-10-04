@@ -40,10 +40,10 @@
                             <td class="actions">
                             <a href="{{route('formations.edit',$formation->id)}}"> <i class="bi bi-pencil-square " style="color: rgb(0, 155, 103)"></i> </a>
                             @if( Auth::user()->permission==="super_admin" )
-                                    <form action="{{route('formations.destroy',$formation->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">
+                                    <form action="{{route('formations.destroy',$formation->id)}}" method="post" style="display:inline;" >
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="border:none; background:none; padding:0;">
+                                        <button type="button" style="border:none; background:none; padding:0;" onclick="confirmDelete(this)">
                                             <i href="" class="bi bi-trash3 text-danger"></i></button>
                                     </form>
                             @endif
@@ -65,5 +65,23 @@
 <script> 
 
 new DataTable('#example');
+// SWEET ALERT DELETE CONFIRM
+function confirmDelete(button){
+    const form = $(button).closest('form');
+    Swal.fire({
+        title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas récupérer cet utilisateur!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler'
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    form.submit();
+            }
+    })
+}
 </script>
 @endsection

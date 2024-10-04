@@ -54,10 +54,10 @@
                         <button class="btn btn-info" type="submit">Modifier</button>
                     </form>
                     @if(Auth::user()->permission === "super_admin")
-                    <form action="{{ route('formations.destroy', $formation->id) }}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette formation')">
+                    <form action="{{ route('formations.destroy', $formation->id) }}" method="post" style="display:inline;" >
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">Supprimer</button>
                     </form>
                     @endif
                 </div>
@@ -207,5 +207,24 @@
         // Update form action URL
         document.getElementById('videoUpdateForm').action = `/formation_videos/${videoId}`;
     });
+
+    // SWEET ALERT DELETE CONFIRM
+    function confirmDelete(button){
+    const form = $(button).closest('form');
+    Swal.fire({
+        title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas récupérer cet utilisateur!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler'
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    form.submit();
+            }
+    })
+}
 </script>
 @endsection

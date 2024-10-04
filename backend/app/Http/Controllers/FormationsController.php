@@ -87,7 +87,8 @@ class FormationsController extends Controller
                 ]);
             };
 
-            return $this->index();
+            alert()->success('Formation ajoutée avec succés')->position('middle');
+            return back();
         
     }
     public function show($id){
@@ -131,7 +132,8 @@ class FormationsController extends Controller
                 $formation->souscategory_id = $request->souscategory_id;
             }
             $formation->save();
-            return $this->show($id);     
+            alert()->success('Formation ajoutée avec succés')->position('middle');
+            return $this->index();    
 
     }
 }
@@ -140,7 +142,8 @@ class FormationsController extends Controller
         $videos = FormationVideo::where('formation_id',$id)->delete(); 
         $formation = Formation::findOrFail($id);
         $formation->delete();
-        return $this->index();
+        alert()->success('Formation supprimée avec succés')->position('middle');
+        return back();
     }
     public function add_videos(Request $request, $id){
         Log::info($request->all());

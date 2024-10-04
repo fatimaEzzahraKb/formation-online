@@ -22,6 +22,8 @@ class FavorisController extends Controller
                 "user_id"=>Auth::user()->id,
                 "formation_id"=>$request->formation_id,
             ]);
+            alert()->success('Ajoutée aux favoris', 'La formation a été ajouté à votre favoris ')->position('middle');
+
             return back();
         
     }
@@ -29,6 +31,7 @@ class FavorisController extends Controller
     public function destroy( $id){
         $favoris = Favoris::findOrFail($id);
         $favoris->delete();
-        return back(); 
+            alert()->success('Supprimée des favoris', 'La formation a été supprimé de votre favoris')->position('middle');
+            return back(); 
     }
 }

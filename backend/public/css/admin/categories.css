@@ -32,18 +32,25 @@
     color: rgb(255, 98, 98);
   }
   .modify-icon {
-    color: rgb(142, 153, 156); /* Change to your desired hover color */
+    color: rgb(0, 175, 219); /* Change to your desired hover color */
 }
 .bi-trash3:hover{
   color: rgb(170, 2, 2);
 }
 .modify-icon:hover {
-  color: rgb(1, 110, 8); /* Change to your desired hover color */
+  color: rgb(0, 204, 255); /* Change to your desired hover color */
 }
     .categories .category-item:first-of-type h2 {
     color:#952aff;
 }
-.categories .category-item:nth-of-type(2) h2 {
+.categories .category-item h2 {
+  font-family: "Sriracha", cursive;
+  color: rgb(0, 204, 255) ;
+  background-color: #414141 ;
+  padding:5px 15px;
+text-align: center;
+}
+/* .categories .category-item:nth-of-type(2) h2 {
     color:#4c49ea;
 }
 .categories .category-item:nth-of-type(3) h2 {
@@ -54,7 +61,7 @@
 }
 .categories .category-item:nth-of-type(4) h2 {
     color:#e44002;
-}
+} */
 
   .ag-courses_box {
     display: -webkit-box;
@@ -68,7 +75,7 @@
     
     padding: 10px 0;
   }
-  .ag-courses_item {
+  .ag-courses_item, .subcat-item {
     -ms-flex-preferred-size: calc(33.33333% - 30px);
     flex-basis: calc(25.33333% );
   
@@ -144,7 +151,7 @@
     background-color: #ffc851;
   }
   .ag-courses_item:nth-child(3n) .ag-courses-item_bg {
-    background-color: rgb(255, 196, 0);
+    background-color: rgb(0, 175, 93);
   }
   .ag-courses_item:nth-child(4n) .ag-courses-item_bg {
     background-color: #952aff;
@@ -170,14 +177,14 @@
     .ag-courses-item_title {
       font-size: 18px;
     }
-    .show-link{
+    /* .show-link{
       top: 0px !important;
       bottom: 20%;
       right: 0px !important;
       left: 20% !important;
       width: 100%;
       margin-top: 0px !important;
-    }
+    } */
   }
   
   @media only screen and (max-width: 767px) {
@@ -263,13 +270,36 @@
   border-radius: 20px;
 }
 .show-link{
-  position:relative;
-  top: 120px;
-  right: 20%;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  display: block;
+display: flex;
+justify-content: center;
 }
 .show-link i{
   font-style: 50px;
+}
+.subcat-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.subcat-item:nth-child(2n) .ag-courses-item_bg {
+  background-color: #ffc851;
+}
+.subcat-item:nth-child(3n) .ag-courses-item_bg {
+  background-color: rgb(73, 182, 0)
+}
+.ag-courses_item:nth-child(4n) .ag-courses-item_bg {
+  background-color: #952aff;
+}
+.ag-courses_item:nth-child(5n) .ag-courses-item_bg {
+  background-color: #cd3e94;
+}
+.ag-courses_item:nth-child(6n) .ag-courses-item_bg {
+  background-color: #4c49ea;
+}
+.subcat-item:first-child .ag-courses-item_bg{
+  background-color:rgb(0, 204, 255);
+
+}
+.show-icon:hover{
+  color: rgb(2, 172, 214);
 }

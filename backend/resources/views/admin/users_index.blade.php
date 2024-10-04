@@ -18,6 +18,7 @@
                 <table id="example" class="ui celled table users-table " style="width:100%">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nom</th>
                             <th>Email</th>
                             <th>Rôle</th>
@@ -33,6 +34,7 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr class="user-row">
+                            <td> {{$user->id}} </td>
                             <td> <a href="{{route('users.show',$user->id)}}"> {{$user->username}}</a></td>
                             <td> {{$user->email}} </td>
                             <td> {{$user->permission }}   </td>
@@ -52,10 +54,10 @@
                                         </button>
                                     </form>
                             @if( Auth::user()->permission==="super_admin" )
-                                    <form action="{{route('users.destroy',$user->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">
+                                    <form action="{{route('users.destroy',$user->id)}}" method="post" style="display:inline;" >
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="border:none; background:none; padding:0;">
+                                        <button type="button" onclick="confirmDelete(this)" style="border:none; background:none; padding:0;" >
                                             <i href="" class="bi bi-trash3 text-danger"></i></button>
                                     </form>
                             @endif
@@ -72,9 +74,26 @@
 
 @endsection
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script> 
     new DataTable('#example');
+    // SWEET ALERT DELETE CONFIRM
+    function confirmDelete(button){
+            const form = $(button).closest('form');
+            Swal.fire({
+                title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas récupérer cet utilisateur!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler'
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    form.submit();
+                }
+            })
+    }
     </script>
 @endsection

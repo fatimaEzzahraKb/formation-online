@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Souscategory;
 use App\Models\UserSubcategory;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UsersController extends Controller
 {
@@ -19,6 +20,8 @@ class UsersController extends Controller
      */
     public function index()
     {
+        
+        $title = 'Delete User!';
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
         $success = null;
@@ -75,8 +78,9 @@ class UsersController extends Controller
             
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
-        $success = "success";
-        return view('admin/users_index',compact('users','souscategories','success'));
+        alert()->success('Utilisateur ajouté avec succés', 'success')->position('middle');
+
+        return redirect()->route('users.index');
         }
             
             
@@ -120,7 +124,9 @@ class UsersController extends Controller
             'category_id'=>$request->category_id,
         ]));
         $user->permission = $request->permission;
-        return $this->index();
+        alert()->success('Utilisateur modifié avec succés', 'success')->position('middle');
+
+        return redirect()->route('users.index');
 
     }
 
@@ -128,8 +134,16 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id){
+        Alert::warning('Warning Title', 'Warning Message');
+
         $user = User::findOrFail($id);
         $user->delete();
-        return $this->index();
+        $success = "supprimé";
+        $users = User::with('category','souscategoriesList','favoris')->get();
+        $souscategories = Souscategory::with('users');
+        alert()->success('Utilisateur supprimé avec succés', 'success')->position('middle');
+
+        return redirect()->route('users.index')->with(['success'=>$success]);
+
     }
 }
