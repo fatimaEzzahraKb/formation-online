@@ -3,14 +3,14 @@
     <div class="container ">
       <div class="footer-infos">
          <div class="nos-services ">
-      <h4>Nos Services</h4>
-      <a href="#">- Nettoyage pour les particuliers</a>
-     <a href="#"> - Nettoyage pour les professionnels</a>
-     <a href="#">- Nettoyage fin de chantier Casablanca</a>    
-      <a href="#">- Nettoyage industriel Casablanca</a>    
-      <a href="#">- Nettoyage de moquette Casablanca</a>    
-      <a href="#">- Nettoyage du parquet Casablanca</a>    
-      <a href="#"> - Nettoyage des vitres Casablanca </a>
+      <h4>Nos Formations</h4>
+      <a href="#">- Formation en Réseaux</a>
+     <a href="#"> - Formation en Développement</a>
+     <a href="#">- Formation en Réferencement</a>    
+      <a href="#">- Formation en Commerciale téléphonique</a>    
+      <a href="#">- Formation en Commerciale terrain</a>    
+      <a href="#">- Formation en Enregistrement Vocale Whatsapp </a>    
+      <a href="#"> - Formation en Enregistrement Vocale Facebook </a>
       
         <a href="#"> - Cristallisation du marbre Casablanca </a>
       </div>
@@ -22,9 +22,9 @@
           </div>
           <div class="sites">
               <h4>Notre site web</h4>
-              <a href=""> - Accueil</a> 
-              <a href="">- Devis en ligne</a>
-              <a href="">- Produits de Nettoyage</a>
+              <a href="{{route('acceuil')}}"> - Accueil</a> 
+              <a href="{{route('favoris.index')}}">- Favoris</a>
+              <a href="{{route('about')}}">- À propos</a>
           </div> 
       </div>
      
@@ -33,10 +33,7 @@
         <ul>
           <li>Mobile : +212 668 31 19 </li>
           <li>Fixe : +212 606 38 38 58</li>
-          <li>Fax : +212 522 38 82 38</li>
           <li> Adresse 1 : 46 BD Zarktouni, 6éme ETG Casablanca.</li>
-          <li> Adresse 2 : Rue Ahmed Touki N° 7 étage 2 Casablanca.</li>
-          <li> Adresse 3 : 10 Rue ghandi R202 Rabat.</li>
           <li>Email: pnsmaroc@gmail.com</li>
         </ul>
       </div>

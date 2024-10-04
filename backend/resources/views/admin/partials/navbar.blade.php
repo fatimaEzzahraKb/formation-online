@@ -8,23 +8,23 @@
                   
                   <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div class="offcanvas-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            <div class="top">
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="color:white;" ></button>
+                            <div class="top-responsive">
                             <h1><span class="V"> V</span> Formations</h1>
 
 
                         </div><hr class="line"/>
                       </div>
-                    <div class="offcanvas-header sidebar">
+                    <div class="offcanvas-header sidebar-responsive">
                         
                     
                         <nav>
                             <ul>
-                                <li> <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
-                                <li><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
-                                <li><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
-                                <li>  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
-                                <li><a href="{{route('settings')}}"><i class="bi bi-gear"></i>Paramètres</a></li>
+                                <li class="{{ request()->is('admin') ? 'active-sidebar-resp' : '' }}" > <a href="{{route('admin')}}"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
+                                <li class="{{ request()->is('users*') ? 'active-sidebar-resp' : '' }}"><a href="{{route('users.index')}}"><i class="bi bi-person"></i>Utilisateurs</a></li>
+                                <li class="{{ request()->is('formations*') ? 'active-sidebar-resp' : '' }}"><a href="{{route('formations.index')}}"><i class="bi bi-person-video3"></i>Formations</a></li>
+                                <li class="{{ request()->is('categories*') ? 'active-sidebar-resp' : '' }}">  <a href="{{route('categories.index')}}"><i class="bi bi-card-list"></i> Catégories</a></li>
+                                <li class="{{ request()->is('settings') ? 'active-sidebar-resp' : '' }}"><a href="{{route('settings')}}"><i class="bi bi-gear"></i>Paramètres</a></li>
                             </ul>
                         </nav>
                
