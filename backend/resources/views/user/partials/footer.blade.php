@@ -11,8 +11,6 @@
       <a href="#">- Formation en Commerciale terrain</a>    
       <a href="#">- Formation en Enregistrement Vocale Whatsapp </a>    
       <a href="#"> - Formation en Enregistrement Vocale Facebook </a>
-      
-        <a href="#"> - Cristallisation du marbre Casablanca </a>
       </div>
       <div class="sites-contact">
         <div class="intro">
