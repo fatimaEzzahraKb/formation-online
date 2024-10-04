@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('titre')->unique();
             $table->text('description');
             $table->string('image_url')->nullable();
-            $table->string('video_url');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->foreignId('souscategory_id')->constrained('souscategories')->onDelete('cascade');
             $table->timestamps();
         });
     }
