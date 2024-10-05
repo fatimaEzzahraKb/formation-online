@@ -142,22 +142,25 @@ header button {
 .responsive-menu{
  display: none;
 }
-
+.offcanvas-body ul{
+  text-align: start;
+}
 .offcanvas-body > ul > li  {
  margin: 10px;
  padding-left: 20px;
  padding: 5px;
+ font-size: 16px;
 }
 .offcanvas-body li{
  text-decoration: none;
  list-style: none;
 }
 .offcanvas-body ul  li:hover{
- color:rgb(0, 204, 255);
+ color:rgb(0, 193, 241);
  
 }
 .offcanvas-body  ul  li:hover >a{
- color:rgb(0, 204, 255);
+ color:rgb(0, 193, 241);
 
 }
 .offcanvas-body >ul> li> a{

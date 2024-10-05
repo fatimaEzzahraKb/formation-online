@@ -49,7 +49,7 @@
                             </form>
                             <i class="bi bi-box-arrow-right"></i>
                             <a style=" text-transform:none; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Log out</a>
+                            Se déconnecter</a>
                         </li>
                     </ul>
                 </div>
@@ -80,9 +80,12 @@
         <div class="offcanvas-body">
           <ul>
            <li></li>
-            <li><a href="{{route('acceuil')}}">Acceuil</a></li>
-            <li><a href="{{route('about')}}">À propos</a></li>
-            <li><a href="{{route('favoris.index')}}">Favoris</a></li>
+            <li style="display:flex; gap:15px " ><i class="bi bi-house"></i>  <a href="{{route('acceuil')}}"> Acceuil</a></li>
+            <li style="display:flex; gap:15px " ><i class="bi bi-heart"></i> <a href="{{route('favoris.index')}}" >  Favoris</a></li>
+            <li style="display:flex; gap:15px " ><i class="bi bi-info-square-fill"></i> <a href="{{route('about')}}">  À propos</a></li>
+            <hr>
+            <li><a style=" text-transform:none; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bi bi-box-arrow-right"></i> Se déconnecter</a>
+            </li>
           </ul>  
           </div>
    

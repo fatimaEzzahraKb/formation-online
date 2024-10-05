@@ -40,7 +40,11 @@
                     <span class="ag-courses-item_date">
                       {{$souscategory->formations->count()}}
                     </span>
-                    Formations
+                    Formations <br> <br>
+                    <span class="ag-courses-item_date">
+                      {{$souscategory->userList->count()}}
+                    </span>
+                    Utilisateurs
                     <div class="actions-souscat">
                   <i class="bi bi-pencil-square modify-icon-souscat" data-bs-toggle="modal" id="open-modify-subcat" data-bs-target="#ModifySubCatModal" data-souscat-id="{{$souscategory->id}}" data-souscat-nom = "{{$souscategory->nom}}" data-souscat-description="{{$souscategory->description}}" style="font-size:20px ;" ></i>                    
                   @if( Auth::user()->permission==="super_admin" )

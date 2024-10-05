@@ -30,13 +30,17 @@
                 </div>
 				<div class="login__field">
                     <i class="login__icon bi bi-lock-fill"></i>
-					<input type="password" class="login__input" name="password" placeholder="Password">
+					<input type="password" class="login__input" name="password" placeholder="Password" id="password">
                     @error('password')
                     <p class="error"> {{$message}} </p>
                     @enderror
                 </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="togglePassword" onclick="togglePasswordVisibility()">
+                    <label class="form-check-label" for="togglePassword" style="font-weight: 600; font-size:14px">Afficher le mot de passe</label>
+                </div>
 				<button class="button login__submit">
-					<span class="button__text">Log In Now</span>
+					<span class="button__text">Se Connecter </span>
                     <i class="button__icon bi bi-chevron-right"></i>
 				</button>				
 			</form>
@@ -49,5 +53,12 @@
 		</div>		
 	</div>
 </div>
+<script>
+    function togglePasswordVisibility(){
+        const password = document.getElementById('password');
+        const Show = document.getElementById('togglePassword');
+        password.type = Show.checked ?  'text' : 'password'
+    }
+</script>
 </body>
 </html>
