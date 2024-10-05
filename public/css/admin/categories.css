@@ -1,3 +1,7 @@
+.breadcrumb-item a{
+  color:rgb(0, 204, 255);
+  text-decoration: none;
+}
 .ag-format-container {
     margin: 0 auto;
   }
@@ -252,6 +256,7 @@ text-align: center;
     justify-content: center ;
     color: black;
     gap: 20px;
+    visibility: hidden;
   }
   .actions-souscat a{
     height: 10px;
@@ -268,6 +273,7 @@ text-align: center;
   color: rgb(0, 0, 0);
   background: #ffffff;
   border-radius: 20px;
+  visibility: visible;
 }
 .show-link{
 display: flex;

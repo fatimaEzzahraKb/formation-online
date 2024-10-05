@@ -34,7 +34,6 @@
                         
                             </td>
                             <td><a href="{{route('formations.show',$formation->id)}}">  {{$formation->titre }}   </a></td>
-                            <!-- <td id="" > <textarea name="" id="description-textarea" style='height:150px;padding:5px' id=""> {{$formation->description }}</textarea></td> -->
                             <td>{{$formation->souscategory->nom}}</td>
                             <td>{{$formation->category->nom}}</td>
                             <td class="actions">

@@ -14,9 +14,8 @@
       </div>
       <div class="sites-contact">
         <div class="intro">
-            <h4>Société de nettoyage Casablanca</h4>
-            <p>Notre société de nettoyage sur Casablanca attache une grande importance à l’image de vos locaux et un vrai savoir-faire dans le secteur du nettoyage et le ménage pour cela nous vous offrons des services de qualité et des prix attractifs, par un nombre de sites partout au Maroc.
-            </p>
+            <h4>Plateforme de formation de la Société Brighten</h4>
+            <p style='text-align:center' >Notre plateforme de formation à Casablanca attache une grande importance au développement des compétences et à la réussite de nos apprenants. Forte d'un véritable savoir-faire dans le secteur de la formation professionnelle, cette plateforme de visualisation de vidéos de formation vous offre un aperçu global des différents domaines de formation que nous proposons. Grâce à une interface conviviale et à un contenu riche, vous pouvez accéder facilement à des modules variés pour perfectionner vos connaissances et progresser à votre rythme.</p>
           </div>
           <div class="sites">
               <h4>Notre site web</h4>
@@ -29,10 +28,10 @@
         <div class="contact">
         <h4>Contact</h4>
         <ul>
-          <li>Mobile : +212 668 31 19 </li>
-          <li>Fixe : +212 606 38 38 58</li>
-          <li> Adresse 1 : 46 BD Zarktouni, 6éme ETG Casablanca.</li>
-          <li>Email: pnsmaroc@gmail.com</li>
+          <li>Mobile : +212 00 00 00 00 </li>
+          <li>Fixe : +212 00 00 00 00</li>
+          <li> Adresse 1 : Casablanca Maroc.</li>
+          <li>Email: fiduciairebrighten.@gmail.com</li>
         </ul>
       </div>
     </div>

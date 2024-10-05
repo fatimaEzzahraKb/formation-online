@@ -18,7 +18,7 @@
                 <div class="mb-3  row-forms ">
                     <label for="titre" class="form-label">Titre : </label>
                     <div class="">
-                        <input type="text" class="form-control" name="titre" id="titre-input" aria-describedby="emailHelp">
+                        <input type="text" value=" {{old('titre')}} " class="form-control" name="titre" id="titre-input" aria-describedby="emailHelp">
                     @error('titre')
                             <p class="error"> {{$message}} </p>
                         @enderror
@@ -28,7 +28,7 @@
                 <div class="mb-3 row-forms ">
                     <label for="exampleInputEmail1" class="form-label">Description :</label>
                     <div class="inputs">
-                        <textarea name="description" id="description" class="form-control"></textarea>
+                        <textarea name="description" id="description" class="form-control">{{old('description')}}</textarea>
                     @error('description')
                             <p class="error"> {{$message}} </p>
                     @enderror
@@ -50,12 +50,22 @@
                         @error('image_url')
                                     <p class="error"> {{$message}} </p>
                             @enderror
+                            
                     </div>
                     
                 </div>
                 <div class="mb-3 row-forms">
                         <label for="formFileMultiple" class="form-label">Vidéos:</label>
                         <div id="video-inputs-container" >
+                            @if(old('videos'))
+                                @foreach( old('videos') as $index =>$video  )
+                                <div class="video-input mb-3">
+                                    <input type="file" class="form-control" name="videos[{{ $index }}][video]" accept="video/*">
+                                    <input type="text" class="form-control" name="videos[{{ $index }}][titre]" placeholder="Titre" value="{{ $video['titre'] }}">
+                                    <input type="number" class="form-control" name="videos[{{ $index }}][ordre]" placeholder="Ordre" value="{{ $video['ordre'] }}" min="1">                                
+                                </div>
+                                @endforeach
+                            @endif
                         </div>
                         <div style="display:flex;align-items:end;">
                         <button  type="button" class=" btn btn-secondary" id="add-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
@@ -76,6 +86,7 @@
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}" data-souscategories='@json($category->souscategories)'>{{ $category->nom }}</option>
                                     @endforeach
+                                    
                                 </select>
                         </div>
                             @error('category_id')
