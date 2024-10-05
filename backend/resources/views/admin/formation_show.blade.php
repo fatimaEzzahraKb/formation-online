@@ -82,10 +82,10 @@
                                                 <i class="bi bi-pencil-square text-success" style="font-size:20px"></i>
                                             </button>
                                             @if(Auth::user()->permission === "super_admin")
-                                            <form action="{{ route('formation_videos.destroy', $video->id) }}" method="post" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cette video')">
+                                            <form action="{{ route('formation_videos.destroy', $video->id) }}" method="post" >
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn"><i style="font-size:20px" class="bi bi-trash3 text-danger"></i></button>
+                                                <button type="button" class="btn" onclick="confirmDelete(this)"><i style="font-size:20px" class="bi bi-trash3 text-danger" ></i></button>
                                             </form>
                                             @endif
                                         </div>

@@ -111,6 +111,8 @@ class FormationVideoController extends Controller
             
         
         $video->save();
+        alert()->success('Vidéo modifié avec succés')->position('middle');
+            
         return redirect()->route("formations.show",$video->formation_id);
     }
     }
@@ -123,6 +125,7 @@ class FormationVideoController extends Controller
         $formation_id = $video->formation_id;
         $this->vimeoService->deleteVideo($video->video_path);
         $video->delete();
+        alert()->success('Vidéo supprimée avec succés')->position('middle');
         return redirect()->route("formations.show",$formation_id);
     
     }
