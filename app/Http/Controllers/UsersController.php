@@ -33,7 +33,7 @@ class UsersController extends Controller
         return view('admin/user_add',compact('categories'));
     }
     public function store(Request $request){
-         $request->validate([
+        $validatedData = $request->validate([
             'username' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
@@ -74,9 +74,9 @@ class UsersController extends Controller
             
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
-        alert()->success('Utilisateur ajouté avec succés', 'success')->position('middle');
+        toast('Utilistaur Ajouté avec succés!','success')->autoClose(2500);
         return redirect()->route('users.index');
-    }
+        }
     public function show(User $user)
     {
         return view('admin.user_show', compact('user'));
@@ -101,7 +101,7 @@ class UsersController extends Controller
             'username' =>"sometimes|string",
             'email' => "sometimes|string|unique:users,email,".$user->id,
             'password' => "sometimes|nullable|string",
-            'permission' => "string|in:admin,super_admin,stagiaire",
+            'permission' => "sometimes|string|in:admin,super_admin,stagiaire",
             'category_id' => 'sometimes|nullable|exists:categories,id',
         ]);
         if(!$validatedData){
@@ -115,10 +115,13 @@ class UsersController extends Controller
             'password'=>$request->password ? bcrypt($request->password) : $user->password,
             'category_id'=>$request->category_id,
         ]));
-        $user->permission = $request->permission;
-        alert()->success('Utilisateur modifié avec succés', 'success')->position('middle');
-
-        return redirect()->route('users.index');
+        if ((int)$id === Auth::user()->id) {
+            toast('Vos données ont été modifiées avec succès!', 'success')->autoClose(2500);
+            return redirect()->route('admin');
+        } else {
+            toast('Utilisateur modifié avec succès!', 'success')->autoClose(2500);
+            return redirect()->route('users.index');
+        }
 
     }
 
@@ -126,15 +129,12 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id){
-        Alert::warning('Warning Title', 'Warning Message');
-
         $user = User::findOrFail($id);
         $user->delete();
         $success = "supprimé";
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
-        alert()->success('Utilisateur supprimé avec succés', 'success')->position('middle');
-
+        toast('Utilistaur supprimé avec succés!','success')->autoClose(2500);
         return redirect()->route('users.index')->with(['success'=>$success]);
 
     }

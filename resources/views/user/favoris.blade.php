@@ -21,7 +21,7 @@
             <form action="{{route('favoris.destroy',$favoris->id)}}" method="POST">
                    @csrf
                    @method('DELETE')
-                    <button  type="submit" class="delete-favoris"> <i class="bi bi-x-lg"></i> </button>
+                    <button  type="button" class="delete-favoris" onclick='confirmDelete(this)'> <i class="bi bi-x-lg"></i> </button>
 
                 </form>
                 
@@ -32,4 +32,25 @@
     
     </div>
     @endif
+@endsection
+@section('scripts')
+    <script>
+        function confirmDelete(button){
+            const form = $(button).closest('form');
+            Swal.fire({
+                title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas récupérer cet utilisateur!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler'
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    form.submit();
+                }
+            })
+    }
+    </script>
 @endsection

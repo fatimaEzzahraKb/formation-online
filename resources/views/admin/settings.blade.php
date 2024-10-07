@@ -39,6 +39,7 @@
             @enderror
         </div>
         </div>
+        <input type="hidden" name="settings">
     <button type="submit" class="btn btn-info submit-add-user col-4">Enregistrer les modifications</button>
 
     </form>

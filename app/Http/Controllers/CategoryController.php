@@ -24,7 +24,7 @@ class CategoryController extends Controller
                 "nom"=>$request->nom,
                 "description"=>$request->description,
             ]);
-            alert()->success('Catégorie ajoutée avec succés', 'success')->position('middle');
+            toast('Catégorie ajoutée avec succés!','success')->autoClose(2500);
             return redirect()->route('categories.index');
         
     }
@@ -59,7 +59,7 @@ class CategoryController extends Controller
                 'description'=>$request->description,
             ]);
             $category->save();
-            alert()->success('Catégorie modifiée avec succés', 'success')->position('middle');
+            toast('Catégorie modifiée avec succés!','success')->autoClose(2500);
             return back();
 
             
@@ -68,7 +68,7 @@ class CategoryController extends Controller
     public function destroy( $id){
         $category = Category::findOrFail($id);
         $category->delete();
-        alert()->success('Catégorie supprimée avec succés', 'success')->position('middle');
+        toast('Catégorie suuprimée avec succés!','success')->autoClose(2500);
         return back(); 
     }
 }

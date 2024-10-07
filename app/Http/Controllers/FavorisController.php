@@ -22,7 +22,7 @@ class FavorisController extends Controller
                 "user_id"=>Auth::user()->id,
                 "formation_id"=>$request->formation_id,
             ]);
-            alert()->success('Ajoutée aux favoris', 'La formation a été ajouté à votre favoris ')->position('middle');
+            toast('La formation est ajoutée à votre favoris!','success')->autoClose(2500);
 
             return back();
         
@@ -31,7 +31,7 @@ class FavorisController extends Controller
     public function destroy( $id){
         $favoris = Favoris::findOrFail($id);
         $favoris->delete();
-            alert()->success('Supprimée des favoris', 'La formation a été supprimé de votre favoris')->position('middle');
+        toast('La formation a été supprimée de votre favoris','success')->autoClose(2500);
             return back(); 
     }
 }

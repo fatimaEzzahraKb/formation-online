@@ -3,12 +3,7 @@
 @section('title','Utilisateurs')
 
 @section('content')
-            @if($success)
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-            Utilisateur ajouté avec succées
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
+           
             <div class="users">
                 <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Utilisateurs</h1>
                 @if(Auth::user()->permission==="super_admin")

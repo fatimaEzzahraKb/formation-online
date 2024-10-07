@@ -30,7 +30,7 @@
                 <form action="{{route('favoris.destroy',$favorite->id)}}" method="POST">
                    @csrf
                    @method('DELETE')
-                    <button  type="submit" class="btn btn-outline-danger" title='supprimer des favoris'>  <i class="bi bi-heart-fill btn-danger" style="color:red; stroke:white;" > </i></button>
+                    <button  type="button" class="btn btn-outline-danger" onclick='confirmDelete(this)' title='supprimer des favoris'>  <i class="bi bi-heart-fill btn-danger" style="color:red; stroke:white;" > </i></button>
 
                 </form>
             @else   
@@ -88,6 +88,23 @@
             console.log('playing');
         });
     });
+    function confirmDelete(button){
+            const form = $(button).closest('form');
+            Swal.fire({
+                title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas récupérer cet utilisateur!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler'
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    form.submit();
+                }
+            })
+    }
 </script>
 
 @endsection
