@@ -32,7 +32,15 @@
                             <td> {{$user->id}} </td>
                             <td> <a href="{{route('users.show',$user->id)}}"> {{$user->username}}</a></td>
                             <td> {{$user->email}} </td>
-                            <td> {{$user->permission }}   </td>
+                            <td style="text-align:center;">
+                                @if($user->permission  === 'admin' ) 
+                                <span class=" badge text-bg-success">
+                                @elseif($user->permission  === 'super_admin') 
+                                <span class="badge text-bg-info">
+                                @elseif($user->permission  === 'stagiaire') 
+                                <span class="badge text-bg-secondary">
+                                @endif
+                                {{$user->permission }} </span>  </td>
                             <td>{{$user->category ? $user->category->nom : '__' }}</td>
                             <td>
                                 @if ($user->souscategoriesList->isNotEmpty())
