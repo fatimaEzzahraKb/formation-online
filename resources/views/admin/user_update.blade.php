@@ -2,6 +2,15 @@
 @section('title',"Modifier Utilisateur")
 
 @section('content')
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href=" {{route('admin')}} ">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href=" {{route('users.index')}} ">Utilisateurs</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Formulaire</li>
+    </ol>
+</nav>
+<!-- /Breadcrumb -->
     <h2> <i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>Modifier les données </h2>
     <div class="form-main-container">
         <form action="{{route('users.update',$user->id)}}" method="POST">
@@ -87,7 +96,7 @@
     </div>
 
                     </div>
-                    <button type="submit" class="btn btn-info submit-add-user">Submit</button>
+                    <button type="submit" class="btn btn-info submit-add-user col-2">Modifier</button>
 
                 </form>
                 </div>

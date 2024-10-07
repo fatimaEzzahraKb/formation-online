@@ -33,7 +33,7 @@ class UsersController extends Controller
         return view('admin/user_add',compact('categories'));
     }
     public function store(Request $request){
-        $validatedData = $request->validate([
+         $request->validate([
             'username' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
@@ -55,10 +55,6 @@ class UsersController extends Controller
             'permission.in' => 'Le rôle doit être l’un des suivants : admin, super_admin, stagiaire.',
             'category_id.exists' => 'La catégorie sélectionnée est invalide.',
         ]);
-        if(!$validatedData){
-            return back()->withErrors($validatedData)->withInput();
-        }
-        else{
             $user = User::create([
                 'username' => $validatedData['username'],
                 'email' => $validatedData['email'],
@@ -79,11 +75,7 @@ class UsersController extends Controller
         $users = User::with('category','souscategoriesList','favoris')->get();
         $souscategories = Souscategory::with('users');
         alert()->success('Utilisateur ajouté avec succés', 'success')->position('middle');
-
         return redirect()->route('users.index');
-        }
-            
-            
     }
     public function show(User $user)
     {

@@ -15,7 +15,7 @@
       <div class="sites-contact">
         <div class="intro">
             <h4>Plateforme de formation de la Société Brighten</h4>
-            <p style='text-align:center' >Notre plateforme de formation à Casablanca attache une grande importance au développement des compétences et à la réussite de nos apprenants. Forte d'un véritable savoir-faire dans le secteur de la formation professionnelle, cette plateforme de visualisation de vidéos de formation vous offre un aperçu global des différents domaines de formation que nous proposons. Grâce à une interface conviviale et à un contenu riche, vous pouvez accéder facilement à des modules variés pour perfectionner vos connaissances et progresser à votre rythme.</p>
+            <p style='  ' >Notre plateforme de formation à Casablanca attache une grande importance au développement des compétences et à la réussite de nos apprenants. Forte d'un véritable savoir-faire dans le secteur de la formation professionnelle, cette plateforme de visualisation de vidéos de formation vous offre un aperçu global des différents domaines de formation que nous proposons. Grâce à une interface conviviale et à un contenu riche, vous pouvez accéder facilement à des modules variés pour perfectionner vos connaissances et progresser à votre rythme.</p>
           </div>
           <div class="sites">
               <h4>Notre site web</h4>

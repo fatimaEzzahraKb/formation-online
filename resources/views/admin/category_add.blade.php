@@ -18,7 +18,7 @@
                 <div class="mb-3  row-forms ">
                     <label for="titre" class="form-label">Nom : </label>
                     <div class="">
-                        <input type="text" class="form-control" name="nom" id="titre-input" aria-describedby="emailHelp">
+                        <input type="text" class="form-control" value="{{old('nom')}}" name="nom" id="titre-input" aria-describedby="emailHelp">
                     @error('nom')
                             <p class="error"> {{$message}} </p>
                         @enderror
@@ -28,7 +28,7 @@
                 <div class="mb-3 row-forms ">
                     <label for="exampleInputEmail1" class="form-label">Description :</label>
                     <div class="inputs">
-                        <textarea name="description" id="description" class="form-control"></textarea>
+                        <textarea name="description" id="description" class="form-control"> {{old('description')}} </textarea>
                     @error('description')
                             <p class="error"> {{$message}} </p>
                     @enderror
@@ -36,11 +36,7 @@
                     
                 </div>
                 
-                            @if($errors->any())
-                                @foreach( $errors->all() as $error)
-                                    <p class="text-danger">  {{$error}} </p>
-                                @endforeach
-                             @endif
+                            
                          </div>
                             <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             

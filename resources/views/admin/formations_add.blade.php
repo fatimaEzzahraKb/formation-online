@@ -44,7 +44,7 @@
                         <i class="bi bi-upload"></i>
                         Choisir une image: 
                         </label>
-                        <input accept="image/*" name="image_url" type="file" id="formFile" class="file-input" onchange="displayImage()">
+                        <input accept="image/*" value=" {{old('image_url')}} " name="image_url" type="file" id="formFile" class="file-input" onchange="displayImage()">
                         <p id="change-msg" style="display:none; font-size:13px"> Clickez sur l'image pour changer</p>
                         </div>
                         @error('image_url')
@@ -77,7 +77,7 @@
                     </div>
                      @error('videos')
                                     <p class="error"> {{$message}} </p>
-                            @enderror
+                        @enderror
 
                     <div class="row-flex mb-3  row-forms" id="category">
                             <label for="">Catégorie : </label> 
@@ -88,26 +88,32 @@
                                     @endforeach
                                     
                                 </select>
-                        </div>
-                            @error('category_id')
+                                @error('category_id')
                                     <p class="error"> {{$message}} </p>
                             @enderror
+                        </div>
+                            
                         
-                            <div id="subcategory-container" style="display:none;">
+                            <div id="subcategory-container" class="subcat-row" style="display:none;">
                                 <label for="">Sous-catégorie:</label> 
                                     <select class="form-select  " name="souscategory_id" id="subcategory-select">
                                         <option ></option>
                                     </select>
                             </div>
-                            @if($errors->any())
-                                @foreach( $errors->all() as $error)
-                                    <p class="text-danger">  {{$error}} </p>
-                                @endforeach
-                             @endif
+                                <!-- @if($errors->any())
+                                <div class="alert alert-danger " role="alert">
+                                    
+                                            @foreach( $errors->all() as $error)
+                                                <p class="text-danger">  {{$error}} </p>
+                                            @endforeach
+                                        
+                                </div>
+                                @endif -->
                          </div>
                             <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             
                         </form>
+                        
                         
 @endsection
 

@@ -39,7 +39,7 @@
             @enderror
         </div>
         </div>
-    <button type="submit" class="btn btn-info submit-add-user col-2">Submit</button>
+    <button type="submit" class="btn btn-info submit-add-user col-4">Enregistrer les modifications</button>
 
     </form>
     </div>

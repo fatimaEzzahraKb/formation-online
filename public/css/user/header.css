@@ -49,11 +49,11 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    padding-left: 30px;
+    padding: 0px 10px;
+    font-weight: 600;
 }
 .dropdown-links-list li:hover{
     background-color: rgb(232, 243, 250);
-    font-weight: 500;
 }
 
 /* SEARCH */

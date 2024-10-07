@@ -67,3 +67,15 @@ label{
     display: flex;
     justify-content: end;
 }
+.subcat-row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 10px;
+}
+#subcategory-container{
+    margin-bottom: 15px;
+
+}
+#togglePassword-user{
+    width:15px;
+}
