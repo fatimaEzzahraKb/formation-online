@@ -68,7 +68,7 @@ class FormationsController extends Controller
                 "souscategory_id"=>$request->souscategory_id,
             ]);
             
-                
+            if($request->videos)  {  
             foreach($request->videos as $videoData){
                 $orders = collect($request->videos)->pluck('ordre');
                 if ($orders->count() !== $orders->unique()->count()) {
@@ -86,9 +86,9 @@ class FormationsController extends Controller
                     'ordre'=>$videoData['ordre']
                 ]);
             };
-
+}
             alert()->success('Formation ajoutée avec succés')->position('middle');
-            return back();
+            return $this->index();
         
     }
     public function show($id){

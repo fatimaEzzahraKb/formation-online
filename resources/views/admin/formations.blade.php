@@ -34,8 +34,8 @@
                         
                             </td>
                             <td><a href="{{route('formations.show',$formation->id)}}">  {{$formation->titre }}   </a></td>
-                            <td>{{$formation->souscategory->nom}}</td>
                             <td>{{$formation->category->nom}}</td>
+                            <td>{{$formation->souscategory->nom}}</td>
                             <td class="actions">
                             <a href="{{route('formations.edit',$formation->id)}}"> <i class="bi bi-pencil-square " style="color: rgb(0, 155, 103)"></i> </a>
                             @if( Auth::user()->permission==="super_admin" )
