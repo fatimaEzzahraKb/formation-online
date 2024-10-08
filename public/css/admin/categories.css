@@ -31,6 +31,7 @@
   .category-actions {
     display: flex;
     gap: 20px;
+    margin-right: 60px;
   }
   .trash{
     color: rgb(255, 98, 98);
@@ -90,7 +91,7 @@ text-align: center;
   .ag-courses-item_link {
     display: block;
     padding: 30px 20px;
-    background-color: #121212;
+    background-color: #414141;
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
