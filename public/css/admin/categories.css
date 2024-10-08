@@ -44,9 +44,7 @@
 .modify-icon:hover {
   color: rgb(0, 204, 255); /* Change to your desired hover color */
 }
-    .categories .category-item:first-of-type h2 {
-    color:#952aff;
-}
+
 .categories .category-item h2 {
   font-family: "Sriracha", cursive;
   color: rgb(0, 204, 255) ;

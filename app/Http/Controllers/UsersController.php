@@ -115,6 +115,7 @@ class UsersController extends Controller
             'password'=>$request->password ? bcrypt($request->password) : $user->password,
             'category_id'=>$request->category_id,
         ]));
+        Log::info('users_info',['user_id'=>$id,'auth_id',Auth::user()->id]);
         if ((int)$id === Auth::user()->id) {
             toast('Vos données ont été modifiées avec succès!', 'success')->autoClose(2500);
             return redirect()->route('admin');
