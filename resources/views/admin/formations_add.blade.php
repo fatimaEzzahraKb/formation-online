@@ -113,7 +113,11 @@
                             <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             
                         </form>
-                        
+                        @if($errors->any())
+                            @foreach($errors->all() as $error)
+                            <p class="text-danger"> {{$error}} </p>
+                            @endforeach
+                        @endif
                         
 @endsection
 

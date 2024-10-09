@@ -37,9 +37,9 @@ class FormationsController extends Controller
             'category_id' => 'required|exists:categories,id',
             'souscategory_id' => 'required|exists:souscategories,id',
             'videos' => 'sometimes|array',
-            'videos.*.video' => 'sometimes|file',
-            'videos.*.titre' => 'sometimes|string',
-            'videos.*.ordre' => 'sometimes|integer|min:1',
+            'videos.*.video' => 'file|nullable',
+            'videos.*.titre' => 'string|nullable',
+            'videos.*.ordre' => 'integer|nullable|min:1',
         ], [
             'titre.required' => 'Le titre est requis.',
             'titre.string' => 'Le titre doit être une chaîne de caractères.',
@@ -148,8 +148,7 @@ class FormationsController extends Controller
         return back();
     }
     public function add_videos(Request $request, $id){
-        Log::info($request->all());
-        $validateData = $request->all([
+       $request->validate([
             'videos' => 'required|array',
             'videos.*.video' => 'required|file',
             'videos.*.titre' => 'required|string',
@@ -167,13 +166,13 @@ class FormationsController extends Controller
             if (isset($videoData) && $video && $video->isValid()) 
             {
                 $videoUri = $this->vimeoService->uploadVideo($video);
+                FormationVideo::create([
+                    'video_path'=>$videoUri,
+                    'formation_id'=>$id,
+                    'titre'=>$videoData['titre'],
+                    'ordre'=>$videoData['ordre']
+                ]);
             }
-            FormationVideo::create([
-                'video_path'=>$videoUri,
-                'formation_id'=>$id,
-                'titre'=>$videoData['titre'],
-                'ordre'=>$videoData['ordre']
-            ]);
         };
         return $this->show($id);
     }
