@@ -33,6 +33,15 @@
     gap: 20px;
     margin-right: 20px;
   }
+  .modif-btn{
+    color: black;
+    border: 1px solid red !important;
+    
+  }
+  .modif-btn:hover{
+    color: white !important;
+    background-color: rgb(255, 105, 105) !important;
+  }
   .category-actions .btn{
     text-wrap: nowrap;
   }
@@ -240,10 +249,10 @@ width: 50%;
     cursor: pointer;
   }
   .add-btn p{
-    border: 1px #f9b234 solid;
+    border: 1px red solid;
     width: 100%;
     text-wrap: nowrap;
-    color: #f9b234;
+    color: black;
     border-radius: 5px;
     padding: 6.5px 14px;
     display: flex;
@@ -254,17 +263,25 @@ width: 50%;
     p, i {color: white;} 
   } */
   .add-btn:hover p {
-    background-color: #e79405;
-    border-color: #e79405;
+    animation: ColorRed 0.5s forwards;
+    background-color: red;
+    border-color: red;
     color: white;
 }
 
 .add-btn:hover i {
-    color: #e79405;
+    color: black;
 }
-
+@keyframes ColorRed {
+  from{
+    background-color: white;
+  }
+  to{
+    background-color: red;
+  }
+}
   .add-icon i{
-    color:#f9b234;
+    color:red;
     font-size:35px;
      display:flex;
      justify-content:center;
