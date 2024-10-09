@@ -12,13 +12,13 @@
     <div class="category-header ">
       <h2 style="text-transform:capitalize"> {{$category->nom}} </h2>
         <span class="category-actions"> 
-        <i class="bi bi-pencil-square modify-icon" data-cat-id="{{$category->id}}" data-cat-nom = "{{$category->nom}}" data-cat-description="{{$category->description}}" data-bs-toggle="modal" data-bs-target="#modifyCat" style="font-size:20px ;" ></i>
+        <div class="btn btn-outline-secondary" data-cat-id="{{$category->id}}" data-cat-nom = "{{$category->nom}}" data-cat-description="{{$category->description}}" data-bs-toggle="modal" data-bs-target="#modifyCat"> Modifier la catégorie  <i class="bi bi-pencil-square "  style="font-size:20px ;" ></i></div>
             @if( Auth::user()->permission==="super_admin" )
                     <form action="{{route('categories.destroy',$category->id)}}" method="post" style="display:inline;" >
                         @csrf
                         @method('DELETE')
                         <button type="button" style="border:none; background:none; padding:0;" onclick="confirmDelete(this)">
-                            <i href="" class="bi bi-trash3 trash" style="font-size:20px"></i></button>
+                            <div class="btn btn-outline-danger">Supprimer la catégorie <i href="" class="bi bi-trash3 " style="font-size:20px"></i></div></button>
                     </form>
             @endif    
       </span>
@@ -69,9 +69,15 @@
 
                       
           @endforeach
-          <div class="add-btn">
-                <div class="add-icon" style="dislay:flex; justify-content:center; align-items:center">
-                  <i class="bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-category-id="{{$category->id}}" data-category-nom="{{$category->nom}}"></i>
+          <!-- <div class="btn btn-outline-success d-flex " style="gap:15px" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-category-id="{{$category->id}}" data-category-nom="{{$category->nom}}">
+            <p>Ajouter sous-catégorie</p> 
+            <i class="bi  bi-plus-square" ></i>
+
+          </div> -->
+          <div class="add-btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-category-id="{{$category->id}}" data-category-nom="{{$category->nom}}"> 
+            <p>Ajouter une sous-catégorie</p>
+                <div class="add-icon " style="dislay:flex; justify-content:center; align-items:center">
+                 <i class="bi bi-plus-square" ></i>
                 </div>
               </div>
           </div>
