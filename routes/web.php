@@ -35,19 +35,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
         Route::resource('categories', CategoryController::class)->except(['destroy']);
         Route::resource('souscategories', SouscategoryController::class)->except(['destroy']);
+        Route::resource('formation_videos', FormationVideoController::class)->except(['destroy']);
         Route::resource('users', UsersController::class)->only(['show','index','edit','update']);
         Route::get('settings',function(){
             return view('admin/settings');
         })->name('settings');
-        // Super Admin routes
+            // Super Admin routes
         Route::middleware('superadmin')->group(function() {
             
             Route::get('users/create',[ UsersController::class,'create'])->name('users.create');
             Route::resource('users', UsersController::class)->except(['show','index','edit','update']);
             Route::resource('categories', CategoryController::class)->only(['destroy']);
             Route::resource('souscategories', SouscategoryController::class)->only(['destroy']);
-            Route::resource('formations', FormationsController::class)->only(['destroy']);
             Route::resource('formation_videos', FormationVideoController::class)->only(['destroy']);
+            Route::resource('formations', FormationsController::class)->only(['destroy']);
         });
     });
     Route::middleware('stagiaire')->group(function(){

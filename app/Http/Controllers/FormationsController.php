@@ -157,10 +157,13 @@ class FormationsController extends Controller
             'videos.*.titre' => 'Chaque vidéo doit avoir un titre'
         ]);
         foreach($request->videos as $videoData){
-            $orders = collect($request->videos)->pluck('ordre');
-            if ($orders->count() !== $orders->unique()->count()) {
-                return redirect()->back()->withErrors(['videos.*.ordre' => 'Les ordres des vidéos doivent être uniques.'])->withInput();
+            $existingVideo = FormationVideo::where('formation_id',$id)
+            ->where('ordre',$videoData['ordre'])
+            ->first();
+            if($existingVideo){
+                return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
             }
+            
             $video = $videoData['video'];
             if (isset($videoData) && $video && $video->isValid()) 
             {

@@ -113,6 +113,13 @@
                                 @enderror
                             </div>
                         </form>
+        @if($errors->any())
+    @foreach($errors->all() as $error)
+        <p class='text-danger' style="margin:15px">
+            {{ $error }}
+        </p>
+    @endforeach
+@endif
                     </div>
                 </div>
             </div>
@@ -191,9 +198,9 @@
 
     const videoModal = document.getElementById('videoModal');
     videoModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget; // Button that triggered the modal
+        const button = event.relatedTarget; 
         const videoId = button.getAttribute('data-video-id');
-        const videoTitle = button.b ('data-video-title');
+        const videoTitle = button.getAttribute('data-video-title');
         const videoOrdre = button.getAttribute('data-video-ordre');
 
         // Update the modal's content.

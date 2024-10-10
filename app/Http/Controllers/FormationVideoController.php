@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use App\Services\VimeoService;
 use App\Models\FormationVideo;
 
@@ -81,10 +82,8 @@ class FormationVideoController extends Controller
     public function update(Request $request, string $id)
     {
         $validate = Validator::make($request->all(),[
-            'formation_id'=>'required | exists: formations,id',
-            'video_url'=>'sometimes|file|mimes:mp4,mov,avi,wmv',
-            'titre'=>'string',
-            'ordre'=>'number|min:1'
+            'titre'=>'string|nullable',
+            'ordre'=>'number|min:1|nullable'
         ]);
         $video =  FormationVideo::findOrFail($id);
         if(!$video){
@@ -97,22 +96,15 @@ class FormationVideoController extends Controller
         else{
             $existingVideo = FormationVideo::where('formation_id',$video->formation_id)
             ->where('ordre',$request->ordre)
-            ->where('id','!=',$id)
+            ->where('id','!=',(int)$id)
             ->first();
             if($existingVideo){
                 return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
             }
             $video->update($request->only(['titre', 'ordre']));
-            if (isset($request->video)  && $request->video->isValid()) 
-            {
-                $videoUri = $this->vimeoService->uploadVideo($request->video);
-                $video->video_path = $videoUri ;
-            }
             
-        
         $video->save();
-        alert()->success('Vidéo modifié avec succés')->position('middle');
-            
+        toast('Vidéo modifié avec succés!','success')->autoClose(2500);
         return redirect()->route("formations.show",$video->formation_id);
     }
     }
