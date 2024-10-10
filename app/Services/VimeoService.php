@@ -24,8 +24,7 @@ class VimeoService{
         return $response;
     }
 
-    public function getVideos()
-    {
+    public function getVideos(){
         $response = $this->vimeo->request('/me/videos');
         return $response['body']['data']; 
     }

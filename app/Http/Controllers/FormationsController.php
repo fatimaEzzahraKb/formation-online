@@ -77,14 +77,14 @@ class FormationsController extends Controller
                 $video = $videoData['video'];
                 if (isset($videoData) && $video && $video->isValid()) 
                 {
-                    $videoUri = $this->vimeoService->uploadVideo($video);
+                    $videoUri = $video->store('videos', 'public');
+                    FormationVideo::create([
+                        'video_path'=>$videoUri,
+                        'formation_id'=>$formation->id,
+                        'titre'=>$videoData['titre'],
+                        'ordre'=>$videoData['ordre']
+                    ]);
                 }
-                FormationVideo::create([
-                    'video_path'=>$videoUri,
-                    'formation_id'=>$formation->id,
-                    'titre'=>$videoData['titre'],
-                    'ordre'=>$videoData['ordre']
-                ]);
             };
             }
             toast('Formation ajourtée avec succés!','success')->autoClose(2500);
@@ -140,7 +140,6 @@ class FormationsController extends Controller
 }
 
     public function destroy( $id){
-        $videos = FormationVideo::where('formation_id',$id)->delete(); 
         $formation = Formation::findOrFail($id);
         $formation->delete();
         toast('Formation supprimée avec succés!','success')->autoClose(2500);
@@ -165,7 +164,7 @@ class FormationsController extends Controller
             $video = $videoData['video'];
             if (isset($videoData) && $video && $video->isValid()) 
             {
-                $videoUri = $this->vimeoService->uploadVideo($video);
+                $videoUri = $video->store('videos', 'public');
                 FormationVideo::create([
                     'video_path'=>$videoUri,
                     'formation_id'=>$id,
