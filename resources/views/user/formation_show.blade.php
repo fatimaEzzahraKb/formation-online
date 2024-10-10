@@ -55,7 +55,10 @@
                                 @foreach($formation->videos->sortBy('ordre') as $video)
                                       
                                     <div class="video-display mt-3" style="display:flex;">
-                                    <iframe class="vimeo-player" src="https://player.vimeo.com/video/{{ basename($video->video_path) }}?dnt=1&autoplay=0&muted=0&color=ff0080" width="300" height="150" frameborder="0" allowfullscreen></iframe>
+                                    <video width="280" height="160" controls>
+                                        <source src="{{asset('storage/'.$video->video_path)}}" type="video/mp4">
+                                        Votre navigateur n'affiche pas les vidéos.
+                                    </video>
                                         <div class="video-details" style="display:flex;align-items:center">
                                             <h5
                                              style="text-transform:capitalize">{{ $video->ordre }} - {{ $video->titre }} </h5
