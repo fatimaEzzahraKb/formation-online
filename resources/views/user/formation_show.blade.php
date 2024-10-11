@@ -55,7 +55,7 @@
                                 @foreach($formation->videos->sortBy('ordre') as $video)
                                       
                                     <div class="video-display mt-3" style="display:flex;">
-                                    <video width="280" height="160" controls>
+                                    <video width="280" height="160"  controlsList="nodownload" controls>
                                         <source src="{{asset('storage/'.$video->video_path)}}" type="video/mp4">
                                         Votre navigateur n'affiche pas les vidéos.
                                     </video>

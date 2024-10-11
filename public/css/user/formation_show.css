@@ -35,19 +35,20 @@
     
     text-wrap: wrap;
 }
-        .video-display:hover{
-            background-color: rgb(245, 251, 255);
-            transform: scale(1.08);
-            box-shadow: 1px 10px 30px 1px rgb(194, 194, 194) ;
-            transition: transform 0.3s ease;
-            
-        }
-        .video-display{
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease; 
-        }
+.video-display:hover{
+    background-color: rgb(245, 251, 255);
+    transform: scale(1.08);
+    box-shadow: 1px 10px 30px 1px rgb(194, 194, 194) ;
+    transition: transform 0.3s ease;
+    
+}
+.video-display{
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease; 
+    gap: 30px;
+}
 .ControlBar_module_progressBarAndButtons__0f8e1b0f a.Link_module_link__5efef3b8  {
     display: none !important;
 }
