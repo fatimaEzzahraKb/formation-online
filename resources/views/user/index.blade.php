@@ -1,5 +1,5 @@
 @extends('user.layout')
-@section('title','home')
+@section('title','Acceuil ')
 @section('content')
    <div class="hero per-container">
     <h3>Nous sommes ravis de vous retrouver, {{Auth::user()->username}} </h3>

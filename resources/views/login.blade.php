@@ -13,7 +13,7 @@
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 
-    <title>Document</title>
+    <title>Se connecter à V Formations</title>
 </head>
 <body>
 <div class="container">

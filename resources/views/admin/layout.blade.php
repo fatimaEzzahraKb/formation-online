@@ -59,7 +59,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Noty Alerts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <title>Document</title>
+    <link rel="icon" href="{{ asset('images/logo_V.jpeg') }}" type="image/x-icon">
+    <title>@yield('title','V Formations en ligne Fiduciaire Brighten') </title>
 </head>
 <body>
     <div class="body-container ">
