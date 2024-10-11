@@ -36,15 +36,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('categories', CategoryController::class)->except(['destroy']);
         Route::resource('souscategories', SouscategoryController::class)->except(['destroy']);
         Route::resource('formation_videos', FormationVideoController::class)->except(['destroy']);
-        Route::resource('users', UsersController::class)->only(['show','index','edit','update']);
+        Route::resource('users', UsersController::class)->except(['destroy']);
         Route::get('settings',function(){
             return view('admin/settings');
         })->name('settings');
             // Super Admin routes
         Route::middleware('superadmin')->group(function() {
             
-            Route::get('users/create',[ UsersController::class,'create'])->name('users.create');
-            Route::resource('users', UsersController::class)->except(['show','index','edit','update']);
+            Route::get('users/create', [UsersController::class, 'create'])->name('users.create');
+            Route::resource('users', UsersController::class)->only(['destroy']);
             Route::resource('categories', CategoryController::class)->only(['destroy']);
             Route::resource('souscategories', SouscategoryController::class)->only(['destroy']);
             Route::resource('formation_videos', FormationVideoController::class)->only(['destroy']);
