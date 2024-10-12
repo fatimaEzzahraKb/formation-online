@@ -25,16 +25,22 @@
     background-color: #007BFF;
     color: white;
 }
-.video-input{
+.video-input , .audio-input{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
-.video-input input[type="number"]{
+.video-input input[type="number"], .audio-input input[type="number"]{
     width:100px
 }
+
 #video-inputs-container{
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.audio-input  {
+    margin: 20px 0px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(151, 151, 151);
 }

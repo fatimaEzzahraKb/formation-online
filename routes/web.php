@@ -32,7 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->group(function() {
         Route::get('admin', [DashboardController::class,'datavisualisation'])->name('admin');
         Route::resource('formations', FormationsController::class)->except(['destroy']);
+        Route::get('formations_add_audio', [FormationsController::class,'create_audio'])->name("formations_audio.create");
         Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
+        Route::post('ajouter_audios/{id}', [FormationsController::class, 'add_audios'])->name('ajouter_audios');
         Route::resource('categories', CategoryController::class)->except(['destroy']);
         Route::resource('souscategories', SouscategoryController::class)->except(['destroy']);
         Route::resource('formation_videos', FormationVideoController::class)->except(['destroy']);

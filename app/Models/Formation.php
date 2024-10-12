@@ -12,7 +12,8 @@ class Formation extends Model
     'image_url',
     'video_url',
     'category_id',
-    'souscategory_id'
+    'souscategory_id',
+    'type'
 ];
     use HasFactory;
     public function category(){
@@ -29,6 +30,9 @@ class Formation extends Model
     }
     public function videos(){
         return $this->hasMany(FormationVideo::class);
+    }
+    public function audios(){
+        return $this->hasMany(FormationAudio::class);
     }
     public function blocked(){
         return $this->hasMany(BlockedFormation::class);

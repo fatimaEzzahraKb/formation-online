@@ -55,30 +55,30 @@
                     
                 </div>
                 <div class="mb-3 row-forms">
-                        <label for="formFileMultiple" class="form-label">Vidéos:</label>
-                        <div id="video-inputs-container" >
-                            @if(old('videos'))
-                                @foreach( old('videos') as $index =>$video  )
-                                <div class="video-input mb-3">
-                                    <input type="file" class="form-control" name="videos[{{ $index }}][video]" accept="video/*">
-                                    <input type="text" class="form-control" name="videos[{{ $index }}][titre]" placeholder="Titre" value="{{ $video['titre'] }}">
-                                    <input type="number" class="form-control" name="videos[{{ $index }}][ordre]" placeholder="Ordre" value="{{ $video['ordre'] }}" min="1">                                
-                                </div>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div style="display:flex;align-items:end;">
-                        <button  type="button" class=" btn btn-secondary" id="add-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
+                    <label for="formFileMultiple" class="form-label">Vidéos:</label>
+                    <div id="video-inputs-container" >
+                        @if(old('videos'))
+                            @foreach( old('videos') as $index =>$video  )
+                            <div class="video-input mb-3">
+                                <input type="file" class="form-control" name="videos[{{ $index }}][video]" accept="video/*">
+                                <input type="text" class="form-control" name="videos[{{ $index }}][titre]" placeholder="Titre" value="{{ $video['titre'] }}">
+                                <input type="number" class="form-control" name="videos[{{ $index }}][ordre]" placeholder="Ordre" value="{{ $video['ordre'] }}" min="1">                                
+                            </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <div style="display:flex;align-items:end;">
+                    <button  type="button" class=" btn btn-secondary" id="add-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
 
-                        </div>
+                    </div>
                 
                         
                        
-                    </div>
+                </div>
                      @error('videos')
                                     <p class="error"> {{$message}} </p>
                         @enderror
-
+                        
                     <div class="row-flex mb-3  row-forms" id="category">
                             <label for="">Catégorie : </label> 
                                 <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
@@ -110,6 +110,7 @@
                                 </div>
                                 @endif -->
                          </div>
+                         <input type="hidden" name="type" value="vidéo">
                             <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             
                         </form>
@@ -232,5 +233,6 @@
             container.appendChild(videoInputDiv)
 
         })
+       
     </script>
 @endsection

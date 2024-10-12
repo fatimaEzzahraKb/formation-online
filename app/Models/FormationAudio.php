@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormationVideo extends Model
+class FormationAudio extends Model
 {
     use HasFactory;
-    protected $fillable = ["video_path","formation_id","ordre","titre"];
+    protected $fillable = ["audio","formation_id","ordre","titre","lien_video"];
     public function formation(){
         return $this->belongsTo(Formation::class);
     }

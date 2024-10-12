@@ -7,7 +7,9 @@
    <div class="formations">
     <!-- les formations sous format de cards -->
      <div class="formation-cards">
-        
+        @if($souscategory->formations->isEmpty())
+          <h6 style="margin:20px;" >Aucune formation pour le moment </h6 >
+        @endif
         @foreach($souscategory->formations as $formation)
 
           <a href=" {{route('user_formation.show',$formation->id)}}?fromSubCat=true " class="formation-card">

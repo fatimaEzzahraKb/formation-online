@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Formation;
 use App\Models\FormationVideo;
+use App\Models\FormationAudio;
 use App\Services\VimeoService;
 
 class FormationsController extends Controller
@@ -22,14 +23,20 @@ class FormationsController extends Controller
         $this->vimeoService = $vimeoService;
     }
     public function index(){
-        $formations  = Formation::with('category','souscategory','videos')->get();
-        return view('admin/formations')->with(['formations'=>$formations]);
+        $formationsAudios  = Formation::with('category','souscategory','videos','audios')->where('type',"audio")->get();
+        $formationsVideos  = Formation::with('category','souscategory','videos','audios')->where('type',"vidéo")->get();
+        return view('admin/formations')->with(['formationsVideos'=>$formationsVideos,"formationsAudios"=>$formationsAudios]);
     }
     public function create(){
         $categories = Category::with('souscategories')->get();
-        return view('admin/formations_add')->with('categories',$categories);
+        return view('admin/formations_vid_add')->with('categories',$categories);
+    }
+    public function create_audio(){
+        $categories = Category::with('souscategories')->get();
+        return view('admin/formations_audio_add')->with('categories',$categories);
     }
     public function store(Request $request){
+        Log::info($request->all());
         $validateData = $request->validate([
             'titre' => 'required|string|unique:formations',
             'description' => 'required|string',
@@ -40,23 +47,25 @@ class FormationsController extends Controller
             'videos.*.video' => 'file|nullable',
             'videos.*.titre' => 'string|nullable',
             'videos.*.ordre' => 'integer|nullable|min:1',
-        ], [
-            'titre.required' => 'Le titre est requis.',
-            'titre.string' => 'Le titre doit être une chaîne de caractères.',
-            'titre.unique' => 'Le titre doit être unique.',
-            'description.required' => 'La description est requise.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
-            'image_url.required' => 'L\'image est requise.',
-            'image_url.image' => 'Le fichier doit être une image.',
-            'image_url.mimes' => 'L\'image doit être au format jpeg, png, jpg, gif ou webp.',
-            'image_url.max' => 'L\'image ne peut pas dépasser 20 Mo.',
-            'category_id.required' => 'La catégorie est requise.',
-            'category_id.exists' => 'La catégorie sélectionnée n\'existe pas.',
-            'souscategory_id.required' => 'La sous-catégorie est requise.',
-            'souscategory_id.exists' => 'La sous-catégorie sélectionnée n\'existe pas.',
-            'videos.required' => 'Vous devez saisir au moins une vidéo.',
-            'videos.array' => 'Les vidéos doivent être un tableau.',
-            'videos.*.file' => 'Chaque vidéo doit être un fichier.'
+            'audios' => 'sometimes|array',
+            'audios.*.audio' => 'file|nullable',
+            'audios.*.titre' => 'string|nullable',
+            'audios.*.ordre' => 'integer|nullable|min:1',
+            ], [
+                'titre.required' => 'Le titre est requis.',
+                'titre.string' => 'Le titre doit être une chaîne de caractères.',
+                'titre.unique' => 'Le titre doit être unique.',
+                'description.required' => 'La description est requise.',
+                'description.string' => 'La description doit être une chaîne de caractères.',
+                'image_url.required' => 'L\'image est requise.',
+                'image_url.image' => 'Le fichier doit être une image.',
+                'image_url.mimes' => 'L\'image doit être au format jpeg, png, jpg, gif ou webp.',
+                'image_url.max' => 'L\'image ne peut pas dépasser 20 Mo.',
+                'category_id.required' => 'La catégorie est requise.',
+                'category_id.exists' => 'La catégorie sélectionnée n\'existe pas.',
+                'souscategory_id.required' => 'La sous-catégorie est requise.',
+                'souscategory_id.exists' => 'La sous-catégorie sélectionnée n\'existe pas.',
+                'videos.*.file' => 'Chaque vidéo doit être un fichier.'
         ]);
         
         $imagePath = $request->file('image_url')->store('images', 'public');
@@ -66,8 +75,11 @@ class FormationsController extends Controller
                 "image_url"=>$imagePath,
                 "category_id"=>$request->category_id,
                 "souscategory_id"=>$request->souscategory_id,
+                "type"=>$request->type,
             ]);
-            
+        Log::info($formation);
+
+        if($request->type==="vidéo"){
             if($request->videos)  {  
             foreach($request->videos as $videoData){
                 $orders = collect($request->videos)->pluck('ordre');
@@ -87,24 +99,51 @@ class FormationsController extends Controller
                 }
             };
             }
+        }
+        elseif($request->type==="audio") {
+            if($request->audios)  {  
+                foreach($request->audios as $audioData){
+                    $orders = collect($request->audios)->pluck('ordre');
+                    if ($orders->count() !== $orders->unique()->count()) {
+                        return redirect()->back()->withErrors(['audios.*.ordre' => 'Les ordres des vidéos doivent être uniques.'])->withInput();
+                    }
+                    $audio = $audioData['audio'];
+                    if (isset($audioData) && $audio && $audio->isValid()) 
+                    {
+                        $audio_path = $audio->store('videos', 'public');
+                        FormationAudio::create([
+                            'audio'=>$audio_path,
+                            'formation_id'=>$formation->id,
+                            'titre'=>$audioData['titre'],
+                            'lien_video'=>$audioData['lien'],
+                            'ordre'=>$audioData['ordre']
+                        ]);
+                    }
+                };
+                }
+                
+            }
             toast('Formation ajourtée avec succés!','success')->autoClose(2500);
 
             return $this->index();
         
     }
     public function show($id){
-        $formation = Formation::with('category','souscategory','videos')->find($id)    ;
+        $formation = Formation::with('category','souscategory','videos','audios')->find($id)    ;
         if(!$formation){
           return response()->json([
             'status'=>404,
             'message'=>'Formation Non trouvé'
           ]);  
         }
-        return view('admin/formation_show')->with('formation',$formation);
+        if($formation->type==="audio"){
+            return view('admin/formation_audios_show')->with('formation',$formation);
+        }
+        return view('admin/formation_vid_show')->with('formation',$formation);
         
     }
     public function edit($id){
-        $formation = formation::with('category','souscategory','videos')->find($id);
+        $formation = formation::with('category','souscategory','videos','audios')->find($id);
         $categories = Category::with('souscategories')->get();
         return view('admin/formation_update')->with(['formation' => $formation, 'categories' => $categories]);
     }
@@ -178,4 +217,37 @@ class FormationsController extends Controller
         };
         return $this->show($id);
     }
+    public function add_audios(Request $request, $id){
+        $request->validate([
+             'audios' => 'required|array',
+             'audios.*.audio' => 'required|file',
+             'audios.*.titre' => 'required|string',
+             'audios.*.ordre' => 'required|integer|min:1',
+         ],[
+             'videos.*.ordre' => 'chaque video doit avoir un ordre spécifié',
+             'videos.*.titre' => 'Chaque vidéo doit avoir un titre'
+         ]);
+         foreach($request->audios as $audioData){
+             $existingAudio = FormationAudio::where('formation_id',$id)
+             ->where('ordre',$audioData['ordre'])
+             ->first();
+             if($existingAudio){
+                 return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
+             }
+             
+             $audio = $audioData['audio'];
+             if (isset($audioData) && $audio && $audio->isValid()) 
+             {
+                 $audio_path = $audio->store('videos', 'public');
+                 FormationVideo::create([
+                     'audio'=>$audio_path,
+                     'formation_id'=>$id,
+                     'titre'=>$audioData['titre'],
+                     'lien_video'=>$audioData['lien_video'],
+                     'ordre'=>$audioData['ordre']
+                 ]);
+             }
+         };
+         return $this->show($id);
+     }
 }
