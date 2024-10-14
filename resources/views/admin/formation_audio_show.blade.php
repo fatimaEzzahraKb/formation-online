@@ -71,27 +71,26 @@
                 <div class="card videos-card mb-3 mt-8">
                     <div class="card-body">
                         <div class="videos-container">
-                            @if($formation->videos->isNotEmpty())
-                                @foreach($formation->videos->sortBy('ordre') as $video)
-                                    <div class="video-display mt-3">
-                                        <a href="{{asset('storage/'.$video->video_path)}}">
-                                        <video width="280" height="160"  controlsList="nodownload" controls>
-                                                <source src="{{asset('storage/'.$video->video_path)}}" type="video/mp4">
-                                                Votre navigateur n'affiche pas les vidéos.
-                                            </video>
+                            @if($formation->audios->isNotEmpty())
+                                @foreach($formation->audios->sortBy('ordre') as $audio)
+                                    <div class="video-display audio-display mt-3">
+                                            <audio width="280" height="160"  controlsList="nodownload" controls>
+                                                <source src="{{asset('storage/'.$audio->audio)}}" type="audio/mpeg">
+                                                <source src="{{asset('storage/'.$audio->audio)}}" type="audio/ogg">
+                                                Votre navigateur n'affiche pas les audios.
+                                            </audio>
                                             <div class="video-details">
-                                            <h3 style="text-transform:capitalize;text-align:center;">{{ $video->ordre }} - {{ $video->titre }}</h3>
+                                            <h3 style="text-transform:capitalize;margin-left:15px;">{{ $audio->ordre }} - {{ $audio->titre }}</h3>
                                         </div>
-                                    </a>
                                         <div style="display:flex; gap:10px;">
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#videoModal" 
-                                                    data-video-id="{{ $video->id }}"
-                                                    data-video-title="{{ $video->titre }}"
-                                                    data-video-ordre="{{ $video->ordre }}">
+                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#audioModal" 
+                                                    data-audio-id="{{ $audio->id }}"
+                                                    data-audio-title="{{ $audio->titre }}"
+                                                    data-audio-ordre="{{ $audio->ordre }}">
                                                 <i class="bi bi-pencil-square text-success" style="font-size:20px"></i>
                                             </button>
                                             @if(Auth::user()->permission === "super_admin")
-                                            <form action="{{route('formation_videos.destroy',$video->id)}}" method="post" >
+                                            <form action="{{route('audios.destroy',$audio->id)}}" method="post" >
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn" onclick="confirmDelete(this)"><i style="font-size:20px" class="bi bi-trash3 text-danger" ></i></button>
@@ -102,16 +101,16 @@
                                 @endforeach
                             </div>
                             @else
-                                <h4>Aucune vidéo pour le moment</h4>
+                                <h4>Aucun audio pour le moment</h4>
                             @endif
                         </div>
 
-                        <form action="{{ route('ajouter_videos', $formation->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('ajouter_audios', $formation->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="m-3">
-                                <div id="video-inputs-container"></div>
+                                <div id="audio-inputs-container"></div>
                                 <div style="display:flex; justify-content:center; width:100%; margin-top:10px;">
-                                    <button type="button" class="btn btn-primary" id="add-video-btn"><i class="bi bi-folder-plus"></i> Ajouter</button>
+                                    <button type="button" class="btn btn-primary" id="add-audio-btn"><i class="bi bi-folder-plus"></i> Ajouter</button>
                                 </div>
                                 <button type="submit" class="btn btn-success m-6" id="submit-btn" style="display:none;">Valider</button>
                                 @error('videos')
@@ -134,25 +133,25 @@
 </div>
 
 <!-- Modal for updating video -->
-<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+<div class="modal fade" id="audioModal" tabindex="-1" aria-labelledby="audioModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="videoModalLabel">Update Video</h5>
+                <h5 class="modal-title" id="videoModalLabel">Modifier l'audio</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="videoUpdateForm" method="POST">
+            <form id="audioUpdateForm" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
-                    <input type="hidden" id="videoId" name="video_id">
+                    <input type="hidden" id="audioId" name="video_id">
                     <div class="mb-3">
-                        <label for="videoTitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="videoTitle" name="titre" required>
+                        <label for="audioTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="audioTitle" name="titre" required>
                     </div>
                     <div class="mb-3">
-                        <label for="videoOrdre" class="form-label">Order</label>
-                        <input type="number" class="form-control" id="videoOrdre" name="ordre" required>
+                        <label for="audioOrdre" class="form-label">Order</label>
+                        <input type="number" class="form-control" id="audioOrdre" name="ordre" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -168,60 +167,72 @@
 
 @section('scripts')
 <script>
-    document.getElementById('add-video-btn').addEventListener('click', function () {
-        const container = document.getElementById('video-inputs-container');
-        const videoCount = container.children.length;
+    //Pour ajouter as much audios as we want
+    document.getElementById('add-audio-btn').addEventListener('click', function () {
+        const container = document.getElementById('audio-inputs-container');
+        const audiosCount = container.children.length;
         const submit_btn = document.getElementById('submit-btn');
         submit_btn.style.display = "block";
 
-        const videoInputDiv = document.createElement('div');
-        videoInputDiv.classList.add('video-input');
+        const audioInputDiv = document.createElement('div');
+        audioInputDiv.classList.add('video-input');
 
-        const videoInput = document.createElement("input");
-        videoInput.type = "file";
-        videoInput.classList.add("form-control");
-        videoInput.name = `videos[${videoCount}][video]`;
-        videoInput.accept = "video/*";
+        const audioInput = document.createElement("input");
+        audioInput.type = "file";
+        audioInput.classList.add("form-control");
+        audioInput.name = `audios[${audiosCount}][audio]`;
+        audioInput.accept = "audio/*";
 
         const titleInput = document.createElement("input");
         titleInput.type = "text";
         titleInput.classList.add("form-control");
-        titleInput.name = `videos[${videoCount}][titre]`;
-        titleInput.placeholder = "Titre de la video";
+        titleInput.name = `audios[${audiosCount}][titre]`;
+        titleInput.placeholder = "Titre de l'audio";
 
         const orderInput = document.createElement("input");
         orderInput.classList.add("form-control");
         orderInput.type = "number";
-        orderInput.name = `videos[${videoCount}][ordre]`;
+        orderInput.name = `audios[${audiosCount}][ordre]`;
         orderInput.placeholder = "Ordre";
 
-        videoInputDiv.appendChild(videoInput);
-        videoInputDiv.appendChild(titleInput);
-        videoInputDiv.appendChild(orderInput);
+        const lienVideoInput = document.createElement("input");
+        lienVideoInput.classList.add("form-control");
+        lienVideoInput.type = "text";
+        lienVideoInput.classList.add("form-control");
+        lienVideoInput.name = `audios[${audiosCount}][lien_video]`;
+        lienVideoInput.placeholder = "Lien de la vidéo liée";
 
-        container.appendChild(videoInputDiv);
+        audioInputDiv.appendChild(audioInput);
+        audioInputDiv.appendChild(titleInput);
+        audioInputDiv.appendChild(lienVideoInput);
+        audioInputDiv.appendChild(orderInput);
+
+        container.appendChild(audioInputDiv);
     });
 
-    const videoModal = document.getElementById('videoModal');
-    videoModal.addEventListener('show.bs.modal', function (event) {
+
+    // Pour Le Modal de la modification de l'audio
+
+    const audioModal = document.getElementById('audioModal');
+    audioModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget; 
-        const videoId = button.getAttribute('data-video-id');
-        const videoTitle = button.getAttribute('data-video-title');
-        const videoOrdre = button.getAttribute('data-video-ordre');
+        const audioId = button.getAttribute('data-audio-id');
+        const audioTitle = button.getAttribute('data-audio-title');
+        const audioOrdre = button.getAttribute('data-audio-ordre');
 
         // Update the modal's content.
-        const modalTitle = videoModal.querySelector('.modal-title');
-        const videoIdInput = videoModal.querySelector('#videoId');
-        const videoTitleInput = videoModal.querySelector('#videoTitle');
-        const videoOrdreInput = videoModal.querySelector('#videoOrdre');
+        const modalTitle = audioModal.querySelector('.modal-title');
+        const  audioIdInput = audioModal.querySelector('#audioId');
+        const audioTitleInput = audioModal.querySelector('#audioTitle');
+        const audioOrdreInput = audioModal.querySelector('#audioOrdre');
 
-        modalTitle.textContent = 'Update Video: ' + videoTitle;
-        videoIdInput.value = videoId;
-        videoTitleInput.value = videoTitle;
-        videoOrdreInput.value = videoOrdre;
+        modalTitle.textContent = 'Update Video: ' + audioTitle;
+        audioIdInput.value = audioId;
+        audioTitleInput.value = audioTitle;
+        audioOrdreInput.value = audioOrdre;
 
         // Update form action URL
-        document.getElementById('videoUpdateForm').action = `/formation_videos/${videoId}`;
+        document.getElementById('audioUpdateForm').action = `/formation_audios/${audioId}`;
     });
 
     // SWEET ALERT DELETE CONFIRM

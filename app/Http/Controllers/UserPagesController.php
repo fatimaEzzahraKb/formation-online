@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Log;
 class UserPagesController extends Controller
 {
     public function acceuil(){
-        $formations = Formation::with('category','souscategory')->get();
+        $formations_video = Formation::with('category','souscategory')->where('type','vidéo')->get();
+        $formations_audio = Formation::with('category','souscategory')->where('type','audio')->get();
         $favoris  = Favoris::with('user','formation')->where('user_id',Auth::user()->id)->get();
         
-        return view('user/index',compact('formations','favoris'));
+        return view('user/index',compact('formations_video','formations_audio','favoris'));
     }
     public function subcategory_show($id){
         
@@ -31,7 +32,7 @@ class UserPagesController extends Controller
         if ($response['status'] === 200) {
             return $response['body']['duration']; 
         }
-
+        
         return null; 
     }
     public function formation_show(Request $request, $id){

@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FormationsController;
 use App\Http\Controllers\FormationVideoController;
+use App\Http\Controllers\FormationAudioController;
 use App\Http\Controllers\FavorisController;
 use App\Http\Controllers\UserPagesController;
 // Guest Routes
@@ -37,7 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('ajouter_audios/{id}', [FormationsController::class, 'add_audios'])->name('ajouter_audios');
         Route::resource('categories', CategoryController::class)->except(['destroy']);
         Route::resource('souscategories', SouscategoryController::class)->except(['destroy']);
-        Route::resource('formation_videos', FormationVideoController::class)->except(['destroy']);
+        Route::resource('formation_videos', FormationVideoController::class);
+        Route::resource('formation_audios', FormationAudioController::class)->except(['destroy']);
         Route::resource('users', UsersController::class)->except(['destroy']);
         Route::get('settings',function(){
             return view('admin/settings');
@@ -50,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::resource('categories', CategoryController::class)->only(['destroy']);
             Route::resource('souscategories', SouscategoryController::class)->only(['destroy']);
             Route::resource('formation_videos', FormationVideoController::class)->only(['destroy']);
+            Route::delete('formation_audios-destroy/{id}', [FormationAudioController::class,'destroy'])->name('audios.destroy');
             Route::resource('formations', FormationsController::class)->only(['destroy']);
         });
     });

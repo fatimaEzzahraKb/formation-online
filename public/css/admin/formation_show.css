@@ -29,11 +29,30 @@
 iframe{
     cursor: pointer;
 }
+
+
+
+audio{
+    width: 100%;
+    margin:10px 15px;
+}
+.audio-display{
+    width: 50% !important;
+    padding: 5px;
+}
 @media screen and (max-width:395px) {
     iframe{
         width: 15rem;
     }
+
 }
-
-
-
+@media screen and (max-width:650px) {
+    
+    audio{
+        width: 100%;
+    }
+    .audio-display{
+        
+        width: 100% !important;
+    }
+}

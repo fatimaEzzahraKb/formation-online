@@ -234,7 +234,7 @@
 
             audioInputDiv.appendChild(audioInput);
             audioInputDiv.appendChild(titleInput);
-            audioInputDiv.appendChild(linkInput);
+            // audioInputDiv.appendChild(linkInput);
             
 
             audioInputDiv.appendChild(orderInput);

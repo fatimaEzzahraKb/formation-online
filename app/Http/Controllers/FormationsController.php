@@ -110,7 +110,7 @@ class FormationsController extends Controller
                     $audio = $audioData['audio'];
                     if (isset($audioData) && $audio && $audio->isValid()) 
                     {
-                        $audio_path = $audio->store('videos', 'public');
+                        $audio_path = $audio->store('audios', 'public');
                         FormationAudio::create([
                             'audio'=>$audio_path,
                             'formation_id'=>$formation->id,
@@ -137,7 +137,7 @@ class FormationsController extends Controller
           ]);  
         }
         if($formation->type==="audio"){
-            return view('admin/formation_audios_show')->with('formation',$formation);
+            return view('admin/formation_audio_show')->with('formation',$formation);
         }
         return view('admin/formation_vid_show')->with('formation',$formation);
         
@@ -183,7 +183,7 @@ class FormationsController extends Controller
         $formation->delete();
         toast('Formation supprimée avec succés!','success')->autoClose(2500);
 
-        return back();
+        return $this->index();
     }
     public function add_videos(Request $request, $id){
        $request->validate([
@@ -215,7 +215,9 @@ class FormationsController extends Controller
                 ]);
             }
         };
-        return $this->show($id);
+        toast('Vidéo ajourtée avec succés!','success')->autoClose(2500);
+
+        return back();
     }
     public function add_audios(Request $request, $id){
         $request->validate([
@@ -232,14 +234,14 @@ class FormationsController extends Controller
              ->where('ordre',$audioData['ordre'])
              ->first();
              if($existingAudio){
-                 return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
+                 return redirect()->back()->withErrors(['order'=>'Il y a déjà un audio de cette ordre']);
              }
              
              $audio = $audioData['audio'];
              if (isset($audioData) && $audio && $audio->isValid()) 
              {
-                 $audio_path = $audio->store('videos', 'public');
-                 FormationVideo::create([
+                 $audio_path = $audio->store('audios', 'public');
+                FormationAudio::create([
                      'audio'=>$audio_path,
                      'formation_id'=>$id,
                      'titre'=>$audioData['titre'],
@@ -248,6 +250,8 @@ class FormationsController extends Controller
                  ]);
              }
          };
-         return $this->show($id);
+         toast('Audio ajourtée avec succés!','success')->autoClose(2500);
+
+         return back();
      }
 }

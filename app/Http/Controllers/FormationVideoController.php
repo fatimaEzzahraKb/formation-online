@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Services\VimeoService;
 use App\Models\FormationVideo;
 
@@ -18,12 +19,7 @@ class FormationVideoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $formation_videos  = FormationVideo::with('formation')->get();
 
-        return response()->json( ['formation_videos'=>$formation_videos]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,26 +52,7 @@ class FormationVideoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $video = FormationVideo::with('formation')->find($id);
-        if(!$video){
-          return response()->json([
-            'status'=>404,
-            'message'=>'video Non trouvé'
-          ]);  
-        }
-        else{
-            return response()->json([
-                'video'=>$video
-            ]);
-        }
     
-    }
-    public function edit($id){
-        $video = FormartionVideo::with('formation')->find($id);
-        return view('admin/video_update')->with('video',$video);
-    }
     /**
      * Update the specified resource in storage.
      */
@@ -105,7 +82,7 @@ class FormationVideoController extends Controller
             
         $video->save();
         toast('Vidéo modifié avec succés!','success')->autoClose(2500);
-        return redirect()->route("formations.show",$video->formation_id);
+        return back();
     }
     }
     /**
@@ -115,15 +92,16 @@ class FormationVideoController extends Controller
     {
         $video = FormationVideo::findOrFail($id);
         $formation_id = $video->formation_id;
-        $this->vimeoService->deleteVideo($video->video_path);
+        Storage::disk('public')->delete($video->video_path);
         $video->delete();
-        alert()->success('Vidéo supprimée avec succés')->position('middle');
-        return redirect()->route("formations.show",$formation_id);
+        toast('Vidéo supprimée avec succés!','success')->autoClose(2500);
+        
+        return back();
     
     }
     public function show_course_videos($formation_id){
         $videos = FormationVideo::where('formation_id',$formation_id)->get();
-        return view('admin/fomation_videos')->with('videos',$videos);
+        return back();
 
     }
     public function initialize_course($formation_id){

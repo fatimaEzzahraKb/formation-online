@@ -50,10 +50,11 @@
                 <div class="card videos-card mb-3 mt-8">
                     <div class="card-body">
                         <div class="videos-container">
+                            
                             <h4><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Vidéos: </h4>
                             @if($formation->videos->isNotEmpty())
                                 @foreach($formation->videos->sortBy('ordre') as $video)
-                                      
+                                        
                                     <div class="video-display mt-3" style="display:flex;">
                                     <video width="280" height="160"  controlsList="nodownload" controls>
                                         <source src="{{asset('storage/'.$video->video_path)}}" type="video/mp4">
@@ -61,14 +62,34 @@
                                     </video>
                                         <div class="video-details" style="display:flex;align-items:center">
                                             <h5
-                                             style="text-transform:capitalize">{{ $video->ordre }} - {{ $video->titre }} </h5
+                                             style="text-transform:capitalize; color:black;">{{ $video->ordre }} - {{ $video->titre }} </h5
                                             >
                                         </div>
                                     </div>
+                                    
                                 @endforeach
-                            </div>
+                                </div>
+                            @elseif($formation->audios->isNotEmpty())
+                            @foreach($formation->audios->sortBy('ordre') as $audio)
+                                         
+                                    <div class="video-display mt-3" style="display:flex;">
+                                        
+                                        <div class="video-details" style="display:flex;align-items:center">
+                                            <h5
+                                             style="text-transform:capitalize; color:black;">{{ $audio->ordre }} - {{ $audio->titre }} </h5
+                                            >
+                                        </div>
+                                        <audio width="280" height="160"  controlsList="nodownload" controls>
+                                            <source src="{{asset('storage/'.$audio->audio)}}" type="audio/mpeg">
+                                            <source src="{{asset('storage/'.$audio->audio)}}" type="audio/ogg">
+                                            Votre navigateur n'affiche pas les audios.
+                                        </audio>
+                                    </div>
+                                    
+                                    
+                                @endforeach
                             @else
-                                <h4>Aucune vidéo pour le moment</h4>
+                                <h4>Aucun contenu pour le moment</h4>
                             @endif
                         </div>
 
@@ -84,12 +105,10 @@
 @section('scripts')
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
-    const vimeo_videos = document.getElementsByClassName("vimeo-player");
-    Array.from(vimeo_videos).forEach(function(video) { 
-        const player = new Vimeo.Player(video);
-        player.on('play', function() {
-            console.log('playing');
-        });
+
+    // Pour ne pas donner l'accès à télécharger les vidéos
+    document.querySelector('video').addEventListener('contextmenu', function(e) {
+        e.preventDefault(); // Disable right-click context menu
     });
     function confirmDelete(button){
             const form = $(button).closest('form');

@@ -47,8 +47,9 @@
    </div>
    </div>
    </div>
-   <div class="formations-container ">
-    <h1><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Formations</h1>
+   <div class="formations-container container">
+    <h1 style="    text-decoration: underline  rgb(0, 204, 255);"> Formations</h1>
+    <h2><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Formations Vidéos </h2> 
    
    <div class="formations">
     <!-- les formations sous format de cards -->
@@ -57,7 +58,30 @@
         @php
           $souscategoryIds = Auth::user()->souscategoriesList->pluck('id')->toArray()
         @endphp
-        @foreach($formations as $formation)
+        @foreach($formations_video as $formation)
+          @if( in_array($formation->souscategory_id, $souscategoryIds) )
+
+          <a href=" {{route('user_formation.show',$formation->id)}} " class="formation-card">
+              
+          <div class="formation-card-img">  
+            <img src="	{{asset('storage/'.$formation->image_url)}}"  alt="">
+          </div>
+          <h4>{{$formation->titre}}</h4>
+          <hr class="line-card"/>
+         
+          </a>  
+              @endif
+          @endforeach
+        
+     </div>
+   </div>
+   <h2><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Formations Audios </h2> 
+
+   <div class="formations">
+    <!-- les formations sous format de cards -->
+     <div class="formation-cards">
+        
+        @foreach($formations_audio as $formation)
           @if( in_array($formation->souscategory_id, $souscategoryIds) )
 
           <a href=" {{route('user_formation.show',$formation->id)}} " class="formation-card">
