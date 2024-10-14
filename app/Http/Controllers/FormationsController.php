@@ -115,7 +115,6 @@ class FormationsController extends Controller
                             'audio'=>$audio_path,
                             'formation_id'=>$formation->id,
                             'titre'=>$audioData['titre'],
-                            'lien_video'=>$audioData['lien'],
                             'ordre'=>$audioData['ordre']
                         ]);
                     }
@@ -226,8 +225,8 @@ class FormationsController extends Controller
              'audios.*.titre' => 'required|string',
              'audios.*.ordre' => 'required|integer|min:1',
          ],[
-             'videos.*.ordre' => 'chaque video doit avoir un ordre spécifié',
-             'videos.*.titre' => 'Chaque vidéo doit avoir un titre'
+             'audios.*.ordre' => 'chaque audio doit avoir un ordre spécifié',
+             'audios.*.titre' => 'Chaque audio doit avoir un titre'
          ]);
          foreach($request->audios as $audioData){
              $existingAudio = FormationAudio::where('formation_id',$id)
@@ -245,7 +244,6 @@ class FormationsController extends Controller
                      'audio'=>$audio_path,
                      'formation_id'=>$id,
                      'titre'=>$audioData['titre'],
-                     'lien_video'=>$audioData['lien_video'],
                      'ordre'=>$audioData['ordre']
                  ]);
              }
