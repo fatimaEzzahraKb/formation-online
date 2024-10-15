@@ -314,12 +314,23 @@ justify-content: center;
     border-radius: 15px; 
     flex: 1 1 30%; 
 }
-
+.table tr, .table td{
+    font-size: 13px !important;
+}
+@media screen and (min-width:1200px) {
+    .table tr, .table td{
+        font-size:18px !important;
+        color: #bc35ff !important;
+    }
+}
+.nav-item  button{
+    font-size: 20px;
+}
 .card-dashboard h1 {
-    font-size: 40px;
+    font-size: 50px;
 }
 .card-dashboard h4{
-    font-size: 20px;
+    font-size: 25px;
 
 }
 .card-dashboard i {

@@ -31,7 +31,6 @@
             <input type="hidden" id='charts_data' data-categories ='@json($categories_chart)' data-users = '@json($users_chart)' >
             <canvas id="myPieChart" width="100" height="100" style="font-size:50px"></canvas>
             <canvas id="myBarChart" width="100" height="100"></canvas>
-            <canvas id="chart" width="100" height="100"></canvas>
             </div>
             <div class="tables-dashboard">
                 <a href=" {{route('users.index')}} ">
