@@ -193,7 +193,13 @@ ul{
  font-family: sans-serif;
  line-height: 30px;
 }
+.results-resp{
+  margin: 20px 10px;
 
+}
+.results-resp{
+  line-height: 50px;
+}
 @media screen and (max-width:870px){
  .menu, .results-desk{
   display: none !important;

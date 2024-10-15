@@ -320,7 +320,6 @@ justify-content: center;
 @media screen and (min-width:1200px) {
     .table tr, .table td{
         font-size:18px !important;
-        color: #bc35ff !important;
     }
 }
 .nav-item  button{

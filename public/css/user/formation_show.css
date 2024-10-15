@@ -66,6 +66,10 @@
     .carte-img{
         justify-content: center;
     }
+    .carte-img img{
+        width: 100%;
+
+    }
     .video-display{
         flex-direction: column;
         justify-content: center;
