@@ -7,6 +7,9 @@
     <!-- bootstrap icons  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+
     <!-- Bootsrap links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="../css/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
@@ -16,11 +19,17 @@
     <title>Se connecter à V Formations</title>
 </head>
 <body>
+
 <div class="container">
+    
 	<div class="screen">
 		<div class="screen__content">
-			<form class="login" method="post" action='login'>
+            
+            <form class="login" method="post" action='login'>
                 @csrf
+    <div style="margin-left:12px;margin-bottom:5px" class="top logo-img"> 
+                <h1><span class="V"> V</span> Formations</h1>
+            </div>
 				<div class="login__field">
                     <i class="login__icon bi bi-person-fill"></i>
 					<input type="text" class="login__input" name="email" placeholder=" Email">

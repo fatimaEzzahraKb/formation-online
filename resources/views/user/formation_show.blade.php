@@ -24,8 +24,10 @@
             <div class="card-data">
                 <h2>{{$formation->titre}} </h2>
                 <p> {{$formation->description}} </p>
-            
+
             </div>
+            <p style="text-align:end;font-size:15px;text-transform:capitalize"><span style="font-weight:600">Type de contenu:</span> {{$formation->type}}  </p>
+
             @if( $isFavorite)
                 <form action="{{route('favoris.destroy',$favorite->id)}}" method="POST">
                    @csrf
@@ -51,7 +53,13 @@
                     <div class="card-body">
                         <div class="videos-container">
                             
-                            <h4><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i> Vidéos: </h4>
+                            <h4><i class="bi bi-caret-right-fill" style="color:rgb(0, 204, 255)"></i>
+                            @if($formation->type==='vidéo')
+                                Vidéos:
+                            @else
+                                Audios:
+                            @endif
+                            </h4>
                             @if($formation->videos->isNotEmpty())
                                 @foreach($formation->videos->sortBy('ordre') as $video)
                                         

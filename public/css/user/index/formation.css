@@ -146,9 +146,14 @@ a {
 .formation-card {
 display: flex;
 flex-direction: column;
-
+color: black;
 gap: 10px;
 text-decoration: none !important;
+}
+.formation-card  p{
+	text-align: end;
+	color: #565656;
+	text-transform: capitalize;
 }
 .formation-card-img{
 	width: 100%;
