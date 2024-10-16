@@ -18,7 +18,13 @@ class CategoryController extends Controller
     public function store(Request $request){
         $request->validate([
             'nom'=>'required|string|unique:categories',
-            'description'=>'required | string',
+            'description'=>'required | string.',
+        ],[
+            'nom.required'=>'Le nom est requis.',
+            'nom.string'=>'Le nom doit être au format de caractères.',
+            'nom.unique'=>'Le nom doit être unique.',
+            'description.required'=>'Le description est requise.',
+            'description.string'=>'La description doit être au format de caractères.'
         ]);
             $category= Category::create([
                 "nom"=>$request->nom,

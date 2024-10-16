@@ -19,6 +19,7 @@
           </div>
           <h4>{{$formation->titre}}</h4>
           <hr class="line-card"/>
+          <p>Type de contenu: {{$formation->type}} </p>
           
           </a>    
           @endforeach

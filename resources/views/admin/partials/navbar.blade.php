@@ -53,7 +53,7 @@
                                     </form>
                                 <i class="bi bi-box-arrow-right"></i>
                                 <a style=" text-transform:none; text-align:center; " href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Log out</a> 
+                                Se déconnecter</a> 
                             </li>  
                         </ul>
                     </div>

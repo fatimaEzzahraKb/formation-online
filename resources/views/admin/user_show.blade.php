@@ -72,7 +72,7 @@
                                         <form action="{{route('users.edit', $user->id)}}" method="GET" style="display:inline;">
                                             @csrf
                                             <button class="btn btn-info" type="submit">
-                                                Edit
+                                                Editer
                                             </button>
                                         </form>
                                         <form action="{{route('users.destroy', $user->id)}}" method="post" style="display:inline;" onsubmit="return confirm('Vous êtes sûr que vous voulez supprimer cet utilisateur')">

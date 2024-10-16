@@ -5,3 +5,11 @@
 #description-textarea{
     border: none;
 }
+.search-label::after {
+    content: "Recherche :"; /* Texte en français */
+    display: inline; /* Affiche le texte en ligne */
+}
+
+.search-label {
+    display: none; /* Masque le texte original */
+}

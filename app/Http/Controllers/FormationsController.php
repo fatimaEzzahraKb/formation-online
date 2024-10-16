@@ -65,7 +65,10 @@ class FormationsController extends Controller
                 'category_id.exists' => 'La catégorie sélectionnée n\'existe pas.',
                 'souscategory_id.required' => 'La sous-catégorie est requise.',
                 'souscategory_id.exists' => 'La sous-catégorie sélectionnée n\'existe pas.',
-                'videos.*.file' => 'Chaque vidéo doit être un fichier.'
+                'videos.*.file' => 'Chaque vidéo doit être un fichier.',
+                'videos.*.ordre.min' => "L'ordre minimum requis est 1.",
+                'audios.*.ordre.min' => "L'ordre minimum requis est 1.",
+
         ]);
         
         $imagePath = $request->file('image_url')->store('images', 'public');
@@ -191,7 +194,8 @@ class FormationsController extends Controller
             'videos.*.titre' => 'required|string',
             'videos.*.ordre' => 'required|integer|min:1',
         ],[
-            'videos.*.ordre' => 'chaque video doit avoir un ordre spécifié',
+            'videos.*.ordre' => 'Chaque video doit avoir un ordre spécifié',
+            'videos.*.video' => "Aucune vidéo n'a été sélectionnée",
             'videos.*.titre' => 'Chaque vidéo doit avoir un titre'
         ]);
         foreach($request->videos as $videoData){
@@ -225,7 +229,8 @@ class FormationsController extends Controller
              'audios.*.titre' => 'required|string',
              'audios.*.ordre' => 'required|integer|min:1',
          ],[
-             'audios.*.ordre' => 'chaque audio doit avoir un ordre spécifié',
+            'audios.*.audio' => "Aucun audios n'a été sélectionné",
+             'audios.*.ordre' => 'Chaque audio doit avoir un ordre spécifié',
              'audios.*.titre' => 'Chaque audio doit avoir un titre'
          ]);
          foreach($request->audios as $audioData){

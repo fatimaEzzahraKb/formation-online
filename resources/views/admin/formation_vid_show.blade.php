@@ -119,7 +119,7 @@
                                 @enderror
                             </div>
                         </form>
-        @if($errors->any())
+@if($errors->any())
     @foreach($errors->all() as $error)
         <p class='text-danger' style="margin:15px">
             {{ $error }}

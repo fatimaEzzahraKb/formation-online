@@ -65,6 +65,9 @@
                                 <input type="number" class="form-control" name="videos[{{ $index }}][ordre]" placeholder="Ordre" value="{{ $video['ordre'] }}" min="1">                                
                             </div>
                             @endforeach
+                            @error('videos.*')
+                                    <p class="error" style="text-align:center;"> {{$message}} </p>
+                        @enderror
                         @endif
                     </div>
                     <div style="display:flex;align-items:end;">
@@ -75,9 +78,7 @@
                         
                        
                 </div>
-                     @error('videos')
-                                    <p class="error"> {{$message}} </p>
-                        @enderror
+                     
                         
                     <div class="row-flex mb-3  row-forms" id="category">
                             <label for="">Catégorie : </label> 
@@ -114,12 +115,12 @@
                             <button type="submit" class="col-2 btn btn-info submit-add-user">Créer   </button>
                             
                         </form>
-                        @if($errors->any())
+                        <!-- @if($errors->any())
                             @foreach($errors->all() as $error)
                             <p class="text-danger"> {{$error}} </p>
                             @endforeach
                         @endif
-                        
+                         -->
 @endsection
 
 @section('scripts')
