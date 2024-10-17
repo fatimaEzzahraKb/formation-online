@@ -28,13 +28,22 @@ class Formation extends Model
     public function favoris(){
         return $this->belongsToMany(Favoris::class);
     }
+    // public function videos(){
+    //     return $this->hasMany(FormationVideo::class);
+    // }
+    // public function audios(){
+    //     return $this->hasMany(FormationAudio::class);
+    // }
     public function videos(){
-        return $this->hasMany(FormationVideo::class);
+        return $this->belongsToMany(Video::class,'formation_video')
+                    ->withPivot('order')
+                    ->withTimestamps()
+        ;
     }
     public function audios(){
-        return $this->hasMany(FormationAudio::class);
-    }
-    public function blocked(){
-        return $this->hasMany(BlockedFormation::class);
+        return $this->belongsToMany(Audio::class,'formation_audios')
+                    ->withPivot('ordre')
+                    ->withTimestamps()
+        ;
     }
 }

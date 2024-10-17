@@ -51,7 +51,7 @@
                 @if(Auth::user()->permission==="super_admin")
                     <div class="btn-add text-end" ><button class="btn btn-info "> <a href="{{route('users.create')}}" style="color:white; text-transform:none;">Ajouter un utilisateur</a> </button></div>
                 @endif
-                @if($souscategory->formations->isEmpty())
+                @if($souscategory->userList->isEmpty())
                     <p class="text-center m-3">Aucun Utilisateur pour le moment</p>
                 @else
                 <div class="table-users-container" style="overflow-x:auto;">

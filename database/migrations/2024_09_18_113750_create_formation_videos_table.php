@@ -13,7 +13,7 @@ return new class extends Migration
         {
             Schema::create('formation_videos', function (Blueprint $table) {
                 $table->id();
-                $table->string('video_path');
+                $table->Integer('order');
                 $table->foreignId('formation_id')->constrained();
                 $table->timestamps();
             });

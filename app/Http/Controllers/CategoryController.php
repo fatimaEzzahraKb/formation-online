@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function store(Request $request){
         $request->validate([
             'nom'=>'required|string|unique:categories',
-            'description'=>'required | string.',
+            'description'=>'required|string',
         ],[
             'nom.required'=>'Le nom est requis.',
             'nom.string'=>'Le nom doit être au format de caractères.',
@@ -73,6 +73,10 @@ class CategoryController extends Controller
     }
     public function destroy( $id){
         $category = Category::findOrFail($id);
+        foreach($category->souscategories as $soucategory){
+            $soucategory->formations()->delete();
+        }
+        $category->souscategories()->delete();
         $category->delete();
         toast('Catégorie suuprimée avec succés!','success')->autoClose(2500);
         return back(); 

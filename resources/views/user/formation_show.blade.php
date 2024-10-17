@@ -61,7 +61,7 @@
                             @endif
                             </h4>
                             @if($formation->videos->isNotEmpty())
-                                @foreach($formation->videos->sortBy('ordre') as $video)
+                                @foreach($formation->videos->sortBy('pivot.order') as $video)
                                         
                                     <div class="video-display mt-3" style="display:flex;">
                                     <video width="280" height="160"  controlsList="nodownload" controls>
@@ -70,7 +70,7 @@
                                     </video>
                                         <div class="video-details" style="display:flex;align-items:center">
                                             <h5
-                                             style="text-transform:capitalize; color:black;">{{ $video->ordre }} - {{ $video->titre }} </h5
+                                             style="text-transform:capitalize; color:black;">{{ $video->pivot->order }} - {{ $video->titre }} </h5
                                             >
                                         </div>
                                     </div>

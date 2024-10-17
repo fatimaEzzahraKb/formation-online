@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Str;
 use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Formation;
+use App\Models\Video;
+use App\Models\Audio;
 use App\Models\FormationVideo;
 use App\Models\FormationAudio;
 use App\Services\VimeoService;
@@ -28,11 +30,15 @@ class FormationsController extends Controller
         return view('admin/formations')->with(['formationsVideos'=>$formationsVideos,"formationsAudios"=>$formationsAudios]);
     }
     public function create(){
-        $categories = Category::with('souscategories')->get();
-        return view('admin/formations_vid_add')->with('categories',$categories);
+        $categories = Category::with('souscategories','formations')->get();
+        $formations = Formation::with('videos','category')->get();
+        return view('admin/formations_vid_add')->with([
+            'categories'=>$categories,
+            'formations'=>$formations
+    ]);
     }
     public function create_audio(){
-        $categories = Category::with('souscategories')->get();
+        $categories = Category::with('souscategories','formations')->get();
         return view('admin/formations_audio_add')->with('categories',$categories);
     }
     public function store(Request $request){
@@ -45,11 +51,11 @@ class FormationsController extends Controller
             'souscategory_id' => 'required|exists:souscategories,id',
             'videos' => 'sometimes|array',
             'videos.*.video' => 'file|nullable',
-            'videos.*.titre' => 'string|nullable',
+            'videos.*.titre' => 'string|nullable|unique:videos',
             'videos.*.ordre' => 'integer|nullable|min:1',
             'audios' => 'sometimes|array',
             'audios.*.audio' => 'file|nullable',
-            'audios.*.titre' => 'string|nullable',
+            'audios.*.titre' => 'string|nullable|unique:audios',
             'audios.*.ordre' => 'integer|nullable|min:1',
             ], [
                 'titre.required' => 'Le titre est requis.',
@@ -66,6 +72,7 @@ class FormationsController extends Controller
                 'souscategory_id.required' => 'La sous-catégorie est requise.',
                 'souscategory_id.exists' => 'La sous-catégorie sélectionnée n\'existe pas.',
                 'videos.*.file' => 'Chaque vidéo doit être un fichier.',
+                'videos.*.unique' => 'Il esxiste déjà une vidéo de ce titre.',
                 'videos.*.ordre.min' => "L'ordre minimum requis est 1.",
                 'audios.*.ordre.min' => "L'ordre minimum requis est 1.",
 
@@ -80,7 +87,7 @@ class FormationsController extends Controller
                 "souscategory_id"=>$request->souscategory_id,
                 "type"=>$request->type,
             ]);
-        Log::info($formation);
+        Log::info($request->all());
 
         if($request->type==="vidéo"){
             if($request->videos)  {  
@@ -93,15 +100,30 @@ class FormationsController extends Controller
                 if (isset($videoData) && $video && $video->isValid()) 
                 {
                     $videoUri = $video->store('videos', 'public');
-                    FormationVideo::create([
+                    $video = Video::create([
                         'video_path'=>$videoUri,
-                        'formation_id'=>$formation->id,
                         'titre'=>$videoData['titre'],
-                        'ordre'=>$videoData['ordre']
                     ]);
+                    FormationVideo::create([
+                        'formation_id'=>$formation->id,
+                        'video_id'=>$video->id,
+                        'order'=>$videoData['ordre']
+                    ]);
+                    
                 }
             };
             }
+            if($request->selected_vid){
+                foreach($request->selected_vid as $selected_vidData){
+                    $video = Video::findOrFail($selected_vidData['id']);
+
+                    FormationVideo::create([
+                        'formation_id'=>$formation->id,
+                        'video_id'=>$video->id,
+                        'order'=>$request->selected['ordre']
+                    ]);
+            }
+        }
         }
         elseif($request->type==="audio") {
             if($request->audios)  {  
