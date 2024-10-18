@@ -50,3 +50,18 @@
 .tab-link.active{
     color: black !important;
 }
+.video-input-selection,.video-input-selection-add{
+    display: flex;
+    flex-direction: column-reverse;
+
+    gap: 20px;
+}
+
+.form-video-select{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.form-control , .form-select{
+    border-color: rgb(134, 134, 134) !important ;
+}

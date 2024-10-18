@@ -37,12 +37,14 @@ class Formation extends Model
     public function videos(){
         return $this->belongsToMany(Video::class,'formation_video')
                     ->withPivot('order')
+                    ->withPivot('id')
                     ->withTimestamps()
         ;
     }
     public function audios(){
         return $this->belongsToMany(Audio::class,'formation_audios')
                     ->withPivot('ordre')
+                    ->withPivot('id')
                     ->withTimestamps()
         ;
     }

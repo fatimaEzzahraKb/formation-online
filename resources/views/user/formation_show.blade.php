@@ -78,18 +78,18 @@
                                 @endforeach
                                 </div>
                             @elseif($formation->audios->isNotEmpty())
-                            @foreach($formation->audios->sortBy('ordre') as $audio)
+                            @foreach($formation->audios->sortBy('pivot.ordre') as $audio)
                                          
                                     <div class="video-display mt-3" style="display:flex;">
                                         
                                         <div class="video-details" style="display:flex;align-items:center">
                                             <h5
-                                             style="text-transform:capitalize; color:black;">{{ $audio->ordre }} - {{ $audio->titre }} </h5
+                                             style="text-transform:capitalize; color:black;">{{ $audio->pivot->ordre }} - {{ $audio->titre }} </h5
                                             >
                                         </div>
                                         <audio width="280" height="160"  controlsList="nodownload" controls>
-                                            <source src="{{asset('storage/'.$audio->audio)}}" type="audio/mpeg">
-                                            <source src="{{asset('storage/'.$audio->audio)}}" type="audio/ogg">
+                                            <source src="{{asset('storage/'.$audio->audio_path)}}" type="audio/mpeg">
+                                            <source src="{{asset('storage/'.$audio->audio_path)}}" type="audio/ogg">
                                             Votre navigateur n'affiche pas les audios.
                                         </audio>
                                     </div>

@@ -68,25 +68,26 @@
             </div>
 
             <div class="mt-3">
-                <div class="card videos-card mb-3 mt-8">
+                <div class="card videos-card mb-3 mt-8" style="padding-bottom:50px">
                     <div class="card-body">
                         <div class="videos-container">
                             @if($formation->audios->isNotEmpty())
-                                @foreach($formation->audios->sortBy('ordre') as $audio)
+                                @foreach($formation->audios->sortBy('pivot.ordre') as $audio)
                                     <div class="video-display audio-display mt-3">
                                             <audio width="280" height="160"  controlsList="nodownload" controls>
-                                                <source src="{{asset('storage/'.$audio->audio)}}" type="audio/mpeg">
-                                                <source src="{{asset('storage/'.$audio->audio)}}" type="audio/ogg">
+                                                <source src="{{asset('storage/'.$audio->audio_path)}}" type="audio/mpeg">
+                                                <source src="{{asset('storage/'.$audio->audio_path)}}" type="audio/ogg">
                                                 Votre navigateur n'affiche pas les audios.
                                             </audio>
                                             <div class="video-details">
-                                            <h3 style="text-transform:capitalize;margin-left:15px;">{{ $audio->ordre }} - {{ $audio->titre }}</h3>
+                                            <h3 style="text-transform:capitalize;margin-left:15px;">{{ $audio->pivot->ordre }} - {{ $audio->titre }}</h3>
                                         </div>
                                         <div style="display:flex; gap:10px;">
                                             <button class="btn" data-bs-toggle="modal" data-bs-target="#audioModal" 
                                                     data-audio-id="{{ $audio->id }}"
+                                                    data-pivot-id="{{ $audio->pivot->id }}"
                                                     data-audio-title="{{ $audio->titre }}"
-                                                    data-audio-ordre="{{ $audio->ordre }}">
+                                                    data-audio-ordre="{{ $audio->pivot->ordre }}">
                                                 <i class="bi bi-pencil-square text-success" style="font-size:20px"></i>
                                             </button>
                                             @if(Auth::user()->permission === "super_admin")
@@ -110,7 +111,7 @@
                             <div class="m-3">
                                 <div id="audio-inputs-container"></div>
                                 <div style="display:flex; justify-content:center; width:100%; margin-top:10px;">
-                                    <button type="button" class="btn btn-primary" id="add-audio-btn"><i class="bi bi-folder-plus"></i> Ajouter</button>
+                                    <button type="button" class="btn btn-primary" id="add-audio-btn"><i class="bi bi-folder-plus"></i> Ajouter depuis votre appareil</button>
                                 </div>
                                 <button type="submit" class="btn btn-success m-6" id="submit-btn" style="display:none;">Valider</button>
                                 @error('videos')
@@ -118,6 +119,19 @@
                                 @enderror
                             </div>
                         </form>
+                        <form action="{{ route('ajouter_audios_existed', $formation->id) }}" method="post">
+                            @csrf
+                                <div id="video-options-inputs-container"  style="padding-left:50px">
+                                    
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:center;width:100%; margin-top:10px;">
+                                        <button  type="button" class=" btn btn-secondary" id="select-video-btn" ><i class="bi bi-folder-plus"></i> Choisir un Audio déjà existée</button>
+                                </div>
+                                <button type="submit" class="btn btn-success m-6" id="submit-btn-select" style="display:none;margin-left:50px">Valider</button>
+                        </form>
+                        @error('selected_audio.*')
+                                    <p class="error" style="text-align:center;"> {{$message}} </p>
+                        @enderror
         @if($errors->any())
     @foreach($errors->all() as $error)
         <p class='text-danger' style="margin:15px">
@@ -145,6 +159,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <input type="hidden" id="audioId" name="video_id">
+                    <input type="hidden" id="pivotId" name="pivot_id">
                     <div class="mb-3">
                         <label for="audioTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" id="audioTitle" name="titre" required>
@@ -195,16 +210,16 @@
         orderInput.name = `audios[${audiosCount}][ordre]`;
         orderInput.placeholder = "Ordre";
 
-        const lienVideoInput = document.createElement("input");
-        lienVideoInput.classList.add("form-control");
-        lienVideoInput.type = "text";
-        lienVideoInput.classList.add("form-control");
-        lienVideoInput.name = `audios[${audiosCount}][lien_video]`;
-        lienVideoInput.placeholder = "Lien de la vidéo liée";
+        // const lienVideoInput = document.createElement("input");
+        // lienVideoInput.classList.add("form-control");
+        // lienVideoInput.type = "text";
+        // lienVideoInput.classList.add("form-control");
+        // lienVideoInput.name = `audios[${audiosCount}][lien_video]`;
+        // lienVideoInput.placeholder = "Lien de la vidéo liée";
 
         audioInputDiv.appendChild(audioInput);
         audioInputDiv.appendChild(titleInput);
-        audioInputDiv.appendChild(lienVideoInput);
+        // audioInputDiv.appendChild(lienVideoInput);
         audioInputDiv.appendChild(orderInput);
 
         container.appendChild(audioInputDiv);
@@ -217,18 +232,21 @@
     audioModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget; 
         const audioId = button.getAttribute('data-audio-id');
+        const pivotId = button.getAttribute('data-pivot-id');
         const audioTitle = button.getAttribute('data-audio-title');
         const audioOrdre = button.getAttribute('data-audio-ordre');
 
         // Update the modal's content.
         const modalTitle = audioModal.querySelector('.modal-title');
         const  audioIdInput = audioModal.querySelector('#audioId');
+        const  pivotIdInput = audioModal.querySelector('#pivotId');
         const audioTitleInput = audioModal.querySelector('#audioTitle');
         const audioOrdreInput = audioModal.querySelector('#audioOrdre');
 
         modalTitle.textContent = 'Update Video: ' + audioTitle;
         audioIdInput.value = audioId;
         audioTitleInput.value = audioTitle;
+        pivotIdInput.value = pivotId;
         audioOrdreInput.value = audioOrdre;
 
         // Update form action URL
@@ -253,5 +271,84 @@
             }
     })
 }
+
+// pour choisir un audio déjà existé
+document.getElementById('select-video-btn').addEventListener('click',function(){
+            const container = document.getElementById('video-options-inputs-container')
+            const submit_btn = document.getElementById('submit-btn-select');
+            submit_btn.style.display="block"
+            const videoCount = container.children.length;
+            const categories = @json($categories);
+            const videoForm = document.createElement('div') // pour le formulaire de la vidéo
+            videoForm.classList.add('form-video-select')
+            const videoInputDiv = document.createElement('div');
+            videoInputDiv.appendChild(videoForm)
+            videoInputDiv.classList.add('video-input-selection-add');
+        
+            const categorySelect = document.createElement("select")
+            categorySelect.classList.add('form-select')
+            categorySelect.name="audio_id"
+            console.log(categories)
+            categories.forEach(item => {
+                const option_cat = document.createElement("option");
+                option_cat.value = item.id;
+                option_cat.innerText  = item.nom;
+                categorySelect.appendChild(option_cat);
+
+            })
+            categorySelect.addEventListener('change',function(){
+                selectedCatVideos(this.value,videoForm,container)
+            })
+            videoInputDiv.appendChild(categorySelect);
+
+            container.appendChild(videoInputDiv);
+               // ligne 
+           const line = document.createElement('hr')
+           line.classList.add('line-video-select')
+           videoInputDiv.appendChild(line)
+       })
+       // To change the videos of the courses according to the selected category
+       function selectedCatVideos(category_id,video_form,container){
+                video_form.innerHTML = ""
+                const videoCount = container.children.length;
+
+                const selectAudio = document.createElement('select')
+                selectAudio.name=`selected_audio[${videoCount}][id]`
+                selectAudio.classList.add('form-select')
+                const categories = @json($categories);
+                console.log('all categories',categories)
+                const formations = @json($formations);
+                const cat_formations = formations.filter(f => Number(f.category_id) === Number(category_id));
+                console.log('choosed formations',cat_formations)
+                cat_formations.forEach(formation => {
+                        const audios = formation.audios;
+                        console.log('audios',audios)
+                        if(audios.length>0){
+                            const optgroup = document.createElement('optgroup');
+                            optgroup.label=formation.titre
+                            audios.forEach(audio=>{
+                                const option = document.createElement('option')
+                                option.value = audio.id;
+                                option.innerText = audio.titre;
+                                optgroup.appendChild(option)
+                            })
+                            selectAudio.appendChild(optgroup)
+                        }
+                    }
+                )
+       
+                    
+                const orderInput = document.createElement('input')
+                orderInput.classList.add("form-control")
+                orderInput.type="number"
+                orderInput.name=`selected_audio[${videoCount}][ordre]`
+                orderInput.placeholder="Ordre";
+
+                const videoInputs = document.createElement('div');
+                videoInputs.classList.add('videos-select-form');
+
+                video_form.appendChild(selectAudio)
+                video_form.appendChild(orderInput)
+       }
 </script>
 @endsection

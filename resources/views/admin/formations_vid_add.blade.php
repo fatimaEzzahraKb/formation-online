@@ -78,25 +78,11 @@
                         
                        
                 </div>
+                <!-- Choisir une Vidéo déjà existée: -->
                 <div class="mb-3 row-forms">
                     <label for="formFileMultiple" class="form-label">Choisir une Vidéo déjà existée:</label>
                     <div id="video-options-inputs-container" >
-                        @if(old('selected_vid'))
-                            @foreach( old('selected_vid') as $index =>$video  )
-                            <div class="video-input mb-3">
-                                <input type="file" class="form-control" name="selected_vid[{{ $index }}][video]" accept="video/*">
-                                <input type="text" class="form-control" name="selected_vid[{{ $index }}][titre]" placeholder="Titre" value="{{ $video['titre'] }}">
-                                <input type="number" class="form-control" name="selected_vid[{{ $index }}][ordre]" placeholder="Ordre" value="{{ $video['ordre'] }}" min="1">                                
-                            </div>
-                            <select name="" id=""></select>
-                            @endforeach
-                            @error('selected_vid.*')
-                                    <p class="error" style="text-align:center;"> {{$message}} </p>
-                        @enderror
-                        @endif
-                        <div id="videos-selection">
-
-                        </div>
+                           
                     </div>
                     <div style="display:flex;align-items:end;">
                     <button  type="button" class=" btn btn-secondary" id="select-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
@@ -104,7 +90,9 @@
                     </div>
                 
                         
-                       
+                    @error('selected_vid.*')
+                                    <p class="error" style="text-align:center;"> {{$message}} </p>
+                            @enderror
                 </div>     
                         
                     <div class="row-flex mb-3  row-forms" id="category">
@@ -267,10 +255,12 @@
             const container = document.getElementById('video-options-inputs-container')
             const videoCount = container.children.length;
             const categories = @json($categories);
-        
+            const videoForm = document.createElement('div') // pour le formulaire de la vidéo
+            videoForm.classList.add('form-video-select')
             const videoInputDiv = document.createElement('div');
-            videoInputDiv.classList.add('video-input');
-           
+            videoInputDiv.appendChild(videoForm)
+            videoInputDiv.classList.add('video-input-selection');
+        
             const categorySelect = document.createElement("select")
             categorySelect.classList.add('form-select')
             categorySelect.name="category_id"
@@ -283,38 +273,44 @@
 
             })
             categorySelect.addEventListener('change',function(){
-                selectedCatVideos(this.value)
+                selectedCatVideos(this.value,videoForm,container)
             })
             videoInputDiv.appendChild(categorySelect);
 
             container.appendChild(videoInputDiv);
-
+               // ligne 
+           const line = document.createElement('hr')
+           line.classList.add('line-video-select')
+           videoInputDiv.appendChild(line)
        })
        // To change the videos of the courses according to the selected category
-       function selectedCatVideos(category_id){
-        const container = document.getElementById('videos-selection');
-        container.innerHTML = ""
-        const videoCount = container.children.length;
+       function selectedCatVideos(category_id,video_form,container){
+            video_form.innerHTML = ""
+            const videoCount = container.children.length;
 
-        const selectVideo = document.createElement('select')
-        selectVideo.classList.add('form-select')
-        const categories = @json($categories);
-        console.log('all categories',categories)
-        const formations = @json($formations);
-        const cat_formations = formations.filter(f => Number(f.category_id) === Number(category_id));
-        console.log('choosed formations',cat_formations)
-        cat_formations.forEach(formation => {
-        const optgroup = document.createElement('optgroup');
-        optgroup.label=formation.titre
-        const videos = formation.videos;
-        videos.forEach(video=>{
-            const option = document.createElement('option')
-            option.value = video.id;
-            option.innerText = video.titre;
-            optgroup.appendChild(option)
-        })
-        selectVideo.appendChild(optgroup)
-        }
+            const selectVideo = document.createElement('select')
+            selectVideo.name=`selected_vid[${videoCount}][id]`
+            selectVideo.classList.add('form-select')
+            const categories = @json($categories);
+            console.log('all categories',categories)
+            const formations = @json($formations);
+            const cat_formations = formations.filter(f => Number(f.category_id) === Number(category_id));
+            console.log('choosed formations',cat_formations)
+            cat_formations.forEach(formation => {
+                const videos = formation.videos;
+                console.log('videos',videos)
+                if(videos.length>0){
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label=formation.titre
+                    videos.forEach(video=>{
+                        const option = document.createElement('option')
+                        option.value = video.id;
+                        option.innerText = video.titre;
+                        optgroup.appendChild(option)
+                    })
+                    selectVideo.appendChild(optgroup)
+                }
+            }
         )
        
     
@@ -327,9 +323,8 @@
         const videoInputs = document.createElement('div');
         videoInputs.classList.add('videos-select-form');
 
-        videoInputs.appendChild(selectVideo)
-        videoInputs.appendChild(orderInput)
-        container.appendChild(videoInputs)
+        video_form.appendChild(selectVideo)
+        video_form.appendChild(orderInput)
        }
     
     </script>

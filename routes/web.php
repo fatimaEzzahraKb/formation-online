@@ -35,7 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('formations', FormationsController::class)->except(['destroy']);
         Route::get('formations_add_audio', [FormationsController::class,'create_audio'])->name("formations_audio.create");
         Route::post('ajouter_videos/{id}', [FormationsController::class, 'add_videos'])->name('ajouter_videos');
+        Route::post('ajouter_videos_existed/{id}', [FormationsController::class, 'add_videos_existed'])->name('ajouter_videos_existed');
         Route::post('ajouter_audios/{id}', [FormationsController::class, 'add_audios'])->name('ajouter_audios');
+        Route::post('ajouter_audios_existed/{id}', [FormationsController::class, 'add_audios_existed'])->name('ajouter_audios_existed');
         Route::resource('categories', CategoryController::class)->except(['destroy']);
         Route::resource('souscategories', SouscategoryController::class)->except(['destroy']);
         Route::resource('formation_videos', FormationVideoController::class);

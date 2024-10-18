@@ -24,16 +24,7 @@ class UserPagesController extends Controller
         return view('user/subcategory_courses',compact('souscategory'));
         
     }
-    public function getVideoDuration($videoId)
-    {
-        $response = $this->vimeo->request("/videos/{$videoId}");
 
-        if ($response['status'] === 200) {
-            return $response['body']['duration']; 
-        }
-        
-        return null; 
-    }
     public function formation_show(Request $request, $id){
         $formation = Formation::with('category','souscategory','videos')->find($id);
         $souscategoriesIds = Auth::user()->souscategoriesList->pluck('id')->toArray();
@@ -53,7 +44,5 @@ class UserPagesController extends Controller
 
         return response()->json($results);
     }
-    public function favoris_show(){
-        
-    }
+
 }

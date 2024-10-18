@@ -23,6 +23,7 @@
                 <table id="example" class="ui celled table users-table " style="width:100%">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Image</th>
                             <th>Titre</th>
                             <th>Catégorie</th>
@@ -37,6 +38,7 @@
                     <tbody>
                         @foreach ($formationsVideos as $formation)
                             <tr class="user-row">
+                                <td> {{$formation->id}} </td>
                                 <td> 
                                 <img style='height:50px;' src="{{ asset('storage/'.$formation->image_url) }}" alt="">
                             
@@ -75,7 +77,7 @@
 
                     <h4 style="text-align:center;">Aucune Formation Audio pour le moment</h4>
                 @else
-                    <table id="example" class="ui celled table users-table " style="width:100%">
+                    <table id="audio-table" class="ui celled table users-table " style="width:100%">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -131,7 +133,12 @@
 @section('scripts')
 <script> 
 
-new DataTable('#example');
+new DataTable('#example',{
+    responsive: true
+});
+new DataTable('#audio-table',{
+    responsive: true
+});
 // SWEET ALERT DELETE CONFIRM
 function confirmDelete(button){
     const form = $(button).closest('form');

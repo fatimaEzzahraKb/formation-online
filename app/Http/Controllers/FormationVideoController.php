@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Services\VimeoService;
 use App\Models\FormationVideo;
+use App\Models\Video;
 
 class FormationVideoController extends Controller
 {
@@ -62,7 +63,9 @@ class FormationVideoController extends Controller
             'titre'=>'string|nullable',
             'ordre'=>'number|min:1|nullable'
         ]);
-        $video =  FormationVideo::findOrFail($id);
+        $video =  Video::findOrFail($id);
+        $video->update($request->only('titre'));
+        $video->save();
         if(!$video){
             return response()->json([
                 'status'=>404,
@@ -71,16 +74,20 @@ class FormationVideoController extends Controller
 
         }
         else{
-            $existingVideo = FormationVideo::where('formation_id',$video->formation_id)
-            ->where('ordre',$request->ordre)
-            ->where('id','!=',(int)$id)
+            $video_formation = FormationVideo::findOrFail($request->pivot_id);
+            $existingVideo = FormationVideo::where('formation_id',$video_formation->formation_id)
+            ->where('order',$request->order)
+            ->where('id','!=',(int)$request->pivot_id)
             ->first();
             if($existingVideo){
                 return redirect()->back()->withErrors(['order'=>'Il y a déjà une vidéo de cette ordre']);
             }
-            $video->update($request->only(['titre', 'ordre']));
+            else{
+            $video_formation->update($request->only('order'));
+            $video_formation->save();
+        }
             
-        $video->save();
+    
         toast('Vidéo modifié avec succés!','success')->autoClose(2500);
         return back();
     }
@@ -90,9 +97,10 @@ class FormationVideoController extends Controller
      */
     public function destroy(string $id)
     {
-        $video = FormationVideo::findOrFail($id);
-        $formation_id = $video->formation_id;
+        $video = Video::findOrFail($id);
+        
         Storage::disk('public')->delete($video->video_path);
+        
         $video->delete();
         toast('Vidéo supprimée avec succés!','success')->autoClose(2500);
         

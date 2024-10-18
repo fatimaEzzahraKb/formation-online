@@ -55,7 +55,7 @@
                     
                 </div>
                 
-                        <div class="mb-3 row-forms">
+                <div class="mb-3 row-forms">
                     <label for="formFileMultiple" class="form-label">Audios :</label>
                     <div id="audio-inputs-container" >
                         @if(old('audios'))
@@ -67,15 +67,34 @@
                             </div>
                             @endforeach
                         @endif
+                    @error('audios.*')
+                                    <p class="error" style="text-align:center;"> {{$message}} </p>
+                    @enderror
                     </div>
+                    
                     <div style="display:flex;align-items:end;">
                     <button  type="button" class=" btn btn-secondary" id="add-audio-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
 
                     </div>
-                
+                   
                         
                        
                 </div>
+                <div class="mb-3 row-forms">
+                    <label for="formFileMultiple" class="form-label">Choisir un Audio existé:</label>
+                    <div id="video-options-inputs-container" >
+                           
+                    </div>
+                    <div style="display:flex;align-items:end;">
+                    <button  type="button" class=" btn btn-secondary" id="select-video-btn" ><i class="bi bi-folder-plus"></i> Ajouter</button>
+
+                    </div>
+                
+                        
+                    @error('selected_audio.*')
+                                    <p class="error" style="text-align:center;"> {{$message}} </p>
+                    @enderror
+                </div>    
                     <div class="row-flex mb-3  row-forms" id="category">
                             <label for="">Catégorie : </label> 
                                 <select class="form-select" name="category_id" id="category-select" aria-label="Default select example" onchange="updateSubcategories()">
@@ -113,9 +132,12 @@
                             
                         </form>
                         @if($errors->any())
+                        <div class="alert alert-danger" style="margin-top:20px">
+                            
                             @foreach($errors->all() as $error)
-                            <p class="text-danger"> {{$error}} </p>
+                            <p class="text-dark"> {{$error}} </p>
                             @endforeach
+                        </div>
                         @endif
                         
 @endsection
@@ -242,5 +264,84 @@
             container.appendChild(audioInputDiv)
 
         })
+
+        // To SELECT EXISTING AUDIOS ' FROM THE PLATEFORM VIDEOS' 
+       
+       document.getElementById('select-video-btn').addEventListener('click',function(){
+            const container = document.getElementById('video-options-inputs-container')
+            const videoCount = container.children.length;
+            const categories = @json($categories);
+            const videoForm = document.createElement('div') // pour le formulaire de la vidéo
+            videoForm.classList.add('form-video-select')
+            const videoInputDiv = document.createElement('div');
+            videoInputDiv.appendChild(videoForm)
+            videoInputDiv.classList.add('video-input-selection');
+        
+            const categorySelect = document.createElement("select")
+            categorySelect.classList.add('form-select')
+            categorySelect.name="category_id"
+            console.log(categories)
+            categories.forEach(item => {
+                const option_cat = document.createElement("option");
+                option_cat.value = item.id;
+                option_cat.innerText  = item.nom;
+                categorySelect.appendChild(option_cat);
+
+            })
+            categorySelect.addEventListener('change',function(){
+                selectedCatVideos(this.value,videoForm,container)
+            })
+            videoInputDiv.appendChild(categorySelect);
+
+            container.appendChild(videoInputDiv);
+               // ligne 
+           const line = document.createElement('hr')
+           line.classList.add('line-video-select')
+           videoInputDiv.appendChild(line)
+       })
+       // To change the audios of the courses according to the selected category
+       function selectedCatVideos(category_id,video_form,container){
+        video_form.innerHTML = ""
+        const videoCount = container.children.length;
+
+        const selectVideo = document.createElement('select')
+        selectVideo.name=`selected_audio[${videoCount}][id]`
+        selectVideo.classList.add('form-select')
+        const categories = @json($categories);
+        console.log('all categories',categories)
+        const formations = @json($formations);
+        const cat_formations = formations.filter(f => Number(f.category_id) === Number(category_id));
+        console.log('choosed formations',cat_formations)
+        console.log('choosed formations',cat_formations)
+        cat_formations.forEach(formation => {
+        const audios = formation.audios;
+        console.log('audio',audios)
+        if(audios.length>0){
+        const optgroup = document.createElement('optgroup');
+        optgroup.label=formation.titre
+        audios.forEach(audio=>{
+            const option = document.createElement('option')
+            option.value = audio.id;
+            option.innerText = audio.titre;
+            optgroup.appendChild(option)
+        })
+        selectVideo.appendChild(optgroup)
+        }}
+        )
+       
+    
+        const orderInput = document.createElement('input')
+        orderInput.classList.add("form-control")
+        orderInput.type="number"
+        orderInput.name=`selected_audio[${videoCount}][ordre]`
+        orderInput.placeholder="Ordre";
+
+        const videoInputs = document.createElement('div');
+        videoInputs.classList.add('video-select-form');
+
+        video_form.appendChild(selectVideo)
+        video_form.appendChild(orderInput)
+       }
+    
     </script>
 @endsection

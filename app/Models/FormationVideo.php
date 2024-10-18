@@ -9,7 +9,7 @@ class FormationVideo extends Model
 {
     use HasFactory;
     protected $table ="formation_video";
-    protected $fillable = ["video_id","formation_id","order "];
+    protected $fillable = ["video_id","formation_id","order"];
     public function formation(){
         return $this->belongsTo(Formation::class);
     }

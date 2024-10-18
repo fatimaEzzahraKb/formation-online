@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Models\Souscategory;
+use App\Models\Formation;
+use App\Models\UserSubcategory;
 class SouscategoryController extends Controller
 {
     public function index(){
@@ -63,6 +65,7 @@ class SouscategoryController extends Controller
     }
     public function destroy( $id){
         $souscategory = Souscategory::findOrFail($id);
+
         $souscategory->delete();
         toast('Sous-catégorie supprimée avec succés!','success')->autoClose(2500);
 
